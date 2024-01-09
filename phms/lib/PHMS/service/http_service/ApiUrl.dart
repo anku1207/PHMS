@@ -16,8 +16,6 @@ Future<Map<String, String>> getApiHeaders() async {
   // Define the headers with the 'Authorization' token
   Map<String, String> headers = {
     'apiconnection': 'appmobile',
-    'Content-Type': 'application/json',
-    'apikey': '9962c477-14d4-42e4-b4e6-815cf5805063',
     'Authorization': authToken ?? '', // Use an empty string if authToken is null
   };
 

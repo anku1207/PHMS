@@ -85,7 +85,7 @@ TextTheme textTheme() {
   return baseTheme.copyWith(
     bodyText1: TextStyle(color: Activity_ALL_Text_Color,fontSize: 12.0),
     bodyText2: TextStyle(color: Activity_ALL_Text_Color),
-    button: TextStyle(color: Activity_ALL_Text_Color),
+    button: TextStyle(color: Activity_ALL_Text_Color,fontSize: 15.0),
     caption: TextStyle(color: Activity_ALL_Text_Color),
     subtitle1: TextStyle(color: Activity_ALL_Text_Color),
     // <-- that's the one

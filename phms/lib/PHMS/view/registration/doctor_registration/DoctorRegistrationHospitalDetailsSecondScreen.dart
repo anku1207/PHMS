@@ -5,10 +5,9 @@ import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
-import 'package:phms/PHMS/model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorRegistrationResponseVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
-
 
 class DoctorRegistrationHospitalDetailsSecondScreen extends StatefulWidget {
   late final Registration argument;
@@ -46,14 +45,15 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
   ];
   List<String> selectedOperatingDays = [];
 
-  void doctorRegister(BuildContext context ,Registration registration ) {
-    DoctorRegistrationVO doctorRegistrationVO = DoctorRegistrationVO(registration: registration);
+  void doctorRegister(BuildContext context, Registration registration) {
+    DoctorRegistrationVO doctorRegistrationVO =
+        DoctorRegistrationVO(registration: registration);
 
-    print("doctorRegister_data ___"+doctorRegistrationVO.toJson().toString());
+    print("doctorRegister_data ___" + doctorRegistrationVO.toJson().toString());
     Future<DoctorRegistrationResponseVO?> categoryListResponse =
-    API.registerDoctor(doctorRegistrationVO);
+        API.registerDoctor(doctorRegistrationVO);
     categoryListResponse.catchError(
-          (onError) {
+      (onError) {
         print(onError.toString());
         showToastShortTime(context, onError.toString());
       },
@@ -62,7 +62,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
         Navigator.pushNamedAndRemoveUntil(
           context,
           UavRoutes.Dashboard_Screen,
-              (route) => false,
+          (route) => false,
         );
       }
     }).whenComplete(() {
@@ -114,10 +114,11 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                         Text(
                           "Hospital Details Second",
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                         ),
                         Container(
                           height: 10,
@@ -188,7 +189,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                     "Operating Days",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
-                                      fontSize: 22,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
@@ -209,21 +210,52 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                   itemCount: operatingDays.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return CheckboxListTile(
-                                      title: Text(operatingDays[index]),
-                                      value: selectedOperatingDays
-                                          .contains(operatingDays[index]),
-                                      onChanged: (value) {
+                                    return InkWell(
+                                      onTap: () {
                                         setState(() {
-                                          if (value ?? false) {
-                                            selectedOperatingDays
-                                                .add(operatingDays[index]);
-                                          } else {
+                                          if (selectedOperatingDays
+                                              .contains(operatingDays[index])) {
                                             selectedOperatingDays
                                                 .remove(operatingDays[index]);
+                                          } else {
+                                            selectedOperatingDays
+                                                .add(operatingDays[index]);
                                           }
                                         });
                                       },
+                                      child: Container(
+                                        margin: EdgeInsets.all(0),
+                                        // Remove any margin around the container
+                                        padding: EdgeInsets.all(0),
+                                        // Remove any padding within the container
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                              value: selectedOperatingDays
+                                                  .contains(
+                                                      operatingDays[index]),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  if (value ?? false) {
+                                                    selectedOperatingDays.add(
+                                                        operatingDays[index]);
+                                                  } else {
+                                                    selectedOperatingDays
+                                                        .remove(operatingDays[
+                                                            index]);
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                            Text(
+                                              operatingDays[index],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
@@ -233,8 +265,10 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                   child: Text(
                                     "Operating HRS",
                                     textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 22,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!.copyWith(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
@@ -248,7 +282,9 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                         readOnly: true,
                                         controller: startTimeController,
                                         maxLength: 50,
-                                        style: Theme.of(context).textTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Start Time',
@@ -292,7 +328,9 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                         readOnly: true,
                                         controller: endTimeController,
                                         maxLength: 50,
-                                        style: Theme.of(context).textTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'End Time',
@@ -353,12 +391,12 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                         visitinghrs: startTimeController.text +
                                             " - " +
                                             endTimeController.text);
-                                    if(widget.argument.place!.length==2){
+                                    if (widget.argument.place!.length == 2) {
                                       widget.argument.place!.removeAt(1);
                                     }
                                     widget.argument.place!.add(place);
 
-                                    doctorRegister(context,widget.argument);
+                                    doctorRegister(context, widget.argument);
                                   } else {
                                     showToastShortTime(
                                         context, "Selected Operating Days");
@@ -387,5 +425,4 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
       ),
     );
   }
-
 }

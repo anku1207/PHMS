@@ -261,10 +261,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   "Forgot Password ?",
                                   textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff018ad0)),
+                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      fontWeight: FontWeight.bold),
                                 )),
                           ),
                           SizedBox(

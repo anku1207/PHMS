@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
-import 'package:phms/PHMS/model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 
 class DoctorRegistrationDetailsScreen extends StatefulWidget {
   @override
@@ -28,6 +29,15 @@ class _DoctorRegistrationDetailsScreenState
   late TextEditingController regNumberController;
   late DoctorRegistrationVO doctorRegistrationVO;
 
+  late String _dropDownValue;
+  final List<String> _favouriteFoodModelList = [
+    'Hardware',
+     'Software',
+     'Service',
+     'Payment FollowUp',
+     'PMR',
+     'Other',
+  ];
 
   @override
   void initState() {
@@ -36,6 +46,7 @@ class _DoctorRegistrationDetailsScreenState
     _formKey = GlobalKey<FormState>();
     _autoValidate = AutovalidateMode.disabled;
     mobileNumberValidate = false;
+    _dropDownValue = "Choose a Complaint Type";
 
     // Create controllers for each TextFormField
     doctorNameController = TextEditingController();
@@ -261,7 +272,16 @@ class _DoctorRegistrationDetailsScreenState
                                 SizedBox(
                                   height: 20,
                                 ),
-                                TextFormField(
+
+                                dropDownLayout(context,
+                                    _dropDownValue,
+                                    _favouriteFoodModelList,
+                                        (selectVal) {
+                                      setState(() {
+                                        _dropDownValue = selectVal;
+                                      });
+                                    }),
+                               /* TextFormField(
                                   controller: specializationController,
                                   maxLength: 50,
                                   style: Theme.of(context).textTheme.bodyText1,
@@ -279,7 +299,7 @@ class _DoctorRegistrationDetailsScreenState
                                   ),
                                   validator: (value) =>
                                       validateRequiredField(value),
-                                ),
+                                ),*/
                                 SizedBox(
                                   height: 20,
                                 ),

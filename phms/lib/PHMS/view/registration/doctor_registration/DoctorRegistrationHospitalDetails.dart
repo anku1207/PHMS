@@ -5,7 +5,7 @@ import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
-import 'package:phms/PHMS/model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 
 class DoctorRegistrationHospitalDetailsScreen extends StatefulWidget {
   late final Registration argument;
@@ -22,8 +22,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
   late GlobalKey<FormState> _formKey;
   late AutovalidateMode _autoValidate;
   bool mobileNumberValidate = false;
-  List<Place> placeList =
-  List.filled(0, Place(), growable: true);
+  List<Place> placeList = List.filled(0, Place(), growable: true);
 
   TimeOfDay? startTime;
   TimeOfDay? endTime;
@@ -87,10 +86,11 @@ class _DoctorRegistrationHospitalDetailsScreenState
                         Text(
                           "Hospital Details First",
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                         ),
                         Container(
                           height: 10,
@@ -160,10 +160,14 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                   child: Text(
                                     "Operating Days",
                                     textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                          // Add any additional styling here
+                                        ),
                                   ),
                                 ),
                                 // Operating days GridView
@@ -182,22 +186,41 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                   itemCount: operatingDays.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return CheckboxListTile(
-                                      title: Text(operatingDays[index]),
-                                      value: selectedOperatingDays
-                                          .contains(operatingDays[index]),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          if (value ?? false) {
-                                            selectedOperatingDays
-                                                .add(operatingDays[index]);
-                                          } else {
-                                            selectedOperatingDays
-                                                .remove(operatingDays[index]);
-                                          }
-                                        });
-                                      },
-                                    );
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              if (selectedOperatingDays.contains(operatingDays[index])) {
+                                                selectedOperatingDays.remove(operatingDays[index]);
+                                              } else {
+                                                selectedOperatingDays.add(operatingDays[index]);
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.all(0), // Remove any margin around the container
+                                            padding: EdgeInsets.all(0), // Remove any padding within the container
+                                            child: Row(
+                                              children: [
+                                                Checkbox(
+                                                  value: selectedOperatingDays.contains(operatingDays[index]),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      if (value ?? false) {
+                                                        selectedOperatingDays.add(operatingDays[index]);
+                                                      } else {
+                                                        selectedOperatingDays.remove(operatingDays[index]);
+                                                      }
+                                                    });
+                                                  },
+                                                ),
+                                                Text(
+                                                  operatingDays[index],
+                                                  style: Theme.of(context).textTheme.bodyText1,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
                                   },
                                 ),
                                 SizedBox(height: 20),
@@ -206,8 +229,10 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                   child: Text(
                                     "Operating HRS",
                                     textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 22,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!.copyWith(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
@@ -221,7 +246,9 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         readOnly: true,
                                         controller: startTimeController,
                                         maxLength: 50,
-                                        style: Theme.of(context).textTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Start Time',
@@ -250,7 +277,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                             setState(() {
                                               startTime = selectedTime;
                                               startTimeController.text =
-                                                  startTime!.format(context);                                            });
+                                                  startTime!.format(context);
+                                            });
                                           }
                                         },
                                         validator: (value) =>
@@ -264,7 +292,9 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         readOnly: true,
                                         controller: endTimeController,
                                         maxLength: 50,
-                                        style: Theme.of(context).textTheme.bodyText1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'End Time',
@@ -293,7 +323,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                             setState(() {
                                               endTime = selectedTime;
                                               endTimeController.text =
-                                                  selectedTime.format(context);                                            });
+                                                  selectedTime.format(context);
+                                            });
                                           }
                                         },
                                         validator: (value) =>
@@ -311,31 +342,34 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                 const BoxConstraints(minWidth: double.infinity),
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState?.validate() ?? false) {
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
                                   // Use the selectedOperatingDays list as needed
-                                  if(selectedOperatingDays.isNotEmpty){
-                                    var operatingDays=selectedOperatingDays.toString();
-                                    place=Place(placename: doctorAssociationController.text,
-                                        visitingdays: operatingDays,visitinghrs: startTimeController.text +" - "+endTimeController.text);
-                                    if(placeList.isNotEmpty)placeList.clear();
+                                  if (selectedOperatingDays.isNotEmpty) {
+                                    var operatingDays =
+                                        selectedOperatingDays.toString();
+                                    place = Place(
+                                        placename:
+                                            doctorAssociationController.text,
+                                        visitingdays: operatingDays,
+                                        visitinghrs: startTimeController.text +
+                                            " - " +
+                                            endTimeController.text);
+                                    if (placeList.isNotEmpty) placeList.clear();
                                     placeList.add(place);
                                     widget.argument.setPlace(placeList);
                                     // Navigate to the next screen
                                     print(place.toJson());
                                     Navigator.pushNamed(
-                                      context,
-                                      UavRoutes
-                                          .Doctor_Registration_Hospital_Details_Second_Screen,
-                                      arguments: widget.argument
-                                    );
-                                  }else{
-                                    showToastShortTime(context,"Selected Operating Days");
+                                        context,
+                                        UavRoutes
+                                            .Doctor_Registration_Hospital_Details_Second_Screen,
+                                        arguments: widget.argument);
+                                  } else {
+                                    showToastShortTime(
+                                        context, "Selected Operating Days");
                                   }
-
-
-
                                 }
-
                               },
                               child: Text(
                                 "Next",

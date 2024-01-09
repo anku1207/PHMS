@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:phms/PHMS/model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/view/home/DashboardScreen.dart';
 import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
