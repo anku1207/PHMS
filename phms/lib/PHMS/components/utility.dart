@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,4 +92,9 @@ MaterialColor createMaterialColor(Color color) {
   }
 
   return MaterialColor(color.value, swatch);
+}
+
+int generateRandom4DigitNumber() {
+  Random random = Random();
+  return random.nextInt(9000) + 1000; // Generates a random number between 1000 and 9999
 }

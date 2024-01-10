@@ -48,7 +48,7 @@ class RouteGenerator {
       case UavRoutes.Patient_registration_Screen:
         return BouncyPage(widget: PatientRegistrationScreen());
       case UavRoutes.Doctor_Registration_Details_Screen:
-        return BouncyPage(widget: DoctorRegistrationDetailsScreen());
+        return BouncyPage(widget: DoctorRegistrationDetailsScreen(argument:settings.arguments!));
       case UavRoutes.Doctor_Registration_Hospital_Details_Screen:
         return BouncyPage(widget: DoctorRegistrationHospitalDetailsScreen(argument:settings.arguments! as Registration));
       case UavRoutes.Doctor_Registration_Hospital_Details_Second_Screen:

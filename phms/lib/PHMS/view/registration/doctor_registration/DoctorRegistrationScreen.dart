@@ -211,7 +211,7 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
         Navigator.pushNamed(
             context,
             UavRoutes
-                .Doctor_Registration_Details_Screen);
+                .Doctor_Registration_Details_Screen,arguments: {"doctor_name":doctorNameId.text,"doctor_mobile":mobileNumberId.text});
       }else{
         showAlertDialog(
             context: context,

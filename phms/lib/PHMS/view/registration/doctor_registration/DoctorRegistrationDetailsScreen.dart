@@ -4,9 +4,12 @@ import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 
 class DoctorRegistrationDetailsScreen extends StatefulWidget {
+  final Object argument;
+  DoctorRegistrationDetailsScreen({Key? key, required this.argument}) : super(key: key);
   @override
   State<DoctorRegistrationDetailsScreen> createState() =>
       _DoctorRegistrationDetailsScreenState();
@@ -17,7 +20,7 @@ class _DoctorRegistrationDetailsScreenState
   late GlobalKey<FormState> _formKey;
   late AutovalidateMode _autoValidate;
   bool mobileNumberValidate = false;
-
+  var argumentsMap;
   // Create controllers for each TextFormField
   late TextEditingController doctorNameController;
   late TextEditingController mobileController;
@@ -27,26 +30,34 @@ class _DoctorRegistrationDetailsScreenState
   late TextEditingController qualificationController;
   late TextEditingController specializationController;
   late TextEditingController regNumberController;
+  late TextEditingController otpController;
   late DoctorRegistrationVO doctorRegistrationVO;
 
-  late String _dropDownValue;
-  final List<String> _favouriteFoodModelList = [
-    'Hardware',
-     'Software',
-     'Service',
-     'Payment FollowUp',
-     'PMR',
-     'Other',
+  late String specialization;
+  late String qualification;
+  final List<String> specializationList = [
+    'Dentist',
+     'Heart Specialist',
+     'Eys Specialist',
+  ];
+
+  final List<String> qualificationList = [
+    'MBBS',
+    'MD',
   ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    argumentsMap = widget.argument as Map;
+
     _formKey = GlobalKey<FormState>();
     _autoValidate = AutovalidateMode.disabled;
     mobileNumberValidate = false;
-    _dropDownValue = "Choose a Complaint Type";
+    specialization = "Choose specialization";
+    qualification="Choose qualification";
 
     // Create controllers for each TextFormField
     doctorNameController = TextEditingController();
@@ -54,12 +65,14 @@ class _DoctorRegistrationDetailsScreenState
     passwordController = TextEditingController();
     emailController = TextEditingController();
     landlineController = TextEditingController();
-    qualificationController = TextEditingController();
-    specializationController = TextEditingController();
     regNumberController = TextEditingController();
+    otpController = TextEditingController();
 
     doctorRegistrationVO=DoctorRegistrationVO();
 
+    doctorNameController.text=argumentsMap["doctor_name"];
+    mobileController.text=argumentsMap["doctor_mobile"];
+    otpController.text=generateRandom4DigitNumber().toString();
   }
 
   @override
@@ -141,6 +154,8 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: doctorNameController,
                                   maxLength: 100,
+                                  enabled: false, // Set to false to make it read-only
+                                  readOnly: true, // Set to true to remove the cursor
                                   style: Theme.of(context).textTheme.bodyText1,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
@@ -162,7 +177,9 @@ class _DoctorRegistrationDetailsScreenState
                                 ),
                                 TextFormField(
                                   controller: mobileController,
-                                  maxLength: 50,
+                                  maxLength: 10,
+                                  enabled: false, // Set to false to make it read-only
+                                  readOnly: true, // Set to true to remove the cursor
                                   keyboardType: TextInputType.number,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   decoration: InputDecoration(
@@ -222,6 +239,28 @@ class _DoctorRegistrationDetailsScreenState
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
                                   validator: (value) =>
+                                      validateEmail(value!),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: regNumberController,
+                                  maxLength: 50,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                  decoration: InputDecoration(
+                                    counter: Offstage(),
+                                    hintText: 'Registration Number',
+                                    labelText: 'Registration Number',
+                                    prefixIcon: const Icon(
+                                      Icons.drive_file_rename_outline,
+                                      color: Colors.grey,
+                                    ),
+                                    prefixText: ' ',
+                                    contentPadding: new EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 20.0),
+                                  ),
+                                  validator: (value) =>
                                       validateRequiredField(value),
                                 ),
                                 SizedBox(
@@ -250,67 +289,37 @@ class _DoctorRegistrationDetailsScreenState
                                 SizedBox(
                                   height: 20,
                                 ),
-                                TextFormField(
-                                  controller: qualificationController,
-                                  maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                  decoration: InputDecoration(
-                                    counter: Offstage(),
-                                    hintText: 'Qualification',
-                                    labelText: 'Qualification',
-                                    prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
-                                      color: Colors.grey,
-                                    ),
-                                    prefixText: ' ',
-                                    contentPadding: new EdgeInsets.symmetric(
-                                        vertical: 20.0, horizontal: 20.0),
-                                  ),
-                                  validator: (value) =>
-                                      validateRequiredField(value),
-                                ),
+                                dropDownLayout(context,
+                                    qualification,
+                                    qualificationList,
+                                        (selectVal) {
+                                      setState(() {
+                                        qualification = selectVal;
+                                      });
+                                    }),
                                 SizedBox(
                                   height: 20,
                                 ),
 
                                 dropDownLayout(context,
-                                    _dropDownValue,
-                                    _favouriteFoodModelList,
+                                    specialization,
+                                    specializationList,
                                         (selectVal) {
                                       setState(() {
-                                        _dropDownValue = selectVal;
+                                        specialization = selectVal;
                                       });
                                     }),
-                               /* TextFormField(
-                                  controller: specializationController,
-                                  maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                  decoration: InputDecoration(
-                                    counter: Offstage(),
-                                    hintText: 'Specialization',
-                                    labelText: 'Specialization',
-                                    prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
-                                      color: Colors.grey,
-                                    ),
-                                    prefixText: ' ',
-                                    contentPadding: new EdgeInsets.symmetric(
-                                        vertical: 20.0, horizontal: 20.0),
-                                  ),
-                                  validator: (value) =>
-                                      validateRequiredField(value),
-                                ),*/
                                 SizedBox(
                                   height: 20,
                                 ),
                                 TextFormField(
-                                  controller: regNumberController,
-                                  maxLength: 50,
+                                  controller: otpController,
+                                  maxLength: 6,
                                   style: Theme.of(context).textTheme.bodyText1,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
-                                    hintText: 'Registration Number',
-                                    labelText: 'Registration Number',
+                                    hintText: 'OTP',
+                                    labelText: 'OTP',
                                     prefixIcon: const Icon(
                                       Icons.drive_file_rename_outline,
                                       color: Colors.grey,

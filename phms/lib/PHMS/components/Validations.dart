@@ -16,3 +16,15 @@ String? validateRequiredField(String? value){
   }
   return null;
 }
+String? validateEmail(String email) {
+  // Define a regular expression for a valid email address
+  RegExp emailRegex = RegExp(
+    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+  );
+  if(email==""){
+    return 'this field is required';
+  }else if(!emailRegex.hasMatch(email)){
+    return 'please enter valid email address';
+  }
+  return null;
+}
