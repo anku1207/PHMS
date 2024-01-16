@@ -40,7 +40,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
     'Sat',
     'Sun',
   ];
-  List<String> selectedOperatingDays = [];
+  List<int> selectedOperatingDays = [];
 
   @override
   void initState() {
@@ -189,10 +189,10 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         return InkWell(
                                           onTap: () {
                                             setState(() {
-                                              if (selectedOperatingDays.contains(operatingDays[index])) {
-                                                selectedOperatingDays.remove(operatingDays[index]);
+                                              if (selectedOperatingDays.contains(index)) {
+                                                selectedOperatingDays.remove(index);
                                               } else {
-                                                selectedOperatingDays.add(operatingDays[index]);
+                                                selectedOperatingDays.add(index);
                                               }
                                             });
                                           },
@@ -202,13 +202,13 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                             child: Row(
                                               children: [
                                                 Checkbox(
-                                                  value: selectedOperatingDays.contains(operatingDays[index]),
+                                                  value: selectedOperatingDays.contains(index),
                                                   onChanged: (value) {
                                                     setState(() {
                                                       if (value ?? false) {
-                                                        selectedOperatingDays.add(operatingDays[index]);
+                                                        selectedOperatingDays.add(index);
                                                       } else {
-                                                        selectedOperatingDays.remove(operatingDays[index]);
+                                                        selectedOperatingDays.remove(index);
                                                       }
                                                     });
                                                   },
@@ -346,12 +346,26 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                     false) {
                                   // Use the selectedOperatingDays list as needed
                                   if (selectedOperatingDays.isNotEmpty) {
-                                    var operatingDays =
-                                        selectedOperatingDays.toString();
+                                      selectedOperatingDays.sort();
+                                      var operatingDays1 ="";
+
+                                      for (int value in selectedOperatingDays) {
+                                        // Your code here, using 'value'
+                                        if(operatingDays1.isEmpty){
+                                          operatingDays1= operatingDays[value];
+                                        }else{
+                                          operatingDays1 += " - "+operatingDays[value];
+                                        }
+                                      }
+
+
+
+                                    print(operatingDays1);
+
                                     place = Place(
                                         placename:
                                             doctorAssociationController.text,
-                                        visitingdays: operatingDays,
+                                        visitingdays: operatingDays1,
                                         visitinghrs: startTimeController.text +
                                             " - " +
                                             endTimeController.text);

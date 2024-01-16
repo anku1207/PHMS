@@ -27,8 +27,6 @@ class _DoctorRegistrationDetailsScreenState
   late TextEditingController passwordController;
   late TextEditingController emailController;
   late TextEditingController landlineController;
-  late TextEditingController qualificationController;
-  late TextEditingController specializationController;
   late TextEditingController regNumberController;
   late TextEditingController otpController;
   late DoctorRegistrationVO doctorRegistrationVO;
@@ -343,25 +341,30 @@ class _DoctorRegistrationDetailsScreenState
                                   minWidth: double.infinity),
                               child: ElevatedButton(
                                 onPressed: () => {
-                                if (_formKey.currentState?.validate() ?? false) {
-                                    registration = Registration(
-                                    doctorname: doctorNameController.text,
-                                    mobile: mobileController.text,
-                                    password: passwordController.text,
-                                    email: emailController.text,
-                                    landline: landlineController.text,
-                                    qualification: qualificationController.text,
-                                    specialisation: specializationController.text,
-                                    regNumber: regNumberController.text,
-                                    ),
-                                    Navigator.pushNamed(
-                                    context,
-                                      UavRoutes
-                                            .Doctor_Registration_Hospital_Details_Screen,
-                                      arguments: registration
-                                    )
-                                }
-
+                                  if(qualificationList.isNotEmpty && !qualificationList.contains(qualification)){
+                                    showToastShortTime(context, "please select qualification")
+                                  }else if(specializationList.isNotEmpty && !specializationList.contains(specialization) ){
+                                    showToastShortTime(context, "please select specialization")
+                                  }else{
+                                    if (_formKey.currentState?.validate() ?? false) {
+                                      registration = Registration(
+                                        doctorname: doctorNameController.text,
+                                        mobile: mobileController.text,
+                                        password: passwordController.text,
+                                        email: emailController.text,
+                                        landline: landlineController.text,
+                                        qualification: qualification,
+                                        specialisation: specialization,
+                                        regNumber: regNumberController.text,
+                                      ),
+                                      Navigator.pushNamed(
+                                          context,
+                                          UavRoutes
+                                              .Doctor_Registration_Hospital_Details_Screen,
+                                          arguments: registration
+                                      )
+                                    }
+                                  }
                                 },
                                 child: Text("Next",
                                     style: TextStyle(
