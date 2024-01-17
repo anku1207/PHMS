@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
@@ -43,7 +44,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
     'Sat',
     'Sun',
   ];
-  List<String> selectedOperatingDays = [];
+  List<int> selectedOperatingDays = [];
 
   void doctorRegister(BuildContext context, Registration registration) {
     DoctorRegistrationVO doctorRegistrationVO =
@@ -59,11 +60,20 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
       },
     ).then((value) {
       if (value != null) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          UavRoutes.Dashboard_Screen,
-          (route) => false,
-        );
+        if (value.success == "1") {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            UavRoutes.Login_Screen,
+            (route) => false,
+          );
+        } else {
+          showAlertDialog(
+              context: context,
+              btnNameOk: "ok",
+              btnNameCancel: null,
+              title: "Oops! ",
+              message: value.message!);
+        }
       }
     }).whenComplete(() {
       print("called when future completes");
@@ -214,12 +224,10 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                       onTap: () {
                                         setState(() {
                                           if (selectedOperatingDays
-                                              .contains(operatingDays[index])) {
-                                            selectedOperatingDays
-                                                .remove(operatingDays[index]);
+                                              .contains(index)) {
+                                            selectedOperatingDays.remove(index);
                                           } else {
-                                            selectedOperatingDays
-                                                .add(operatingDays[index]);
+                                            selectedOperatingDays.add(index);
                                           }
                                         });
                                       },
@@ -232,17 +240,15 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                           children: [
                                             Checkbox(
                                               value: selectedOperatingDays
-                                                  .contains(
-                                                      operatingDays[index]),
+                                                  .contains(index),
                                               onChanged: (value) {
                                                 setState(() {
                                                   if (value ?? false) {
-                                                    selectedOperatingDays.add(
-                                                        operatingDays[index]);
+                                                    selectedOperatingDays
+                                                        .add(index);
                                                   } else {
                                                     selectedOperatingDays
-                                                        .remove(operatingDays[
-                                                            index]);
+                                                        .remove(index);
                                                   }
                                                 });
                                               },
@@ -267,10 +273,11 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                        .bodyText1!
+                                        .copyWith(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                   ),
                                 ),
                                 SizedBox(height: 20),
@@ -382,15 +389,32 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                     false) {
                                   // Use the selectedOperatingDays list as needed
                                   if (selectedOperatingDays.isNotEmpty) {
-                                    var operatingDays =
-                                        selectedOperatingDays.toString();
+                                    selectedOperatingDays.sort();
+                                    var operatingDays1 = "";
+
+                                    for (int value in selectedOperatingDays) {
+                                      // Your code here, using 'value'
+                                      if (operatingDays1.isEmpty) {
+                                        operatingDays1 = operatingDays[value];
+                                      } else {
+                                        operatingDays1 +=
+                                            "-" + operatingDays[value];
+                                      }
+                                    }
+                                    print(operatingDays1);
                                     place = Place(
                                         placename:
                                             doctorAssociationController.text,
-                                        visitingdays: operatingDays,
+                                        visitingdays: operatingDays1,
                                         visitinghrs: startTimeController.text +
                                             " - " +
-                                            endTimeController.text);
+                                            endTimeController.text,
+                                        address: "ahmedabad",
+                                        doctorid: "1",
+                                        mobile: "9586582649",
+                                        placetype: "1",
+                                        email:"",
+                                    landline: "");
                                     if (widget.argument.place!.length == 2) {
                                       widget.argument.place!.removeAt(1);
                                     }

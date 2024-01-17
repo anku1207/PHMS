@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
+import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
+import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart';
+import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -21,6 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController userNameId;
   late TextEditingController passwordId;
   int selectedAccountType = 1; // 1 for doctor, 2 for patient
+
+  late Login login;
+  late LoginRequestVO loginRequestVO;
 
   @override
   void initState() {
@@ -71,10 +81,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             "Choose Account Type For Login",
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                           ),
                           Container(
                             height: 10,
@@ -215,6 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   validator: (value) =>
                                       validateRequiredField(value),
+
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -261,8 +273,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   "Forgot Password ?",
                                   textAlign: TextAlign.right,
-                                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      fontWeight: FontWeight.bold),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontWeight: FontWeight.bold),
                                 )),
                           ),
                           SizedBox(
@@ -272,8 +286,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               constraints: const BoxConstraints(
                                   minWidth: double.infinity),
                               child: ElevatedButton(
-                                onPressed: () =>
-                                    {_formKey.currentState!.validate()},
+                                onPressed: () {
+                                  if (_formKey.currentState?.validate() ?? false) {
+                                    login = Login(username: userNameId.text, logintype: "D", password: passwordId.text);
+                                    loginRequestVO = LoginRequestVO(login: login);
+
+                                    userLogin(context,loginRequestVO);
+                                  }
+                                },
                                 child: Text("LOGIN",
                                     style: TextStyle(
                                       color: Colors.white,
@@ -317,5 +337,38 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ]),
     );
+  }
+
+  void userLogin(BuildContext context,LoginRequestVO loginRequestVO){
+
+    print("userLogin_data ___" + loginRequestVO.toJson().toString());
+    Future<LoginResponseVO?> categoryListResponse =
+    API.login(loginRequestVO);
+    categoryListResponse.catchError(
+          (onError) {
+        print(onError.toString());
+        showToastShortTime(context, onError.toString());
+      },
+    ).then((value) {
+      if (value != null) {
+        if (value.success == "1") {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            UavRoutes.Home_Screen,
+                (route) => false,
+          );
+        } else {
+          showAlertDialog(
+              context: context,
+              btnNameOk: "ok",
+              btnNameCancel: null,
+              title: "Oops! ",
+              message: value.message!);
+        }
+      }
+    }).whenComplete(() {
+      print("called when future completes");
+      EasyLoading.dismiss();
+    });
   }
 }

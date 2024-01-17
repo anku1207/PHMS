@@ -43,7 +43,16 @@ class _DoctorRegistrationDetailsScreenState
     'MBBS',
     'MD',
   ];
+  FocusNode _dropdownFocus = FocusNode();
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _dropdownFocus.dispose();
+
+    super.dispose();
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -293,6 +302,8 @@ class _DoctorRegistrationDetailsScreenState
                                         (selectVal) {
                                       setState(() {
                                         qualification = selectVal;
+                                        FocusScope.of(context).requestFocus(_dropdownFocus);
+
                                       });
                                     }),
                                 SizedBox(
@@ -305,6 +316,8 @@ class _DoctorRegistrationDetailsScreenState
                                         (selectVal) {
                                       setState(() {
                                         specialization = selectVal;
+                                        FocusScope.of(context).requestFocus(_dropdownFocus);
+
                                       });
                                     }),
                                 SizedBox(

@@ -354,7 +354,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         if(operatingDays1.isEmpty){
                                           operatingDays1= operatingDays[value];
                                         }else{
-                                          operatingDays1 += " - "+operatingDays[value];
+                                          operatingDays1 += "-"+operatingDays[value];
                                         }
                                       }
 
@@ -368,7 +368,13 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         visitingdays: operatingDays1,
                                         visitinghrs: startTimeController.text +
                                             " - " +
-                                            endTimeController.text);
+                                            endTimeController.text,
+                                    address: "ahmedabad",
+                                    doctorid: "1",
+                                    mobile: "9586582649",
+                                    placetype: "1",
+                                    email: "",
+                                    landline: "");
                                     if (placeList.isNotEmpty) placeList.clear();
                                     placeList.add(place);
                                     widget.argument.setPlace(placeList);
