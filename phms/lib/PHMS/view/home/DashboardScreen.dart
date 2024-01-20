@@ -62,10 +62,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
                 label: 'Account',
               ),

@@ -30,6 +30,53 @@ Future<String>? showAlertDialog(
   );
 }
 
+
+
+Future<String?> showAlertDialogConfirmation({
+  required BuildContext context,
+  String? title,
+  required String message,
+  required String btnNameOk,
+  String? btnNameCancel,
+  bool? backBtn,
+  Function(String)? onOkPressed,
+}) async {
+  return await showDialog(
+    context: context,
+    barrierDismissible: backBtn ?? false,
+    builder: (BuildContext context) => WillPopScope(
+      onWillPop: () async {
+        // Returning false will prevent the dialog from being dismissed
+        return backBtn ?? false;
+      },
+      child: AlertDialog(
+        title: Text(title == null ? "" : title),
+        content: Text(message),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        actions: <Widget>[
+          if (btnNameCancel != null)
+            TextButton(
+              onPressed: () => Navigator.pop(context, btnNameCancel),
+              child: Text(btnNameCancel),
+            ),
+          TextButton(
+            onPressed: () {
+              if (onOkPressed != null) {
+                onOkPressed("ok");
+              } else {
+                Navigator.pop(context, btnNameOk);
+              }
+            },
+            child: Text(btnNameOk),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 Container dropDownLayout(BuildContext context, String hintText,
     List<String> dropdownList, Function customCallBack) {
   List<DropdownMenuItem<String>> dropdownItems = dropdownList

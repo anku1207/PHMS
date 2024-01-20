@@ -47,6 +47,8 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
   List<int> selectedOperatingDays = [];
 
   void doctorRegister(BuildContext context, Registration registration) {
+    FocusScope.of(context).requestFocus(FocusNode());
+
     DoctorRegistrationVO doctorRegistrationVO =
         DoctorRegistrationVO(registration: registration);
 
@@ -61,6 +63,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
     ).then((value) {
       if (value != null) {
         if (value.success == "1") {
+          showToastShortTime(context, value.message!);
           Navigator.pushNamedAndRemoveUntil(
             context,
             UavRoutes.Login_Screen,

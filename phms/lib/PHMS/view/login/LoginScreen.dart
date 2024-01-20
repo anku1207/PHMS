@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,6 +11,7 @@ import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -288,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState?.validate() ?? false) {
-                                    login = Login(username: userNameId.text, logintype: "D", password: passwordId.text);
+                                    login = Login(username: userNameId.text, logintype: selectedAccountType == 1?"D" :"P", password: passwordId.text);
                                     loginRequestVO = LoginRequestVO(login: login);
 
                                     userLogin(context,loginRequestVO);
@@ -340,6 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void userLogin(BuildContext context,LoginRequestVO loginRequestVO){
+    FocusScope.of(context).requestFocus(FocusNode());
 
     print("userLogin_data ___" + loginRequestVO.toJson().toString());
     Future<LoginResponseVO?> categoryListResponse =
@@ -349,12 +353,16 @@ class _LoginScreenState extends State<LoginScreen> {
         print(onError.toString());
         showToastShortTime(context, onError.toString());
       },
-    ).then((value) {
+    ).then((value) async {
       if (value != null) {
         if (value.success == "1") {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(LOGIN_DATA, jsonEncode(value.data![0].toJson()));
+
+
           Navigator.pushNamedAndRemoveUntil(
             context,
-            UavRoutes.Home_Screen,
+            UavRoutes.Dashboard_Screen,
                 (route) => false,
           );
         } else {

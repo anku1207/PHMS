@@ -4,7 +4,7 @@ import 'constants.dart';
 
 Future<String?> checkCustomerSession() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString(KEY_ACCESS_TOKEN);
+  return prefs.getString(LOGIN_DATA);
 }
 Future<String?> getAuthorizationToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

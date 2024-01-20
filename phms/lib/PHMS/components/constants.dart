@@ -70,6 +70,8 @@ const String KEY_ACCESS_TOKEN = "access_token";
 const String KEY_TOKEN_TYPE = "token_type";
 const String KEY_CONTACT = "user_contact";
 const String KEY_FIRST_LOGIN = "user_first_login";
+const String LOGIN_DATA = "login_data";
+
 
 
 const CACHE_LOCATION_LAT = "LOCATION_LAT";

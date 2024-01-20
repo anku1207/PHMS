@@ -90,7 +90,7 @@ TextTheme textTheme() {
     subtitle1: TextStyle(color: Activity_ALL_Text_Color),
     // <-- that's the one
     headline1: TextStyle(color: Activity_ALL_Text_Color,fontSize: 16.0),
-    headline2: TextStyle(color: Activity_ALL_Text_Color),
+    headline2: TextStyle(color: Activity_ALL_Text_Color,fontSize: 20.0),
     headline3: TextStyle(color: Activity_ALL_Text_Color),
     headline4: TextStyle(color: Activity_ALL_Text_Color),
     headline5: TextStyle(color: Activity_ALL_Text_Color),

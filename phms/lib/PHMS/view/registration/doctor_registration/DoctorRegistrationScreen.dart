@@ -190,6 +190,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
   }
 
   void doctorRegistrationSendOTP(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+
     Registration registration = Registration(mobile:mobileNumberId.text);
     CheckDoctorRegistrationRequestVO checkDoctorRegistrationRequestVO = CheckDoctorRegistrationRequestVO(registration: registration);
 

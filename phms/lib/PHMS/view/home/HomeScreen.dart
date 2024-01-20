@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:phms/PHMS/components/constants.dart' as Constants;
+import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
 
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
@@ -78,7 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text("Dashboard"),
+            title: Text("Dashboard" ,
+              style: Theme.of(context).textTheme.headline2!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white
+              ),
+            ),
             iconTheme: IconThemeData(color: Colors.white),
           ),
           body: Container(
@@ -107,9 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       "Doctor Dashboard",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -126,26 +132,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                 controller: new ScrollController(
                                     keepScrollOffset: false),
                                 children: List.generate(myList.length, (index) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        height: 100.0,
-                                        // You can adjust this height if needed
-                                        width: 100.0,
-                                        // You can adjust this width if needed
-                                        child:
-                                            Image.asset(myList[index].image!),
-                                      ),
-                                      Text(
-                                        myList[index].name!,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
+                                  return InkWell(
+                                    onTap: () {
+                                      // Add your onTap logic for the entire Column here
+                                      openViewMenuWise(context,myList[index].name!);
+
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          height: 100.0,
+                                          width: 100.0,
+                                          child: Image.asset(myList[index].image!),
+                                        ),
+                                        Text(
+                                          myList[index].name!,
+                                          style: Theme.of(context).textTheme.bodyText1,
+
+                                        )
+                                      ],
+                                    ),
                                   );
                                 }),
                               ),
@@ -159,5 +167,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )),
     );
+  }
+
+  void openViewMenuWise(BuildContext context ,String serviceName ){
+    if(serviceName == "New Case"){
+      Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.Patient_case_register_screen_1,arguments: {"data":null});
+    }
   }
 }
