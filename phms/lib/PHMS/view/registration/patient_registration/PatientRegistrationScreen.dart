@@ -44,13 +44,24 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
           children: <Widget>[
             Stack(
               children: [
-                Container(
-                    width: double.infinity,
-                    height: 200.0,
-                    child: new Container(
-                      height: 150.0,
-                      width: 150.0,
-                      child: new Image.asset('assets/images/login.png'),)
+                SizedBox(
+                  width: double.infinity,
+                  height: 200.0,
+                ),
+                // Image Container
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 60.0,
+                      height: 60.0,
+                      child: Image.asset(
+                        'assets/images/login.png',
+                        height: 60.0,  // Set the height of the image
+                        width: 60.0,   // Set the width of the image
+                      ),
+                    ),
+                  ),
                 ),
                 Positioned.fill(
                   bottom: 0,
@@ -120,7 +131,7 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
                                       style: Theme
                                           .of(context)
                                           .textTheme
-                                          .bodyText1,
+                                          .bodyText2,
                                       decoration: InputDecoration(
                                         counter: Offstage(),
                                         hintText: 'Patient Name',
@@ -146,7 +157,7 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
                                       style: Theme
                                           .of(context)
                                           .textTheme
-                                          .bodyText1,
+                                          .bodyText2,
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         counter: Offstage(),

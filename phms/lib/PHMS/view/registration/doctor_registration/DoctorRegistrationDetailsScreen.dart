@@ -30,6 +30,8 @@ class _DoctorRegistrationDetailsScreenState
   late TextEditingController regNumberController;
   late TextEditingController otpController;
   late DoctorRegistrationVO doctorRegistrationVO;
+  bool _isHidden = true;
+
 
   late String specialization;
   late String qualification;
@@ -92,13 +94,24 @@ class _DoctorRegistrationDetailsScreenState
           children: <Widget>[
             Stack(
               children: [
-                Container(
-                    width: double.infinity,
-                    height: 200.0,
-                    child: new Container(
-                      height: 150.0,
-                      width: 150.0,
-                      child: new Image.asset('assets/images/login.png'),)
+                SizedBox(
+                  width: double.infinity,
+                  height: 200.0,
+                ),
+                // Image Container
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 60.0,
+                      height: 60.0,
+                      child: Image.asset(
+                        'assets/images/login.png',
+                        height: 60.0,  // Set the height of the image
+                        width: 60.0,   // Set the width of the image
+                      ),
+                    ),
+                  ),
                 ),
                 Positioned.fill(
                   bottom: 0,
@@ -163,7 +176,7 @@ class _DoctorRegistrationDetailsScreenState
                                   maxLength: 100,
                                   enabled: false, // Set to false to make it read-only
                                   readOnly: true, // Set to true to remove the cursor
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Doctor Name',
@@ -188,7 +201,7 @@ class _DoctorRegistrationDetailsScreenState
                                   enabled: false, // Set to false to make it read-only
                                   readOnly: true, // Set to true to remove the cursor
                                   keyboardType: TextInputType.number,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Mobile Number',
@@ -207,32 +220,42 @@ class _DoctorRegistrationDetailsScreenState
                                 SizedBox(
                                   height: 20,
                                 ),
+
                                 TextFormField(
                                   controller: passwordController,
-                                  maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  obscureText: _isHidden,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
-                                    counter: Offstage(),
                                     hintText: 'Password',
                                     labelText: 'Password',
                                     prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
+                                      Icons.lock,
                                       color: Colors.grey,
                                     ),
                                     prefixText: ' ',
+                                    suffixIcon: InkWell(
+                                      onTap: _togglePasswordView,
+                                      child: Icon(
+                                        _isHidden
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                     contentPadding: new EdgeInsets.symmetric(
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
                                   validator: (value) =>
                                       validateRequiredField(value),
                                 ),
+
                                 SizedBox(
                                   height: 20,
                                 ),
                                 TextFormField(
                                   controller: emailController,
                                   maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Email',
@@ -254,7 +277,7 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: regNumberController,
                                   maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Registration Number',
@@ -276,7 +299,7 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: landlineController,
                                   maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
@@ -291,7 +314,8 @@ class _DoctorRegistrationDetailsScreenState
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
                                   validator: (value) =>
-                                      validateRequiredField(value),
+                                      null
+                                      //validateRequiredField(value),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -326,7 +350,7 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: otpController,
                                   maxLength: 6,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'OTP',
@@ -397,5 +421,10 @@ class _DoctorRegistrationDetailsScreenState
             ),
           ]),
     );
+  }
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 }

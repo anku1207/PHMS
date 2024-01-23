@@ -6,7 +6,7 @@ import 'constants.dart';
 
 ThemeData theme() {
   final baseTheme =
-      ThemeData(primarySwatch: createMaterialColor(Color(0xFF425A8B)));
+      ThemeData(primarySwatch: createMaterialColor(Color(0xff55b9fb)));
 
   return baseTheme.copyWith(
       scaffoldBackgroundColor: Colors.white,
@@ -84,8 +84,8 @@ TextTheme textTheme() {
   var baseTheme = TextTheme();
   return baseTheme.copyWith(
     bodyText1: TextStyle(color: Activity_ALL_Text_Color,fontSize: 12.0),
-    bodyText2: TextStyle(color: Activity_ALL_Text_Color),
-    button: TextStyle(color: Activity_ALL_Text_Color,fontSize: 15.0),
+    bodyText2: TextStyle(color:Activity_Text_Color_Black,fontSize: 12.0),
+    button: TextStyle(color: Activity_Button_Text_Color,fontSize: 15.0),
     caption: TextStyle(color: Activity_ALL_Text_Color),
     subtitle1: TextStyle(color: Activity_ALL_Text_Color),
     // <-- that's the one

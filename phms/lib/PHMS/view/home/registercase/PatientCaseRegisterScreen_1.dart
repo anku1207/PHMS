@@ -123,7 +123,7 @@ class _PatientCaseRegisterScreen_1State
                                         keyboardType: TextInputType.number,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Mobile Number',

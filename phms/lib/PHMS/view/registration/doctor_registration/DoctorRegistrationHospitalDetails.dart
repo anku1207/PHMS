@@ -64,14 +64,25 @@ class _DoctorRegistrationHospitalDetailsScreenState
         children: <Widget>[
           Stack(
             children: [
-              Container(
-                  width: double.infinity,
-                  height: 200.0,
-                  child: new Container(
-                    height: 150.0,
-                    width: 150.0,
-                    child: new Image.asset('assets/images/login.png'),
-                  )),
+              SizedBox(
+                width: double.infinity,
+                height: 200.0,
+              ),
+              // Image Container
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 60.0,
+                    height: 60.0,
+                    child: Image.asset(
+                      'assets/images/login.png',
+                      height: 60.0,  // Set the height of the image
+                      width: 60.0,   // Set the width of the image
+                    ),
+                  ),
+                ),
+              ),
               Positioned.fill(
                 bottom: 0,
                 child: Align(
@@ -136,7 +147,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                 TextFormField(
                                   controller: doctorAssociationController,
                                   maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Doctor Association',
@@ -152,7 +163,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                     ),
                                   ),
                                   validator: (value) =>
-                                      validateRequiredField(value),
+                                      null
+                                     // validateRequiredField(value),
                                 ),
                                 SizedBox(height: 20),
                                 Align(
@@ -215,7 +227,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                                 ),
                                                 Text(
                                                   operatingDays[index],
-                                                  style: Theme.of(context).textTheme.bodyText1,
+                                                  style: Theme.of(context).textTheme.bodyText2,
                                                 ),
                                               ],
                                             ),
@@ -282,7 +294,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                           }
                                         },
                                         validator: (value) =>
-                                            validateRequiredField(value),
+                                        null
+                                           // validateRequiredField(value),
                                       ),
                                     ),
                                     SizedBox(width: 20),
@@ -328,7 +341,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                           }
                                         },
                                         validator: (value) =>
-                                            validateRequiredField(value),
+                                        null
+                                          //  validateRequiredField(value),
                                       ),
                                     ),
                                   ],
@@ -345,18 +359,21 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                 if (_formKey.currentState?.validate() ??
                                     false) {
                                   // Use the selectedOperatingDays list as needed
-                                  if (selectedOperatingDays.isNotEmpty) {
-                                      selectedOperatingDays.sort();
-                                      var operatingDays1 ="";
+                                  if (doctorAssociationController.text.isNotEmpty && selectedOperatingDays.isEmpty) {
+                                    showToastShortTime(
+                                        context, "Selected Operating Days");
+                                  } else {
+                                    selectedOperatingDays.sort();
+                                    var operatingDays1 ="";
 
-                                      for (int value in selectedOperatingDays) {
-                                        // Your code here, using 'value'
-                                        if(operatingDays1.isEmpty){
-                                          operatingDays1= operatingDays[value];
-                                        }else{
-                                          operatingDays1 += "-"+operatingDays[value];
-                                        }
+                                    for (int value in selectedOperatingDays) {
+                                      // Your code here, using 'value'
+                                      if(operatingDays1.isEmpty){
+                                        operatingDays1= operatingDays[value];
+                                      }else{
+                                        operatingDays1 += "-"+operatingDays[value];
                                       }
+                                    }
 
 
 
@@ -364,17 +381,17 @@ class _DoctorRegistrationHospitalDetailsScreenState
 
                                     place = Place(
                                         placename:
-                                            doctorAssociationController.text,
+                                        doctorAssociationController.text,
                                         visitingdays: operatingDays1,
                                         visitinghrs: startTimeController.text +
                                             " - " +
                                             endTimeController.text,
-                                    address: "ahmedabad",
-                                    doctorid: "1",
-                                    mobile: "9586582649",
-                                    placetype: "1",
-                                    email: "",
-                                    landline: "");
+                                        address: "ahmedabad",
+                                        doctorid: "1",
+                                        mobile: "9586582649",
+                                        placetype: "1",
+                                        email: "",
+                                        landline: "");
                                     if (placeList.isNotEmpty) placeList.clear();
                                     placeList.add(place);
                                     widget.argument.setPlace(placeList);
@@ -385,9 +402,6 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         UavRoutes
                                             .Doctor_Registration_Hospital_Details_Second_Screen,
                                         arguments: widget.argument);
-                                  } else {
-                                    showToastShortTime(
-                                        context, "Selected Operating Days");
                                   }
                                 }
                               },

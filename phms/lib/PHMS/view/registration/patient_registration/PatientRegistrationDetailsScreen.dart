@@ -24,6 +24,8 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
   late GlobalKey<FormState> _formKey;
   late AutovalidateMode _autoValidate;
   var argumentsMap;
+  bool _isHidden = true;
+
 
   late TextEditingController nameController;
   late TextEditingController mobileController;
@@ -69,6 +71,12 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
 
 
 
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,20 +114,38 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new WillPopScope(
+        onWillPop: () async {
+      if (EasyLoading.isShow)
+        return false;
+      else
+        return true;
+    },
+    child: Scaffold(
       backgroundColor: UavPrimaryColor,
       body: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Stack(
               children: [
-                Container(
-                    width: double.infinity,
-                    height: 200.0,
-                  child: new Container(
-                    height: 150.0,
-                    width: 150.0,
-                    child: new Image.asset('assets/images/login.png'),)
+                SizedBox(
+                  width: double.infinity,
+                  height: 200.0,
+                ),
+                // Image Container
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 60.0,
+                      height: 60.0,
+                      child: Image.asset(
+                        'assets/images/login.png',
+                        height: 60.0,  // Set the height of the image
+                        width: 60.0,   // Set the width of the image
+                      ),
+                    ),
+                  ),
                 ),
 
                 Positioned.fill(
@@ -184,7 +210,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                   maxLength: 30,
                                   readOnly: false,
                                   enabled: false,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Patient Name',
@@ -208,7 +234,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                   maxLength: 30,
                                   readOnly: false,
                                   enabled: false,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Mobile Number',
@@ -229,17 +255,25 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                 ),
                                 TextFormField(
                                   controller: passwordController,
-                                  maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  obscureText: _isHidden,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
-                                    counter: Offstage(),
                                     hintText: 'Password',
                                     labelText: 'Password',
                                     prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
+                                      Icons.lock,
                                       color: Colors.grey,
                                     ),
                                     prefixText: ' ',
+                                    suffixIcon: InkWell(
+                                      onTap: _togglePasswordView,
+                                      child: Icon(
+                                        _isHidden
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                     contentPadding: new EdgeInsets.symmetric(
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
@@ -252,7 +286,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                 TextFormField(
                                   controller: emailController,
                                   maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Email',
@@ -287,7 +321,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                 TextFormField(
                                   maxLength: 50,
                                   controller: addressController,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'Address',
@@ -324,7 +358,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                   maxLength: 30,
                                   readOnly: true,
                                   showCursor: false,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   onTap: () {
                                     showDateDialog(context).then((value) {
                                       if (value != null) {
@@ -368,7 +402,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
                                   readOnly: false,
                                   enabled: false,
                                   maxLength: 6,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
                                     hintText: 'OTP',
@@ -418,7 +452,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
               ),
             ),
           ]),
-    );
+    ));
   }
 
   patientRegistration(BuildContext context) {

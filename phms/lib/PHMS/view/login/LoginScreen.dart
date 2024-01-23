@@ -55,21 +55,40 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new WillPopScope(
+        onWillPop: () async {
+      if (EasyLoading.isShow)
+        return false;
+      else
+        return true;
+    },
+    child: Scaffold(
       backgroundColor: UavPrimaryColor,
       body: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Stack(
               children: [
-                Container(
-                    width: double.infinity,
-                    height: 200.0,
-                    child: new Container(
-                      height: 150.0,
-                      width: 150.0,
-                      child: new Image.asset('assets/images/login.png'),
-                    )),
+                SizedBox(
+                  width: double.infinity,
+                  height: 200.0,
+                ),
+                // Image Container
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 60.0,
+                      height: 60.0,
+                      child: Image.asset(
+                        'assets/images/login.png',
+                        height: 60.0,  // Set the height of the image
+                        width: 60.0,   // Set the width of the image
+                      ),
+                    ),
+                  ),
+                ),
+                // Text Section
                 Positioned.fill(
                   bottom: 0,
                   child: Align(
@@ -79,16 +98,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.center,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        // To minimize the height of the Column
                         children: <Widget>[
                           Text(
                             "Choose Account Type For Login",
                             textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                            style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                           Container(
                             height: 10,
@@ -136,22 +153,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: UavPrimaryColor, width: 2.0),
+                                      color: UavPrimaryColor,
+                                      width: 2.0,
+                                    ),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center, // Align the entire Column vertically centered
                                       children: [
-                                        Icon(Icons.medical_services, size: 40),
-                                        RadioListTile<int>(
-                                          title: Text(
-                                            'Doctor',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1,
-                                          ),
+                                        Image.asset(
+                                          'assets/images/doctor_logo.png',
+                                          height: 40.0,  // Set the height of the image
+                                          width: 40.0,   // Set the width of the image
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'Doctor',
+                                          style: Theme.of(context).textTheme.bodyText2,
+                                        ),
+                                        Radio<int>(
                                           value: 1,
                                           groupValue: selectedAccountType,
                                           onChanged: (value) {
@@ -174,32 +195,38 @@ class _LoginScreenState extends State<LoginScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: UavPrimaryColor, width: 2.0),
+                                      color: UavPrimaryColor,
+                                      width: 2.0,
+                                    ),
                                   ),
                                   child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.person, size: 40),
-                                          RadioListTile<int>(
-                                            title: Text(
-                                              'Patient',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText1,
-                                            ),
-                                            value: 2,
-                                            groupValue: selectedAccountType,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedAccountType = value!;
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      )),
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:CrossAxisAlignment.center ,// Align the entire Column vertically centered
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/patient_logo.png',
+                                          height: 40.0,  // Set the height of the image
+                                          width: 40.0,   // Set the width of the image
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'Patient',
+                                          style: Theme.of(context).textTheme.bodyText2,
+                                        ),
+                                        Radio<int>(
+                                          value: 2,
+                                          groupValue: selectedAccountType,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedAccountType = value!;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -211,25 +238,27 @@ class _LoginScreenState extends State<LoginScreen> {
                               key: _formKey,
                               autovalidateMode: _autoValidate,
                               child: Column(children: <Widget>[
+
                                 TextFormField(
                                   controller: userNameId,
-                                  maxLength: 30,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  maxLength: 10,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
-                                    hintText: 'Enter Email',
-                                    labelText: 'Enter Email',
+                                    hintText: 'Mobile Number',
+                                    labelText: 'Mobile Number',
                                     prefixIcon: const Icon(
-                                      Icons.mail,
+                                      Icons.phone,
                                       color: Colors.grey,
                                     ),
                                     prefixText: ' ',
-                                    contentPadding: new EdgeInsets.symmetric(
+                                    contentPadding: new EdgeInsets
+                                        .symmetric(
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
                                   validator: (value) =>
-                                      validateRequiredField(value),
-
+                                      validateMobileNumber(value!),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -237,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextFormField(
                                   controller: passwordId,
                                   obscureText: _isHidden,
-                                  style: Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     hintText: 'Enter Password',
                                     labelText: 'Enter Password',
@@ -298,10 +327,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                 },
                                 child: Text("LOGIN",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                    )),
+                                  style:
+                                  Theme.of(context).textTheme.button!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),),
                               )),
                           SizedBox(
                             height: 20,
@@ -324,10 +353,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     "Didn\'t have account ? Register Now",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff018ad0)),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(fontWeight: FontWeight.bold),
                                   )),
                             ),
                           ),
@@ -339,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ]),
-    );
+    ));
   }
 
   void userLogin(BuildContext context,LoginRequestVO loginRequestVO){

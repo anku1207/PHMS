@@ -152,7 +152,7 @@ class _PatientCaseRegisterScreen_3State
                                       maxLines: 2,
                                       controller: symptomsController,
                                       keyboardType: TextInputType.text,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style: Theme.of(context).textTheme.bodyText2,
                                       decoration: InputDecoration(
                                         counter: Offstage(),
                                         hintText: 'Patient Symptoms',
@@ -174,7 +174,7 @@ class _PatientCaseRegisterScreen_3State
                                       maxLines: 2,
                                       controller: prescriptionController,
                                       keyboardType: TextInputType.text,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style: Theme.of(context).textTheme.bodyText2,
                                       decoration: InputDecoration(
                                         counter: Offstage(),
                                         hintText: 'Patient Prescription',
@@ -244,7 +244,7 @@ class _PatientCaseRegisterScreen_3State
                                       maxLines: 2,
                                       controller: notesController,
                                       keyboardType: TextInputType.text,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style: Theme.of(context).textTheme.bodyText2,
                                       decoration: InputDecoration(
                                         counter: Offstage(),
                                         hintText: 'Patient Notes',

@@ -96,11 +96,11 @@ Container dropDownLayout(BuildContext context, String hintText,
         child: DropdownButton(
           hint: Text(
             hintText,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           isExpanded: true,
           iconSize: 30.0,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyText2,
           items: dropdownItems,
           onChanged: (val) => customCallBack(val),
         ),

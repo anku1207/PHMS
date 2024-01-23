@@ -141,7 +141,7 @@ class _PatientCaseRegisterScreen_2State
                                         enabled: false,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Mobile Number',
@@ -169,7 +169,7 @@ class _PatientCaseRegisterScreen_2State
                                         keyboardType: TextInputType.number,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Patient Id',
@@ -195,7 +195,7 @@ class _PatientCaseRegisterScreen_2State
                                         enabled: false,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Patient Name',
@@ -222,7 +222,7 @@ class _PatientCaseRegisterScreen_2State
                                         enabled: false,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Patient Blood Group',
@@ -249,7 +249,7 @@ class _PatientCaseRegisterScreen_2State
                                         enabled: false,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText1,
+                                            .bodyText2,
                                         decoration: InputDecoration(
                                           counter: Offstage(),
                                           hintText: 'Patient DOB',

@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
 
   void startTimer() {
     int _start = 0;
-    const oneSec = const Duration(seconds: 5);
+    const oneSec = const Duration(seconds: 2);
     _timer = new Timer.periodic(
       oneSec,
           (Timer timer) {
@@ -55,10 +55,11 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
         child: Container(
             child: Scaffold(
                 body: Center(
-                  child: Lottie.asset('assets/images/splash_animation.json',
+                  /*child: Lottie.asset('assets/images/splash_animation.json',
                   animate: true,
                   repeat: true)
-                  ,
+                  ,*/
+                  child: new Image.asset('assets/images/splash_logo.png'),
                 ))));
 
   }
