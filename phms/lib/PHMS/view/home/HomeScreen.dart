@@ -172,6 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void openViewMenuWise(BuildContext context ,String serviceName ){
     if(serviceName == "New Case"){
       Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.Patient_case_register_screen_1,arguments: {"data":null});
+    }else if(serviceName == "Patient History"){
+      Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.Patient_history_screen_1,arguments: {"data":null});
     }
   }
 }
