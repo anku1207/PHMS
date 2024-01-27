@@ -85,14 +85,18 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
     reasonController.dispose();
   }
 
-  double getTextHeight(String text, TextStyle style, double maxWidth) {
+  double getTextHeight(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      maxLines: null,
+      text: TextSpan(
+        text: text,
+        style: style,
+      ),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: maxWidth);
+    );
 
+    textPainter.layout();
     return textPainter.height;
+
   }
 
   @override
@@ -103,16 +107,14 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
 
     double availableWidth = totalWidth - leftPadding - rightPadding;
 
-    String patientNameText = "Patient\nName";
     TextStyle patientNameStyle = Theme.of(context)
         .textTheme
         .button!
         .copyWith(fontWeight: FontWeight.bold);
 
-    double maxWidth = 200.0; // Adjust as needed
 
     double patientNameTextHeight =
-        getTextHeight(patientNameText, patientNameStyle, maxWidth) + 40;
+    (getTextHeight("A", patientNameStyle) + 20)*2;
 
     return new WillPopScope(
       onWillPop: () async {
@@ -249,9 +251,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                               padding: EdgeInsets
                                                                   .only(
                                                                       bottom:
-                                                                          20.0,
+                                                                          10.0,
                                                                       top:
-                                                                          20.0),
+                                                                          10.0),
                                                               child: Center(
                                                                 child: Text(
                                                                   'Case Id',
@@ -293,9 +295,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            20.0,
+                                                                            10.0,
                                                                         top:
-                                                                            20.0),
+                                                                            10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Date',
@@ -338,9 +340,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            20.0,
+                                                                            10.0,
                                                                         top:
-                                                                            20.0),
+                                                                            10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Patient\nName',
@@ -373,9 +375,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            20.0,
+                                                                            10.0,
                                                                         top:
-                                                                            20.0),
+                                                                            10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Mobile\nNumber',

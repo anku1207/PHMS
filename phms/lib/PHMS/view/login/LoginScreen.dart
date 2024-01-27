@@ -99,12 +99,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text(
-                            "Choose Account Type For Login",
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                          Flexible(
+                            child: Text(
+                              "Choose Account Type For Login",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis, // Optional: Display ellipsis if the text overflows
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline1!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           Container(

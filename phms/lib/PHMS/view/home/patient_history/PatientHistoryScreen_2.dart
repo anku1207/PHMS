@@ -51,16 +51,15 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
 
     double availableWidth = totalWidth - leftPadding - rightPadding;
 
-    String patientNameText = "Patient\nName";
     TextStyle patientNameStyle = Theme.of(context)
         .textTheme
         .button!
         .copyWith(fontWeight: FontWeight.bold);
 
-    double maxWidth = 200.0; // Adjust as needed
 
     double patientNameTextHeight =
-        getTextHeight(patientNameText, patientNameStyle, maxWidth) + 40;
+        (getTextHeight("A", patientNameStyle) + 20)*2;
+    print("height  $patientNameTextHeight" );
 
     return new WillPopScope(
       onWillPop: () async {
@@ -194,9 +193,9 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                               padding: EdgeInsets
                                                                   .only(
                                                                       bottom:
-                                                                          20.0,
+                                                                          10.0,
                                                                       top:
-                                                                          20.0),
+                                                                          10.0),
                                                               child: Center(
                                                                 child: Text(
                                                                   'Case Id',
@@ -228,7 +227,7 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Date',
@@ -254,7 +253,7 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Patient\nName',
@@ -280,7 +279,7 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Mobile\nNumber',
@@ -303,9 +302,9 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            20.0,
+                                                                            10.0,
                                                                         top:
-                                                                            20.0),
+                                                                            10.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Attachments',
@@ -489,14 +488,18 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
     );
   }
 
-  double getTextHeight(String text, TextStyle style, double maxWidth) {
+  double getTextHeight(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      maxLines: null,
+      text: TextSpan(
+        text: text,
+        style: style,
+      ),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: maxWidth);
+    );
 
+    textPainter.layout();
     return textPainter.height;
+
   }
 
   void tableRowClick(BuildContext context, String caseId) {
