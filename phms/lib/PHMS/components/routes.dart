@@ -7,6 +7,7 @@ import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_2.dart';
+import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_3.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_1.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_2.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_3.dart';
@@ -39,6 +40,7 @@ class UavRoutes {
   static const Patient_case_register_screen_3 = "/patient_case_register_screen_3";
   static const Patient_history_screen_1 = "/patient_history_screen_1";
   static const Patient_history_screen_2 = "/patient_history_screen_2";
+  static const Patient_history_screen_3 = "/patient_history_screen_3";
 
 
   static const Dashboard_Screen = "/dashboard";
@@ -86,6 +88,8 @@ class RouteGenerator {
         return BouncyPage(widget: PatientHistoryScreen_1(argument: settings.arguments!));
       case UavRoutes.Patient_history_screen_2 :
         return BouncyPage(widget: PatientHistoryScreen_2(argument: settings.arguments! as Data));
+      case UavRoutes.Patient_history_screen_3 :
+        return BouncyPage(widget: PatientHistoryScreen_3(argument: settings.arguments! as String));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

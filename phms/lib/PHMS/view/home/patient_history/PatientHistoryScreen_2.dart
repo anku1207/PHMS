@@ -4,8 +4,10 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/FullSizeImageDialog.dart';
 import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
+import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/CaseRegRequestVO.dart'
     as CaseRegRequest;
@@ -30,6 +32,7 @@ class PatientHistoryScreen_2 extends StatefulWidget {
 
 class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
   List<CaseSummaryDoctorResponse.Data> caseSummaryList = [];
+  double twoLineHeight = 0;
 
   @override
   void initState() {
@@ -42,6 +45,23 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
 
   @override
   Widget build(BuildContext context) {
+    double totalWidth = MediaQuery.of(context).size.width;
+    double leftPadding = 15.0;
+    double rightPadding = 15.0;
+
+    double availableWidth = totalWidth - leftPadding - rightPadding;
+
+    String patientNameText = "Patient\nName";
+    TextStyle patientNameStyle = Theme.of(context)
+        .textTheme
+        .button!
+        .copyWith(fontWeight: FontWeight.bold);
+
+    double maxWidth = 200.0; // Adjust as needed
+
+    double patientNameTextHeight =
+        getTextHeight(patientNameText, patientNameStyle, maxWidth) + 40;
+
     return new WillPopScope(
       onWillPop: () async {
         if (EasyLoading.isShow)
@@ -72,7 +92,7 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                         // margin: EdgeInsets.zero,
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         elevation: 10,
                         child: SingleChildScrollView(
@@ -129,110 +149,326 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                       SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: caseSummaryList.isNotEmpty
-                                            ? Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black),
-                                          ),
-                                          child: DataTable(
-                                            columns: [
-                                              DataColumn(
-                                                label: Container(
-                                                  width: 60,
-                                                  child: Center(
-                                                    child: Text('No', style: TextStyle(color: Colors.black)),
+                                            ? IntrinsicWidth(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.black),
+                                                  ),
+                                                  child: Table(
+                                                    columnWidths: {
+                                                      0: FixedColumnWidth(
+                                                          availableWidth * 0.12),
+                                                      1: FixedColumnWidth(
+                                                          availableWidth * 0.2),
+                                                      2: FixedColumnWidth(
+                                                          availableWidth * 0.28),
+                                                      3: FixedColumnWidth(
+                                                          availableWidth * 0.2),
+                                                      4: FixedColumnWidth(
+                                                          availableWidth * 0.2),
+                                                    },
+                                                    children: [
+                                                      TableRow(
+                                                        children: [
+                                                          TableCell(
+                                                              child: Container(
+                                                            height:
+                                                                patientNameTextHeight,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Constants
+                                                                  .UavPrimaryColor,
+                                                              border: Border(
+                                                                right:
+                                                                    BorderSide(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  // Set the color of the right border
+                                                                  width:
+                                                                      1.0, // Set the width of the right border
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      bottom:
+                                                                          20.0,
+                                                                      top:
+                                                                          20.0),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'Case Id',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .button!
+                                                                      .copyWith(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )),
+                                                          TableCell(
+                                                            child: Container(
+                                                              height: patientNameTextHeight,
+                                                              decoration: BoxDecoration(
+                                                                color: Constants.UavPrimaryColor,
+                                                                border: Border(
+                                                                  right: BorderSide(
+                                                                    color: Colors.white, // Set the color of the right border
+                                                                    width: 1.0, // Set the width of the right border
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Date',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: Theme.of(context).textTheme.button!.copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          TableCell(
+                                                            child: Container(
+                                                              height: patientNameTextHeight,
+                                                              decoration: BoxDecoration(
+                                                                color: Constants.UavPrimaryColor,
+                                                                border: Border(
+                                                                  right: BorderSide(
+                                                                    color: Colors.white, // Set the color of the right border
+                                                                    width: 1.0, // Set the width of the right border
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Patient\nName',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: Theme.of(context).textTheme.button!.copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          TableCell(
+                                                            child: Container(
+                                                              height: patientNameTextHeight,
+                                                              decoration: BoxDecoration(
+                                                                color: Constants.UavPrimaryColor,
+                                                                border: Border(
+                                                                  right: BorderSide(
+                                                                    color: Colors.white, // Set the color of the right border
+                                                                    width: 1.0, // Set the width of the right border
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Mobile\nNumber',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: Theme.of(context).textTheme.button!.copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          TableCell(
+                                                            child: Container(
+                                                              height:
+                                                                  patientNameTextHeight,
+                                                              color: Constants
+                                                                  .UavPrimaryColor,
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            20.0,
+                                                                        top:
+                                                                            20.0),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Attachments',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .button!
+                                                                        .copyWith(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      for (var rowData
+                                                          in caseSummaryList)
+                                                        TableRow(
+                                                          children: [
+                                                            TableRowInkWell(
+                                                              onTap: () {
+                                                                tableRowClick(
+                                                                    context,
+                                                                    rowData
+                                                                        .caseID!);
+                                                              },
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            20.0,
+                                                                        top:
+                                                                            20.0),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                        '${rowData.caseID}',style: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyText2!
+                                                                        .copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ))),
+                                                              ),
+                                                            ),
+                                                            TableRowInkWell(
+                                                              onTap: () {
+                                                                tableRowClick(
+                                                                    context,
+                                                                    rowData
+                                                                        .caseID!);
+                                                              },
+                                                              child: Center(
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(
+                                                                      bottom:
+                                                                          20.0,
+                                                                      top:
+                                                                          20.0),
+                                                                  child: Text(
+                                                                      '${rowData.casedatetime}',style: Theme.of(context)
+                                                                      .textTheme
+                                                                      .bodyText2!
+                                                                      .copyWith(
+                                                                    fontWeight: FontWeight.bold,
+                                                                  )))),
+                                                            ),
+                                                            TableRowInkWell(
+                                                              onTap: () {
+                                                                tableRowClick(
+                                                                    context,
+                                                                    rowData
+                                                                        .caseID!);
+                                                              },
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            20.0,
+                                                                        top:
+                                                                            20.0),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                        '${rowData.patientname}',style: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyText2!
+                                                                        .copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ))),
+                                                              ),
+                                                            ),
+                                                            TableRowInkWell(
+                                                              onTap: () {
+                                                                tableRowClick(
+                                                                    context,
+                                                                    rowData
+                                                                        .caseID!);
+                                                              },
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            20.0,
+                                                                        top:
+                                                                            20.0),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                        '${rowData.mobile}',style: Theme.of(context)
+                                                                        .textTheme
+                                                                        .bodyText2!
+                                                                        .copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ))),
+                                                              ),
+                                                            ),
+                                                            TableRowInkWell(
+                                                              onTap: () {
+                                                              if(rowData.soapPic!=null){
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) {
+                                                                    return FullSizeImageDialog(imageUrl: rowData.soapPic!);
+                                                                  },
+                                                                );
+                                                              }
+
+                                                              },
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            20.0,
+                                                                        top:
+                                                                            20.0),
+                                                                child: Center(
+                                                                  child: Icon(Icons
+                                                                      .attachment),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                              DataColumn(
-                                                label: Container(
-                                                  width: 100,
-                                                  child: Center(
-                                                    child: Text('Date', style: TextStyle(color: Colors.black)),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Container(
-                                                  width: 150,
-                                                  child: Center(
-                                                    child: Text('Patient Name', style: TextStyle(color: Colors.black)),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Container(
-                                                  width: 120,
-                                                  child: Center(
-                                                    child: Text('Mobile Number', style: TextStyle(color: Colors.black)),
-                                                  ),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Container(
-                                                  width: 100,
-                                                  child: Center(
-                                                    child: Text('Attachments', style: TextStyle(color: Colors.black)),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                            rows: caseSummaryList.map((CaseSummaryDoctorResponse.Data rowData) {
-                                              return DataRow(
-                                                cells: [
-                                                  DataCell(
-                                                    Container(
-                                                      width: 60,
-                                                      child: Center(
-                                                        child: Text('${rowData.caseID}'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    Container(
-                                                      width: 100,
-                                                      child: Center(
-                                                        child: Text('${rowData.casedatetime}'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    Container(
-                                                      width: 150,
-                                                      child: Center(
-                                                        child: Text('${rowData.patientname}'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    Container(
-                                                      width: 120,
-                                                      child: Center(
-                                                        child: Text('${rowData.mobile}'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  DataCell(
-                                                    Container(
-                                                      width: 100,
-                                                      child: Center(
-                                                        child: Icon(Icons.attachment),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }).toList(),
-                                          ),
-                                        )
+                                              )
                                             : Center(
-                                          child: Text(
-                                            'Data Not Found',
-                                            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                                                child: Text(
+                                                  'Data Not Found',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
                                       )
                                     ],
                                   ),
@@ -251,6 +487,21 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
             ),
           )),
     );
+  }
+
+  double getTextHeight(String text, TextStyle style, double maxWidth) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: null,
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: maxWidth);
+
+    return textPainter.height;
+  }
+
+  void tableRowClick(BuildContext context, String caseId) {
+    Navigator.pushNamed(context, UavRoutes.Patient_history_screen_3,
+        arguments: caseId);
   }
 
   void getPatientCaseDetail(BuildContext context) {

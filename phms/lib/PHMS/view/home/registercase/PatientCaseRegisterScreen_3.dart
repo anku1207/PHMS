@@ -279,7 +279,7 @@ class _PatientCaseRegisterScreen_3State
                                       child: Column(
                                         children: [
                                           SizedBox(height: 10),
-                                          CustomDateTimePickerFormField(dateAndTimeController),
+                                          CustomDateTimePickerFormField(dateAndTimeController,true),
                                           SizedBox(height: 20),
                                           TextFormField(
                                             maxLines: 2,

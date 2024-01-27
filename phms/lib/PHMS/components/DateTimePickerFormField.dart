@@ -5,8 +5,9 @@ import 'Validations.dart';
 
 class CustomDateTimePickerFormField extends StatefulWidget {
   late TextEditingController dateTimeController;
+  late bool isClickable;
 
-  CustomDateTimePickerFormField(this.dateTimeController);
+  CustomDateTimePickerFormField(this.dateTimeController,this.isClickable);
   @override
   _CustomDateTimePickerFormFieldState createState() =>
       _CustomDateTimePickerFormFieldState();
@@ -70,12 +71,15 @@ class _CustomDateTimePickerFormFieldState
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: true,
-      onTap: () => _selectDateTime(context),
+      onTap: () => widget.isClickable?_selectDateTime(context):null,
       controller: widget.dateTimeController,
       decoration: InputDecoration(
         labelText: 'Select Date and Time',
         suffixIcon: Icon(Icons.calendar_today),
       ),
+      style: Theme.of(context)
+          .textTheme
+          .bodyText2,
       validator: (value) =>
           validateRequiredField(value!),
     );
