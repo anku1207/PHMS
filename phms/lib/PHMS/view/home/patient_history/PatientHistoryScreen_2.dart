@@ -150,10 +150,6 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                         child: caseSummaryList.isNotEmpty
                                             ? IntrinsicWidth(
                                                 child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black),
-                                                  ),
                                                   child: Table(
                                                     columnWidths: {
                                                       0: FixedColumnWidth(
@@ -185,7 +181,7 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                       .white,
                                                                   // Set the color of the right border
                                                                   width:
-                                                                      1.0, // Set the width of the right border
+                                                                      5.0, // Set the width of the right border
                                                                 ),
                                                               ),
                                                             ),
@@ -193,12 +189,12 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                               padding: EdgeInsets
                                                                   .only(
                                                                       bottom:
-                                                                          10.0,
+                                                                          5.0,
                                                                       top:
-                                                                          10.0),
+                                                                          5.0),
                                                               child: Center(
                                                                 child: Text(
-                                                                  'Case Id',
+                                                                  'No',
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -222,12 +218,12 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 border: Border(
                                                                   right: BorderSide(
                                                                     color: Colors.white, // Set the color of the right border
-                                                                    width: 1.0, // Set the width of the right border
+                                                                    width: 5.0, // Set the width of the right border
                                                                   ),
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                                                                padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Date',
@@ -248,12 +244,12 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 border: Border(
                                                                   right: BorderSide(
                                                                     color: Colors.white, // Set the color of the right border
-                                                                    width: 1.0, // Set the width of the right border
+                                                                    width: 5.0, // Set the width of the right border
                                                                   ),
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                                                                padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Patient\nName',
@@ -274,12 +270,12 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 border: Border(
                                                                   right: BorderSide(
                                                                     color: Colors.white, // Set the color of the right border
-                                                                    width: 1.0, // Set the width of the right border
+                                                                    width: 5.0, // Set the width of the right border
                                                                   ),
                                                                 ),
                                                               ),
                                                               child: Padding(
-                                                                padding: EdgeInsets.only(bottom: 10.0, top: 10.0),
+                                                                padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Mobile\nNumber',
@@ -302,12 +298,12 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            10.0,
+                                                                            5.0,
                                                                         top:
-                                                                            10.0),
+                                                                            5.0),
                                                                 child: Center(
                                                                   child: Text(
-                                                                    'Attachments',
+                                                                    'Attach',
                                                                     textAlign:
                                                                         TextAlign
                                                                             .center,
@@ -330,122 +326,123 @@ class _PatientHistoryScreen_2State extends State<PatientHistoryScreen_2> {
                                                           in caseSummaryList)
                                                         TableRow(
                                                           children: [
-                                                            TableRowInkWell(
-                                                              onTap: () {
-                                                                tableRowClick(
-                                                                    context,
-                                                                    rowData
-                                                                        .caseID!);
-                                                              },
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            20.0,
-                                                                        top:
-                                                                            20.0),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        '${rowData.caseID}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
-                                                              ),
-                                                            ),
-                                                            TableRowInkWell(
-                                                              onTap: () {
-                                                                tableRowClick(
-                                                                    context,
-                                                                    rowData
-                                                                        .caseID!);
-                                                              },
-                                                              child: Center(
+                                                            Container(
+                                                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                              color: Color.fromRGBO(245, 245, 245, 1), // Set background color here
+                                                              height:
+                                                              patientNameTextHeight,
+                                                              child: TableRowInkWell(
+                                                                onTap: () {
+                                                                  tableRowClick(context, rowData.caseID!);
+                                                                },
                                                                 child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      bottom:
-                                                                          20.0,
-                                                                      top:
-                                                                          20.0),
-                                                                  child: Text(
-                                                                      '${rowData.casedatetime}',style: Theme.of(context)
-                                                                      .textTheme
-                                                                      .bodyText2!
-                                                                      .copyWith(
-                                                                    fontWeight: FontWeight.bold,
-                                                                  )))),
-                                                            ),
-                                                            TableRowInkWell(
-                                                              onTap: () {
-                                                                tableRowClick(
-                                                                    context,
-                                                                    rowData
-                                                                        .caseID!);
-                                                              },
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            20.0,
-                                                                        top:
-                                                                            20.0),
-                                                                child: Center(
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                                                                  child: Center(
                                                                     child: Text(
-                                                                        '${rowData.patientname}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
+                                                                      '${rowData.caseID}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                            TableRowInkWell(
-                                                              onTap: () {
-                                                                tableRowClick(
-                                                                    context,
-                                                                    rowData
-                                                                        .caseID!);
-                                                              },
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            20.0,
-                                                                        top:
-                                                                            20.0),
-                                                                child: Center(
+                                                            Container(
+                                                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                              color: Color.fromRGBO(245, 245, 245, 1),  // Set background color here
+                                                              height:
+                                                              patientNameTextHeight,
+                                                              child: TableRowInkWell(
+                                                                onTap: () {
+                                                                  tableRowClick(context, rowData.caseID!);
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                                                                  child: Center(
                                                                     child: Text(
-                                                                        '${rowData.mobile}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
+                                                                      '${rowData.casedatetime}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                            TableRowInkWell(
-                                                              onTap: () {
-                                                              if(rowData.soapPic!=null){
-                                                                showDialog(
-                                                                  context: context,
-                                                                  builder: (BuildContext context) {
-                                                                    return FullSizeImageDialog(imageUrl: rowData.soapPic!);
-                                                                  },
-                                                                );
-                                                              }
-
-                                                              },
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        bottom:
-                                                                            20.0,
-                                                                        top:
-                                                                            20.0),
-                                                                child: Center(
-                                                                  child: Icon(Icons
-                                                                      .attachment),
+                                                            Container(
+                                                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                              color: Color.fromRGBO(245, 245, 245, 1), // Set background color here
+                                                              height:
+                                                              patientNameTextHeight,
+                                                              child: TableRowInkWell(
+                                                                onTap: () {
+                                                                  tableRowClick(context, rowData.caseID!);
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      '${rowData.patientname}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                              color: Color.fromRGBO(245, 245, 245, 1), // Set background color here
+                                                              height:
+                                                              patientNameTextHeight,
+                                                              child: TableRowInkWell(
+                                                                onTap: () {
+                                                                  tableRowClick(context, rowData.caseID!);
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      '${rowData.mobile}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                              color: Color.fromRGBO(245, 245, 245, 1), // Set background color here
+                                                              height:
+                                                              patientNameTextHeight,
+                                                              child: TableRowInkWell(
+                                                                onTap: () {
+                                                                  if (rowData.soapPic != null) {
+                                                                    showDialog(
+                                                                      context: context,
+                                                                      builder: (BuildContext context) {
+                                                                        return FullSizeImageDialog(imageUrl: rowData.soapPic!);
+                                                                      },
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
+                                                                  child: Center(
+                                                                    child: Icon(Icons.attachment),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),

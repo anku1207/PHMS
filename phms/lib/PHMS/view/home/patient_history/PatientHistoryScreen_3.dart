@@ -208,20 +208,16 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                     .data!.isNotEmpty
                                             ? IntrinsicWidth(
                                                 child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black),
-                                                  ),
                                                   child: Table(
                                                     columnWidths: {
                                                       0: FixedColumnWidth(
                                                           availableWidth *
-                                                              0.12),
+                                                              0.2),
                                                       1: FixedColumnWidth(
-                                                          availableWidth * 0.3),
+                                                          availableWidth * 0.2),
                                                       2: FixedColumnWidth(
                                                           availableWidth *
-                                                              0.28),
+                                                              0.3),
                                                       3: FixedColumnWidth(
                                                           availableWidth * 0.3),
                                                     },
@@ -243,7 +239,7 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                       .white,
                                                                   // Set the color of the right border
                                                                   width:
-                                                                      1.0, // Set the width of the right border
+                                                                      5.0, // Set the width of the right border
                                                                 ),
                                                               ),
                                                             ),
@@ -251,12 +247,12 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                               padding: EdgeInsets
                                                                   .only(
                                                                       bottom:
-                                                                          10.0,
+                                                                          5.0,
                                                                       top:
-                                                                          10.0),
+                                                                          5.0),
                                                               child: Center(
                                                                 child: Text(
-                                                                  'Case Id',
+                                                                  'Case No',
                                                                   textAlign:
                                                                       TextAlign
                                                                           .center,
@@ -287,7 +283,7 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                         .white,
                                                                     // Set the color of the right border
                                                                     width:
-                                                                        1.0, // Set the width of the right border
+                                                                        5.0, // Set the width of the right border
                                                                   ),
                                                                 ),
                                                               ),
@@ -295,9 +291,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            10.0,
+                                                                            5.0,
                                                                         top:
-                                                                            10.0),
+                                                                            5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Date',
@@ -332,7 +328,7 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                         .white,
                                                                     // Set the color of the right border
                                                                     width:
-                                                                        1.0, // Set the width of the right border
+                                                                        5.0, // Set the width of the right border
                                                                   ),
                                                                 ),
                                                               ),
@@ -340,9 +336,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            10.0,
+                                                                            5.0,
                                                                         top:
-                                                                            10.0),
+                                                                            5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Patient\nName',
@@ -375,9 +371,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         bottom:
-                                                                            10.0,
+                                                                            5.0,
                                                                         top:
-                                                                            10.0),
+                                                                            5.0),
                                                                 child: Center(
                                                                   child: Text(
                                                                     'Mobile\nNumber',
@@ -406,99 +402,88 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                           children: [
                                                             TableCell(
                                                               child: Container(
-                                                                color: Colors
-                                                                    .white60,
-                                                                height:
-                                                                    patientNameTextHeight,
+                                                                margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+                                                                color: Color.fromRGBO(245, 245, 245, 1), // #F5F5F5
+                                                                height: patientNameTextHeight,
                                                                 child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      bottom:
-                                                                          20.0,
-                                                                      top:
-                                                                          20.0),
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                   child: Center(
                                                                     child: Text(
-                                                                        '${rowData.caseID}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
+                                                                      '${rowData.caseID}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                             TableCell(
                                                               child: Container(
-                                                                color: Colors
-                                                                    .white60,
-                                                                height:
-                                                                    patientNameTextHeight,
+                                                                margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+
+                                                                color: Color.fromRGBO(245, 245, 245, 1), // #F5F5F5
+                                                                height: patientNameTextHeight,
                                                                 child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      bottom:
-                                                                          20.0,
-                                                                      top:
-                                                                          20.0),
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                   child: Center(
-                                                                      child: Text(
-                                                                          '${rowData.casedatetime}',
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyText2!
-                                                                              .copyWith(
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ))),
+                                                                    child: Text(
+                                                                      '${rowData.casedatetime}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                             TableCell(
                                                               child: Container(
-                                                                color: Colors
-                                                                    .white60,
-                                                                height:
-                                                                    patientNameTextHeight,
+
+                                                                margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+
+                                                                color: Color.fromRGBO(245, 245, 245, 1), // #F5F5F5
+                                                                height: patientNameTextHeight,
                                                                 child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      bottom:
-                                                                          20.0,
-                                                                      top:
-                                                                          20.0),
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                   child: Center(
                                                                     child: Text(
-                                                                      '${rowData.patientname}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
+                                                                      '${rowData.patientname}',
+                                                                      maxLines: 2, // Set maximum lines here
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                             TableCell(
                                                               child: Container(
-                                                                color: Colors
-                                                                    .white60,
-                                                                height:
-                                                                    patientNameTextHeight,
+                                                                margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Set margin here
+
+                                                                color: Color.fromRGBO(245, 245, 245, 1), // #F5F5F5
+                                                                height: patientNameTextHeight,
                                                                 child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      bottom:
-                                                                          20.0,
-                                                                      top:
-                                                                          20.0),
+                                                                  padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
                                                                   child: Center(
                                                                     child: Text(
-                                                                        '${rowData.patientmobile}',style: Theme.of(context)
-                                                                        .textTheme
-                                                                        .bodyText2!
-                                                                        .copyWith(
-                                                                      fontWeight: FontWeight.bold,
-                                                                    ))),
+                                                                      '${rowData.patientmobile}',
+                                                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
                                                           ],
-                                                        )
+                                                        ),
                                                     ],
                                                   ),
                                                 ),
