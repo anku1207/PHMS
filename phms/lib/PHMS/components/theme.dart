@@ -6,7 +6,7 @@ import 'constants.dart';
 
 ThemeData theme() {
   final baseTheme =
-      ThemeData(primarySwatch: createMaterialColor(Color(0xff4169e1)));
+      ThemeData(primarySwatch: createMaterialColor(Color(0xff000080)));
 
   return baseTheme.copyWith(
       scaffoldBackgroundColor: Colors.white,
@@ -42,10 +42,8 @@ const customCardTheme =
 
 AppBarTheme appBarTheme() {
   return AppBarTheme(
-    //color: UavPrimaryColor, // Colors.white,
-    // elevation: 0,
-    //brightness: Brightness.dark,
-    backgroundColor: AppBar_Color,
+    backgroundColor: AppBar_Color, // Set app bar color
+    brightness: Brightness.dark, // Set app bar icon brightness to dark (white icons)
     iconTheme: IconThemeData(color: AppBar_Icon_Color),
     textTheme: TextTheme(
       headline6: TextStyle(color: AppBar_Text_Color, fontSize: 18),

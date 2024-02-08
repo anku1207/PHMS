@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'PHMS/components/constants.dart';
 import 'PHMS/components/routes.dart';
 import 'PHMS/components/theme.dart';
 import 'PHMS/view/splash/SplashScreen.dart';
@@ -10,7 +11,7 @@ import 'PHMS/view/splash/SplashScreen.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     // systemNavigationBarColor: Colors.blue, // navigation bar color
-    statusBarColor:Colors.transparent , // status bar color
+    statusBarColor:UavPrimaryColor, // status bar color
     statusBarIconBrightness:Brightness.light,
     statusBarBrightness:Brightness.light,
   ));

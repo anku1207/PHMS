@@ -59,8 +59,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onGenerateRoute: RouteGenerator.homeRoute),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Constants.UavPrimaryColor, // Set the background color here
-            selectedItemColor: Constants.AppBar_Icon_Color, // Set color for selected item
-            unselectedItemColor: Constants.Activity_Text_Color_Black, // Set color for unselected items
+            selectedItemColor: Constants.Select_Icon_Color, // Set color for selected item
+            unselectedItemColor: Constants.AppBar_Icon_Color, // Set color for unselected items
 
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
