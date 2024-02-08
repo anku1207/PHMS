@@ -102,8 +102,8 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
   @override
   Widget build(BuildContext context) {
     double totalWidth = MediaQuery.of(context).size.width;
-    double leftPadding = 15.0;
-    double rightPadding = 15.0;
+    double leftPadding = 0.0;
+    double rightPadding = 0.0;
 
     double availableWidth = totalWidth - leftPadding - rightPadding;
 
@@ -141,12 +141,12 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    padding: const EdgeInsets.only(left: 0.0, right: 0.0),
                     child: Card(
-                        // margin: EdgeInsets.zero,
+                        margin: EdgeInsets.zero,
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(0.0),
                         ),
                         elevation: 10,
                         child: SingleChildScrollView(
@@ -217,7 +217,7 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                           availableWidth * 0.2),
                                                       2: FixedColumnWidth(
                                                           availableWidth *
-                                                              0.3),
+                                                              0.28),
                                                       3: FixedColumnWidth(
                                                           availableWidth * 0.3),
                                                     },

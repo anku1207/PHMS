@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-const UavPrimaryColor =  Color(0xff55b9fb); //Color(0xFF425A8B);
-const UavSecondaryColor = Color(0xff55b9fb);
-const UavTextColor = Color(0xff55b9fb);
+const UavPrimaryColor =  Color(0xff4169e1); //Color(0xFF425A8B);
+const UavSecondaryColor = Color(0xff4169e1);
+const UavTextColor = Color(0xff4169e1);
 
 
 
 // AppBar color
-const AppBar_Color=  Color(0xff55b9fb);
+const AppBar_Color=  Color(0xff4169e1);
 const AppBar_Icon_Color= Colors.white;
 const AppBar_Text_Color=  Colors.white;
 
 
 //Activity color
 const Activity_Icon_Color_White = Colors.white;
-const Activity_ALL_Text_Color = Color(0xff55b9fb);
+const Activity_ALL_Text_Color = Color(0xff4169e1);
 
 const Activity_EditText_Border_Color =  Colors.black;
 const Activity_EditText_Hint_Color = Colors.black;
@@ -36,8 +36,8 @@ const Activity_Tab_UnSelect_Color = Color.fromRGBO(119, 119, 119, 1);
 
 
 
-const Activity_Button_BG_Color= Color(0xff55b9fb);
-const Activity_Button_Border_Color = Color(0xff55b9fb);
+const Activity_Button_BG_Color= Color(0xff4169e1);
+const Activity_Button_Border_Color = Color(0xff4169e1);
 const Activity_Button_Text_Color =Colors.white;
 
 
@@ -46,7 +46,7 @@ const Activity_Dialog_Title_Color =Colors.grey;
 const Activity_Dialog_Message_Color =Colors.grey;
 
 const Activity_Container_Border_Color_White =Colors.white;
-const Activity_Bottom_Nav_Color =Color(0xff55b9fb);
+const Activity_Bottom_Nav_Color =Color(0xff4169e1);
 const Activity_Divider_Color =Colors.white;
 
 
@@ -54,7 +54,7 @@ const Activity_Divider_Color =Colors.white;
 const Activity_Card_Border_Color =Colors.black;
 
 
-const actions_bg_orange =Color(0xff55b9fb);
+const actions_bg_orange =Color(0xff4169e1);
 
 
 

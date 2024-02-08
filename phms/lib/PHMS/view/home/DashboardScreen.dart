@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/constants.dart' as Constants;
+
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -56,6 +58,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               key: _navigatorKey,
               onGenerateRoute: RouteGenerator.homeRoute),
           bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Constants.UavPrimaryColor, // Set the background color here
+            selectedItemColor: Constants.AppBar_Icon_Color, // Set color for selected item
+            unselectedItemColor: Constants.Activity_Text_Color_Black, // Set color for unselected items
+
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

@@ -6,7 +6,7 @@ import 'constants.dart';
 
 ThemeData theme() {
   final baseTheme =
-      ThemeData(primarySwatch: createMaterialColor(Color(0xff55b9fb)));
+      ThemeData(primarySwatch: createMaterialColor(Color(0xff4169e1)));
 
   return baseTheme.copyWith(
       scaffoldBackgroundColor: Colors.white,

@@ -94,12 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   flex: 2,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    padding: const EdgeInsets.only(left: 0.0, right: 0.0),
                     child: Card(
-                        // margin: EdgeInsets.zero,
+                        margin: EdgeInsets.zero,
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(0.0),
                         ),
                         elevation: 10,
                         child: Column(
