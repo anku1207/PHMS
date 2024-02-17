@@ -70,7 +70,7 @@ const String FORGOT_PASSWORD = "forgot_password";
 const String KEY_ACCESS_TOKEN = "access_token";
 const String KEY_TOKEN_TYPE = "token_type";
 const String KEY_CONTACT = "user_contact";
-const String KEY_FIRST_LOGIN = "user_first_login";
+const String USER_LOGIN_TYPE = "user_login_type";
 const String LOGIN_DATA = "login_data";
 
 

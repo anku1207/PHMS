@@ -391,6 +391,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value.success == "1") {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString(LOGIN_DATA, jsonEncode(value.data![0].toJson()));
+          prefs.setString(USER_LOGIN_TYPE,selectedAccountType.toString());
 
 
           Navigator.pushNamedAndRemoveUntil(

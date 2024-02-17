@@ -49,3 +49,10 @@ const int View_Appointment = 5;
 const int Document_Images = 6;
 const int Refer_A_Doctor = 7;
 const int Advanced_Search = 8;
+const int History = 9;
+const int Report = 10;
+const int Medical_Bill = 11;
+const int Medical_Scheduler = 12;
+
+
+

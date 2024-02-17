@@ -14,6 +14,7 @@ import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart'
 import 'package:phms/PHMS/model/response_model/CaseDetialsResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseRegResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseSummaryDoctorResponseVO.dart';
+import 'package:phms/PHMS/model/response_model/CaseSummaryResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CheckDoctorRegistrationResponse.dart';
 import 'package:phms/PHMS/model/response_model/CheckPatientRegistrationResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorRegistrationResponseVO.dart';
@@ -170,6 +171,22 @@ Future<CaseDetialsResponseVO?> caseDetails(CaseDetailsRequestVO detailsRequestVO
   print(response.body);
   if (response.statusCode == 200) {
     return CaseDetialsResponseVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to createUser Data');
+  }
+}
+
+Future<CaseSummaryResponseVO?> caseSummary(CaseSummaryDoctorRequestVO caseSummaryDoctorRequestVO) async {
+  EasyLoading.show(status: 'loading...');
+  print("caseRegister");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/casesummary');
+  var response = await http.post(url, headers: headers,body: json.encode(caseSummaryDoctorRequestVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return CaseSummaryResponseVO.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to createUser Data');
   }

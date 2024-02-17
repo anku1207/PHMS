@@ -6,6 +6,11 @@ Future<String?> checkCustomerSession() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(LOGIN_DATA);
 }
+
+Future<String?> getUserTypeLogin() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(USER_LOGIN_TYPE);
+}
 Future<String?> getAuthorizationToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? tokenType = prefs.getString(KEY_TOKEN_TYPE);

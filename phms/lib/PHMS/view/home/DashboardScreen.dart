@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/constants.dart' as Constants;
-
+import 'package:phms/PHMS/components/utility.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -26,21 +27,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     switch (tabIndex) {
       case 0:
         _navigatorKey.currentState!
-            .pushNamedAndRemoveUntil(UavRoutes.Home_Screen,(route) => false);
+            .pushNamedAndRemoveUntil(UavRoutes.Home_Screen, (route) => false);
+
         break;
       case 1:
-        _navigatorKey.currentState!.pushNamedAndRemoveUntil(UavRoutes.Product_Screen,(route) => false);
+        _navigatorKey.currentState!.pushNamedAndRemoveUntil(
+            UavRoutes.Product_Screen, (route) => false);
         break;
       case 2:
         _navigatorKey.currentState!
-            .pushNamedAndRemoveUntil(UavRoutes.Home_Screen,(route) => false);
+            .pushNamedAndRemoveUntil(UavRoutes.Home_Screen, (route) => false);
+
         break;
     }
     setState(() {
       _currentTabIndex = tabIndex;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +58,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
         child: Scaffold(
           body: Navigator(
-              key: _navigatorKey,
-              onGenerateRoute: RouteGenerator.homeRoute),
+              key: _navigatorKey, onGenerateRoute: RouteGenerator.homeRoute),
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Constants.UavPrimaryColor, // Set the background color here
-            selectedItemColor: Constants.Select_Icon_Color, // Set color for selected item
-            unselectedItemColor: Constants.AppBar_Icon_Color, // Set color for unselected items
+            backgroundColor: Constants.UavPrimaryColor,
+            // Set the background color here
+            selectedItemColor: Constants.Select_Icon_Color,
+            // Set color for selected item
+            unselectedItemColor: Constants.AppBar_Icon_Color,
+            // Set color for unselected items
 
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(

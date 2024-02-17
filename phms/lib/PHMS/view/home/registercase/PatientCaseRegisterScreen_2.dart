@@ -59,7 +59,7 @@ class _PatientCaseRegisterScreen_2State
     patientIdController.text = widget.argument.patientID!;
     patientNameController.text = widget.argument.patientname!;
     bloodGroupController.text = widget.argument.bloodgroup!;
-    dobController.text = widget.argument.bloodgroup!;
+    dobController.text = widget.argument.dob!;
   }
 
   @override

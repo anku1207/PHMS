@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/constants.dart' as Constants;
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
@@ -15,52 +16,105 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<DashboardItemVO> myList =
       List.filled(0, DashboardItemVO(), growable: true);
-
+  late String title;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    myList.add(DashboardItemVO(
-        id: Profile,
-        name: "Profile",
-        image: "assets/images/login.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: Patient_Registration,
-        name: "Patient Registration",
-        image: "assets/images/registration.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: New_Case,
-        name: "New Case",
-        image: "assets/images/medicalcase.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: Patient_History,
-        name: "Patient History",
-        image: "assets/images/viewhistory.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: View_Appointment,
-        name: "View Appointment",
-        image: "assets/images/appointment.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: Document_Images,
-        name: "Document / Images",
-        image: "assets/images/viewcase.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: Refer_A_Doctor,
-        name: "Refer A Doctor",
-        image: "assets/images/viewcase.png",
-        count: "0"));
-    myList.add(DashboardItemVO(
-        id: Advanced_Search,
-        name: "Advanced Search",
-        image: "assets/images/viewcase.png",
-        count: "0"));
+    getUserTypeLogin().then((value){
+      if(value.toString()=="1"){
+        setState(() {
+          title="Doctor Dashboard";
+        });
+        myList.add(DashboardItemVO(
+            id: Profile,
+            name: "Profile",
+            image: "assets/images/login.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Patient_Registration,
+            name: "Patient Registration",
+            image: "assets/images/registration.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: New_Case,
+            name: "New Case",
+            image: "assets/images/medicalcase.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Patient_History,
+            name: "Patient History",
+            image: "assets/images/viewhistory.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: View_Appointment,
+            name: "View Appointment",
+            image: "assets/images/appointment.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Document_Images,
+            name: "Document / Images",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Refer_A_Doctor,
+            name: "Refer A Doctor",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Advanced_Search,
+            name: "Advanced Search",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+      }else{
+        setState(() {
+          title="Patient Dashboard";
+        });
+        myList.add(DashboardItemVO(
+            id: Profile,
+            name: "Profile",
+            image: "assets/images/login.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: History,
+            name: "History",
+            image: "assets/images/viewhistory.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: View_Appointment,
+            name: "View Appointment",
+            image: "assets/images/appointment.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Report,
+            name: "Report",
+            image: "assets/images/appointment.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Document_Images,
+            name: "Document / Images",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Medical_Bill,
+            name: "Medical Bill",
+            image: "assets/images/uploadreports.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Medical_Scheduler,
+            name: "Medical Scheduler",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+        myList.add(DashboardItemVO(
+            id: Advanced_Search,
+            name: "Advanced Search",
+            image: "assets/images/viewcase.png",
+            count: "0"));
+      }
+
+    });
+
   }
 
   @override
@@ -112,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
-                                      "Doctor Dashboard",
+                                      title,
                                       style: Theme.of(context).textTheme.headline1!.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -135,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return InkWell(
                                     onTap: () {
                                       // Add your onTap logic for the entire Column here
-                                      openViewMenuWise(context,myList[index].name!);
+                                      openViewMenuWise(context,myList[index].id!);
 
                                     },
                                     child: Column(
@@ -169,11 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void openViewMenuWise(BuildContext context ,String serviceName ){
-    if(serviceName == "New Case"){
+  void openViewMenuWise(BuildContext context ,int serviceId ){
+    if(serviceId == 3){
       Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.Patient_case_register_screen_1,arguments: {"data":null});
-    }else if(serviceName == "Patient History"){
+    }else if(serviceId == 4){
       Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.Patient_history_screen_1,arguments: {"data":null});
+    }else if(serviceId == 9){
+      Navigator.of(context, rootNavigator: true).pushNamed(UavRoutes.History_screen_1,arguments: {"data":null});
     }
   }
 }
