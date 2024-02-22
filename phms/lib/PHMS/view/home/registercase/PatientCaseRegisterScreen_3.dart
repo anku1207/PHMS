@@ -257,8 +257,6 @@ class _PatientCaseRegisterScreen_3State
                                         contentPadding: new EdgeInsets.symmetric(
                                             vertical: 20.0, horizontal: 20.0),
                                       ),
-                                      validator: (value) =>
-                                          validateRequiredField(value!),
                                     ),
                                     Row(
                                       children: [
@@ -320,7 +318,7 @@ class _PatientCaseRegisterScreen_3State
 
                                             }
                                           },
-                                          child: Text("Show",
+                                          child: Text("Submit",
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15,
