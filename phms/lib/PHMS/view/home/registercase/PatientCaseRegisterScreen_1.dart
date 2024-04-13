@@ -55,7 +55,7 @@ class _PatientCaseRegisterScreen_1State
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Dashboard",
+              "Case Register",
               style: Theme.of(context)
                   .textTheme
                   .headline2!

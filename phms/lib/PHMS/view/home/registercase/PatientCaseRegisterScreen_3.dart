@@ -88,7 +88,7 @@ class _PatientCaseRegisterScreen_3State
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Dashboard",
+              "Case Register",
               style: Theme.of(context)
                   .textTheme
                   .headline2!
@@ -408,7 +408,7 @@ class _PatientCaseRegisterScreen_3State
                       "Success", value.message!, "OK", true), (clickBtn) {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  UavRoutes.Dashboard_Screen,
+                  UavRoutes.Home_Screen,
                       (route) => false,
                 );
               },backBtn: false);

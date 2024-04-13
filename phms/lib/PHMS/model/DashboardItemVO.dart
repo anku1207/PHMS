@@ -49,10 +49,21 @@ const int View_Appointment = 5;
 const int Document_Images = 6;
 const int Refer_A_Doctor = 7;
 const int Advanced_Search = 8;
-const int History = 9;
+const int Appointment = 9;
 const int Report = 10;
 const int Medical_Bill = 11;
-const int Medical_Scheduler = 12;
+const int Medicine_next_Visit_Scheduler = 12;
+const int View_Appointment_MR=13;
+const int View_Product_MR=14;
+const int Search_Doctors_By_Specialization_Location=15;
+const int Case_History =16;
+const int Hospitalization =17;
+
+const int Refer_Doctor=18;
+const int Refer_APP=19;
+
+
+
 
 
 

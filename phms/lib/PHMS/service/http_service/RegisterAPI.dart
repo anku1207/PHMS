@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
+import 'package:phms/PHMS/model/request_model/AppointmentListRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/CaseDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/CaseRegRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/CaseSummaryDoctorRequestVO.dart';
@@ -11,6 +12,7 @@ import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
+import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseDetialsResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseRegResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseSummaryDoctorResponseVO.dart';
@@ -187,6 +189,23 @@ Future<CaseSummaryResponseVO?> caseSummary(CaseSummaryDoctorRequestVO caseSummar
   print(response.body);
   if (response.statusCode == 200) {
     return CaseSummaryResponseVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to createUser Data');
+  }
+}
+
+
+Future<AppointmentListResponseVO?> getAppointmentList(AppointmentListRequestVO appointmentListRequestVO) async {
+  EasyLoading.show(status: 'loading...');
+  print("getAppointmentList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewAppointments_Doc');
+  var response = await http.post(url, headers: headers,body: json.encode(appointmentListRequestVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return AppointmentListResponseVO.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to createUser Data');
   }

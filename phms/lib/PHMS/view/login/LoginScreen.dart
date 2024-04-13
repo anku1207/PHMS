@@ -170,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           'assets/images/doctor_logo.png',
                                           height: 40.0,  // Set the height of the image
                                           width: 40.0,   // Set the width of the image
+                                          color: UavPrimaryColor,
                                         ),
                                         SizedBox(height: 8),
                                         Text(
@@ -213,6 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           'assets/images/patient_logo.png',
                                           height: 40.0,  // Set the height of the image
                                           width: 40.0,   // Set the width of the image
+                                          color: UavPrimaryColor,
                                         ),
                                         SizedBox(height: 8),
                                         Text(
@@ -396,7 +398,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           Navigator.pushNamedAndRemoveUntil(
             context,
-            UavRoutes.Dashboard_Screen,
+            UavRoutes.Home_Screen,
                 (route) => false,
           );
         } else {
