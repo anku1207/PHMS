@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       myList.add(DashboardItemVO(
           id: Search_Doctors_By_Specialization_Location,
-          name: "Search doctors by specialization/location",
+          name: "Search Doctors",
           image: "assets/images/viewcase.png",
           count: "0"));
 
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
           count: "0"));
       myList.add(DashboardItemVO(
           id: Medicine_next_Visit_Scheduler,
-          name: "Medicine/next visit scheduler",
+          name: "Scheduler",
           image: "assets/images/scheduler.png",
           count: "0"));
       myList.add(DashboardItemVO(
@@ -135,12 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
           count: "0"));
       myList.add(DashboardItemVO(
           id: Refer_Doctor,
-          name: "Refer doctor",
+          name: "Refer Doctor",
           image: "assets/images/viewcase.png",
           count: "0"));
       myList.add(DashboardItemVO(
           id: Refer_APP,
-          name: "Refer app",
+          name: "Refer App",
           image: "assets/images/viewcase.png",
           count: "0"));
 
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Container(
                               margin: EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 20.0),
+                                  horizontal: 10.0, vertical: 10.0),
                               child: Stack(
                                 overflow: Overflow.visible,
                                 alignment: Alignment.bottomCenter,
@@ -252,33 +252,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      title,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                             GridView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 2,
-                                mainAxisExtent: 200,
+                                childAspectRatio: 1.3,
                               ),
                               padding: EdgeInsets.all(5.0),
                               controller: ScrollController(keepScrollOffset: false),
@@ -289,9 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // Add your onTap logic for the entire Column here
                                     openViewMenuWise(context, myList[index].id!);
                                   },
-                                  child: SizedBox(
-                                    height: _calculateContainerHeight(myList[index].name),
-                                    child: Container(
+                                  child:Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(5),
@@ -312,8 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              height: 70.0,
-                                              width: 70.0,
+                                              height: 40.0,
+                                              width: 40.0,
                                               child: Image.asset(
                                                 myList[index].image!,
                                                 color: UavPrimaryColor,
@@ -331,7 +308,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                  ),
                                 );
                               },
                             ),
@@ -349,9 +325,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   double _calculateContainerHeight(String? text) {
     // Assuming the maxHeight is 200, adjust as needed
-    const double maxHeight = 200;
-    const double padding = 16 * 2; // Padding on top and bottom
-    const double imageHeight = 100;
+    const double maxHeight = 150;
+    const double padding = 16 * 2 + 200; // Padding on top and bottom
+    const double imageHeight = 50;
     const double textSpacing = 10;
     double textHeight = text != null ? (text.length / 15) * 20 : 0; // Assuming 15 characters per line and 20px height per line
 
@@ -366,20 +342,122 @@ class _HomeScreenState extends State<HomeScreen> {
     if (serviceId == 2) {
       Navigator.of(context, rootNavigator: true)
           .pushNamed(UavRoutes.Patient_registration_Screen);
-    } else if (serviceId == 3) {
-      Navigator.of(context, rootNavigator: true).pushNamed(
-          UavRoutes.Patient_case_register_screen_1,
-          arguments: {"data": null});
-    } else if (serviceId == 4) {
+    } else if (serviceId == 15) {
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+        ),
+        backgroundColor: Colors.white,
+        builder: (BuildContext bc) {
+          return Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Center(
+                        child: Text(
+                          "Appointment",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.of(context, rootNavigator: true).pushNamed(
+                                    UavRoutes.Video_case_register_screen_1,
+                                    arguments: {"data": null});
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 60.0,
+                                    width: 60.0,
+                                    child: Image.asset(
+                                      "assets/images/Calladoctor.png",
+                                      color: UavPrimaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "Call A Doctor",
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.of(context, rootNavigator: true).pushNamed(
+                                    UavRoutes.Patient_case_register_screen_1,
+                                    arguments: {"data": null});
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 60.0,
+                                    width: 60.0,
+                                    child: Image.asset(
+                                      "assets/images/visitclinic.png",
+                                      color: UavPrimaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "Visit Clinic",
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+        },
+      );
+
+    } else if (serviceId == 16) {
       Navigator.of(context, rootNavigator: true).pushNamed(
           UavRoutes.Patient_history_screen_1,
           arguments: {"data": null});
     } else if (serviceId == 9) {
+     /* Navigator.of(context, rootNavigator: true)
+          .pushNamed(UavRoutes.History_screen_1, arguments: {"data": null});*/
       Navigator.of(context, rootNavigator: true)
-          .pushNamed(UavRoutes.History_screen_1, arguments: {"data": null});
+          .pushNamed(UavRoutes.Appointment_list_grid, arguments: {"data": null});
     } else if (serviceId == 5) {
       Navigator.of(context, rootNavigator: true)
           .pushNamed(UavRoutes.Appointment_list, arguments: {"data": null});
+
     }
   }
 }
