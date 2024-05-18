@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Expanded(
                                 child: Card(
                                   color: selectedAccountType == 1
-                                      ? Activity_Tab_Select_Color
+                                      ? Activity_Box_Select_Color
                                       : Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Expanded(
                                 child: Card(
                                   color: selectedAccountType == 2
-                                      ? Activity_Tab_Select_Color
+                                      ? Activity_Box_Select_Color
                                       : Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),

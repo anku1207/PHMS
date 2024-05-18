@@ -119,11 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
           image: "assets/images/scheduler.png",
           count: "0"));
       myList.add(DashboardItemVO(
-          id: Report,
-          name: "Report",
-          image: "assets/images/appointment.png",
-          count: "0"));
-      myList.add(DashboardItemVO(
           id: Case_History,
           name: "Case History",
           image: "assets/images/viewcase.png",
@@ -343,108 +338,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.of(context, rootNavigator: true)
           .pushNamed(UavRoutes.Patient_registration_Screen);
     } else if (serviceId == 15) {
-      showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-        ),
-        backgroundColor: Colors.white,
-        builder: (BuildContext bc) {
-          return Container(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Center(
-                        child: Text(
-                          "Appointment",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context, rootNavigator: true).pushNamed(
-                                    UavRoutes.Video_case_register_screen_1,
-                                    arguments: {"data": null});
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 60.0,
-                                    width: 60.0,
-                                    child: Image.asset(
-                                      "assets/images/Calladoctor.png",
-                                      color: UavPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    "Call A Doctor",
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.of(context, rootNavigator: true).pushNamed(
-                                    UavRoutes.Patient_case_register_screen_1,
-                                    arguments: {"data": null});
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 60.0,
-                                    width: 60.0,
-                                    child: Image.asset(
-                                      "assets/images/visitclinic.png",
-                                      color: UavPrimaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    "Visit Clinic",
-                                    style: Theme.of(context).textTheme.bodyText2,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-        },
-      );
 
+      Navigator.of(context, rootNavigator: true).pushNamed(
+          UavRoutes.Doctor_List,
+          arguments: {"data": null});
     } else if (serviceId == 16) {
       Navigator.of(context, rootNavigator: true).pushNamed(
           UavRoutes.Patient_history_screen_1,

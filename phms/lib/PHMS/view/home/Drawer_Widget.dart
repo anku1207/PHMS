@@ -79,7 +79,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                       rightIcon: Icon(Icons.arrow_right),
                       btnName: 'Report',
-                      subtitle: 'Search by date and member',
+                      subtitle: '',
                     ),
                     _buildDivider(),
                     _parentChildList(),
@@ -178,29 +178,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         'children': [
           {
             "title": "Ambulance",
-            "subtitle": "Ambulance list with details and booking",
+            "subtitle": "",
             "icon": "assets/images/ambulance.png"
           },
           {
             "title": "Medicals",
-            "subtitle": "Nearby Medicals list with details",
+            "subtitle": "",
             "icon": "assets/images/madical.png"
           },
           {
             "title": "Labs",
-            "subtitle": "Nearby labs list with details",
+            "subtitle": "",
             "icon":"assets/images/labs.png"
           },
           {
-            "title": "Checkup",
-            "subtitle": "Health checkup packages details",
+            "title": "Health Checkup",
+            "subtitle": "",
             "icon":"assets/images/checkup.png"
           },
-          {
-            "title": "Other",
-            "subtitle": "Other Third party services can be added here",
-            "icon":"assets/images/other.png"
-          }
         ]
       },
     ];

@@ -5,8 +5,9 @@ import 'package:phms/PHMS/model/response_model/PatientDetailsResponseVO.dart';
 import 'package:phms/PHMS/view/home/DashboardScreen.dart';
 import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
-import 'package:phms/PHMS/view/home/appointment/AppointmentGrid.dart';
+import 'package:phms/PHMS/view/home/appointment/AppointmentTab.dart';
 import 'package:phms/PHMS/view/home/appointment/AppointmentList.dart';
+import 'package:phms/PHMS/view/home/doctore_list/DoctorList.dart';
 import 'package:phms/PHMS/view/home/history/HistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_2.dart';
@@ -56,6 +57,7 @@ class UavRoutes {
 
   static const Product_Screen = "/product";
 
+  static const Doctor_List = "/doctor_list";
 
 
 }
@@ -105,7 +107,9 @@ class RouteGenerator {
       case UavRoutes.Video_case_register_screen_1 :
         return BouncyPage(widget: VideoAppointment(argument: settings.arguments!));
       case UavRoutes.Appointment_list_grid :
-        return BouncyPage(widget: AppointmentGrid(argument: settings.arguments!));
+        return BouncyPage(widget: AppointmentTab(argument: settings.arguments!));
+      case UavRoutes.Doctor_List :
+        return BouncyPage(widget: DoctorList(argument: settings.arguments!));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

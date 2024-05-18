@@ -28,10 +28,13 @@ const Activity_Cursor_Color =  Colors.black;
 
 const Activity_Text_Color_Black = Colors.black;
 
+const Activity_Box_Select_Color = Color(0x1d55b9fb);
 
-const Activity_Tab_Select_Color = Color(0x1d55b9fb);
-const Activity_Tab_UnSelect_Color = Color.fromRGBO(119, 119, 119, 1);
 
+const Activity_Tab_Select_Color = Color(0xC3434749);
+const Activity_Tab_UnSelect_Color = Colors.white;
+
+const Activity_Box_Border_Color = Colors.grey;
 
 
 
