@@ -6,12 +6,16 @@ class DoctorFilterBottomSheet extends StatefulWidget {
   const DoctorFilterBottomSheet({required this.onFilterApplied});
 
   @override
-  _DoctorFilterBottomSheetState createState() => _DoctorFilterBottomSheetState();
+  _DoctorFilterBottomSheetState createState() =>
+      _DoctorFilterBottomSheetState();
 }
 
 class _DoctorFilterBottomSheetState extends State<DoctorFilterBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _filters = {};
+
+  final List<String> specialties = ['Cardiology', 'Neurology', 'Pediatrics']; // Example specialties
+  final List<String> cities = ['New York', 'Los Angeles', 'Chicago']; // Example cities
 
   @override
   Widget build(BuildContext context) {
@@ -23,39 +27,103 @@ class _DoctorFilterBottomSheetState extends State<DoctorFilterBottomSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
-              decoration: InputDecoration(labelText: 'Doctor Name'),
+              style: Theme.of(context).textTheme.bodyText2,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'Doctor Name',
+                labelText: 'Doctor Name',
+                prefixIcon: const Icon(
+                  Icons.supervised_user_circle,
+                  color: Colors.grey,
+                ),
+                prefixText: ' ',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 15.0, horizontal: 20.0,
+                ),
+              ),
               onSaved: (value) {
                 _filters['doctorName'] = value ?? '';
               },
             ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Specialty'),
-              onSaved: (value) {
-                _filters['specialty'] = value ?? '';
+            SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Specialty',
+                labelStyle: TextStyle(fontSize: 10),
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              ),
+              items: specialties.map((String specialty) {
+                return DropdownMenuItem<String>(
+                  value: specialty,
+                  child: Text(specialty, style: Theme.of(context).textTheme.bodyText2),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _filters['specialty'] = newValue!;
+                });
               },
             ),
+            SizedBox(height: 10),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Hospital'),
+              style: Theme.of(context).textTheme.bodyText2,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'Hospital',
+                labelText: 'Hospital',
+                prefixIcon: const Icon(
+                  Icons.home,
+                  color: Colors.grey,
+                ),
+                prefixText: ' ',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 15.0, horizontal: 20.0,
+                ),
+              ),
               onSaved: (value) {
                 _filters['hospital'] = value ?? '';
               },
             ),
+            SizedBox(height: 10),
             TextFormField(
-              decoration: InputDecoration(labelText: 'City'),
+              style: Theme.of(context).textTheme.bodyText2,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'Area',
+                labelText: 'Area',
+                prefixIcon: const Icon(
+                  Icons.home,
+                  color: Colors.grey,
+                ),
+                prefixText: ' ',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 15.0, horizontal: 20.0,
+                ),
+              ),
               onSaved: (value) {
-                _filters['city'] = value ?? '';
+                _filters['area'] = value ?? '';
               },
             ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'State'),
-              onSaved: (value) {
-                _filters['state'] = value ?? '';
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Country'),
-              onSaved: (value) {
-                _filters['country'] = value ?? '';
+            SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'City',
+                labelStyle: TextStyle(fontSize: 10),
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                hintText: 'City', // Provide a hint text
+                hintStyle: TextStyle(color: Colors.amber), // Change the placeholder color
+
+              ),
+              items: cities.map((String city) {
+                return DropdownMenuItem<String>(
+                  value: city,
+                  child: Text(city, style: Theme.of(context).textTheme.bodyText2),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _filters['city'] = newValue!;
+                });
               },
             ),
             SizedBox(height: 20),

@@ -344,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
           arguments: {"data": null});
     } else if (serviceId == 16) {
       Navigator.of(context, rootNavigator: true).pushNamed(
-          UavRoutes.Patient_history_screen_1,
+          UavRoutes.Case_History_Tab,
           arguments: {"data": null});
     } else if (serviceId == 9) {
      /* Navigator.of(context, rootNavigator: true)

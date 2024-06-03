@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/routes.dart';
 
 class SplashView extends StatefulWidget {
@@ -34,7 +35,17 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
           (Timer timer) {
         if (_start == 0) {
           _timer.cancel();
-          Navigator.pushReplacementNamed(context, UavRoutes.Login_Screen);
+          checkCustomerSession().then((value) {
+            if (value != null) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                UavRoutes.Home_Screen,
+                    (route) => false,
+              );
+            }else{
+              Navigator.pushReplacementNamed(context, UavRoutes.Login_Screen);
+            }
+          });
         } else {
           _start--;
         }

@@ -171,7 +171,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ),
       Positioned(
-        bottom: 0,
+        bottom: 15,
         left: 15,
         right: 15,
         child: GestureDetector(
@@ -190,8 +190,9 @@ class _HomeTabState extends State<HomeTab> {
                   minHeight: 70.0, // Set the minimum height
                 ),
                 decoration: BoxDecoration(
+                  color: Colors.white, // Set the background color here
                   border: Border.all(
-                    color:Activity_Box_Border_Color, // Border color
+                    color: Activity_Box_Border_Color, // Border color
                     width: 1.0, // Border width
                   ),
                   borderRadius: BorderRadius.circular(8.0), // Border radius for rounded corners
@@ -200,8 +201,8 @@ class _HomeTabState extends State<HomeTab> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 30.0,
-                      width: 30.0,
+                      height: 20.0,
+                      width: 20.0,
                       child: Image.asset(
                         "assets/images/visitclinic.png",
                         color: UavPrimaryColor,
