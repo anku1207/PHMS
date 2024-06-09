@@ -7,17 +7,18 @@ import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
 import 'package:phms/PHMS/view/home/appointment/AppointmentTab.dart';
 import 'package:phms/PHMS/view/home/appointment/AppointmentList.dart';
+import 'package:phms/PHMS/view/home/appointment/BookAppointment.dart';
 import 'package:phms/PHMS/view/home/doctore_list/DoctorDetails.dart';
 import 'package:phms/PHMS/view/home/doctore_list/DoctorList.dart';
 import 'package:phms/PHMS/view/home/history/HistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/CaseHistoryTab.dart';
+import 'package:phms/PHMS/view/home/appointment/PatientCaseDetailsScreen.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_2.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_3.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_1.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_2.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_3.dart';
-import 'package:phms/PHMS/view/home/video_appointment/VideoAppointment.dart';
 import 'package:phms/PHMS/view/login/LoginScreen.dart';
 import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrationDetailsScreen.dart';
 import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrationHospitalDetails.dart';
@@ -50,9 +51,12 @@ class UavRoutes {
   static const Patient_history_screen_2 = "/patient_history_screen_2";
   static const Patient_history_screen_3 = "/patient_history_screen_3";
   static const Appointment_list = "/appointment_list";
-  static const Video_case_register_screen_1 = "/video_case_register_screen_1";
+  static const Book_Appointment = "/book_appointment";
   static const Appointment_list_grid = "/appointment_list_grid";
   static const Doctor_Details = "/doctor_details";
+  static const Patient_Case_Details_Screen = "/patient_case_details_screen";
+
+
 
 
   static const History_screen_1 = "/history_screen_1";
@@ -109,8 +113,8 @@ class RouteGenerator {
         return BouncyPage(widget: HistoryScreen_1(argument: settings.arguments!));
       case UavRoutes.Appointment_list :
         return BouncyPage(widget: AppointmentList(argument: settings.arguments!));
-      case UavRoutes.Video_case_register_screen_1 :
-        return BouncyPage(widget: VideoAppointment(argument: settings.arguments!));
+      case UavRoutes.Book_Appointment :
+        return BouncyPage(widget: BookAppointment(argument: settings.arguments!));
       case UavRoutes.Appointment_list_grid :
         return BouncyPage(widget: AppointmentTab(argument: settings.arguments!));
       case UavRoutes.Doctor_List :
@@ -119,6 +123,8 @@ class RouteGenerator {
         return BouncyPage(widget: CaseHistoryTab(argument: settings.arguments!));
       case UavRoutes.Doctor_Details :
         return BouncyPage(widget: DoctorDetails(argument: settings.arguments!));
+      case UavRoutes.Patient_Case_Details_Screen :
+        return BouncyPage(widget: PatientCaseDetailsScreen(argument: settings.arguments!));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

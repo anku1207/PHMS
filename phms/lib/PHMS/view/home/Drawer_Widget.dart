@@ -35,107 +35,115 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero, // Set padding to zero
-        children: <Widget>[
-          _buildDrawerHeader(context),
-          loginType != "1"
-              ? Column(
-                  children: [
-                    _buildPortfolioItem(
-                      context: context,
-                      leftIcon: Image.asset(
-                        'assets/images/addmember.png',
-                        width: 30,
-                        height: 30,
-                        color: Colors.black,
-                      ),
-                      rightIcon: Icon(Icons.arrow_right),
-                      btnName: 'Family',
-                      subtitle: 'Add members/View Member',
-                    ),
-                    _buildDivider(),
-                    _buildPortfolioItem(
-                      context: context,
-                      leftIcon: Image.asset(
-                        'assets/images/medical_bill.png',
-                        width: 30,
-                        height: 30,
-                        color: Colors.black,
-                      ),
-                      rightIcon: Icon(Icons.arrow_right),
-                      btnName: 'Bills',
-                      subtitle: 'Search by date and member',
-                    ),
-                    _buildDivider(),
-                    _buildPortfolioItem(
-                      context: context,
-                      leftIcon: Image.asset(
-                        'assets/images/report.png',
-                        width: 30,
-                        height: 30,
-                        color: Colors.black,
-                      ),
-                      rightIcon: Icon(Icons.arrow_right),
-                      btnName: 'Report',
-                      subtitle: '',
-                    ),
-                    _buildDivider(),
-                    _parentChildList(),
-                  ],
-                )
-              : SizedBox(), // Empty widget if loginType is not "1"
-          _buildPortfolioItem(
-            context: context,
-            leftIcon: Image.asset(
-              'assets/images/profile.png',
-              width: 30,
-              height: 30,
-              color: Colors.black,
-            ),
-            rightIcon: Icon(Icons.arrow_right),
-            btnName: 'Profile',
+    double statusBarHeightDouble = MediaQuery.of(context).padding.top;
+    int statusBarHeight = statusBarHeightDouble.toInt();
+
+    //kToolbarHeight
+    return Padding(
+        padding: EdgeInsets.only(
+          top: kToolbarHeight + statusBarHeight.toDouble(),
+        ),
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero, // This removes the default padding of ListView
+            children: <Widget>[
+              //buildDrawerHeader(context),
+              loginType != "1"
+                  ? Column(
+                      children: [
+                        _buildPortfolioItem(
+                          context: context,
+                          leftIcon: Image.asset(
+                            'assets/images/addmember.png',
+                            width: 30,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          rightIcon: Icon(Icons.arrow_right),
+                          btnName: 'Family',
+                          subtitle: 'Add members/View Member',
+                        ),
+                        _buildDivider(),
+                        _buildPortfolioItem(
+                          context: context,
+                          leftIcon: Image.asset(
+                            'assets/images/medical_bill.png',
+                            width: 30,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          rightIcon: Icon(Icons.arrow_right),
+                          btnName: 'Bills',
+                          subtitle: 'Search by date and member',
+                        ),
+                        _buildDivider(),
+                        _buildPortfolioItem(
+                          context: context,
+                          leftIcon: Image.asset(
+                            'assets/images/report.png',
+                            width: 30,
+                            height: 30,
+                            color: Colors.black,
+                          ),
+                          rightIcon: Icon(Icons.arrow_right),
+                          btnName: 'Report',
+                          subtitle: '',
+                        ),
+                        _buildDivider(),
+                        _parentChildList(),
+                      ],
+                    )
+                  : SizedBox(), // Empty widget if loginType is not "1"
+              _buildPortfolioItem(
+                context: context,
+                leftIcon: Image.asset(
+                  'assets/images/profile.png',
+                  width: 30,
+                  height: 30,
+                  color: Colors.black,
+                ),
+                rightIcon: Icon(Icons.arrow_right),
+                btnName: 'Profile',
+              ),
+              _buildDivider(),
+              _buildPortfolioItem(
+                context: context,
+                leftIcon: Image.asset(
+                  'assets/images/about.png',
+                  width: 30,
+                  height: 30,
+                  color: Colors.black,
+                ),
+                rightIcon: Icon(Icons.arrow_right),
+                btnName: 'AboutsUs',
+              ),
+              _buildDivider(),
+              _buildPortfolioItem(
+                context: context,
+                leftIcon: Image.asset(
+                  'assets/images/t&c.png',
+                  width: 30,
+                  height: 30,
+                  color: Colors.black,
+                ),
+                rightIcon: Icon(Icons.arrow_right),
+                btnName: 'Terms & Condition',
+              ),
+              _buildDivider(),
+              _buildPortfolioItem(
+                context: context,
+                leftIcon: Image.asset(
+                  'assets/images/signout.png',
+                  width: 30,
+                  height: 30,
+                  color: Colors.black,
+                ),
+                rightIcon: Icon(Icons.arrow_right),
+                btnName: 'SignOut',
+              ),
+            ],
           ),
-          _buildDivider(),
-          _buildPortfolioItem(
-            context: context,
-            leftIcon: Image.asset(
-              'assets/images/about.png',
-              width: 30,
-              height: 30,
-              color: Colors.black,
-            ),
-            rightIcon: Icon(Icons.arrow_right),
-            btnName: 'AboutsUs',
-          ),
-          _buildDivider(),
-          _buildPortfolioItem(
-            context: context,
-            leftIcon: Image.asset(
-              'assets/images/t&c.png',
-              width: 30,
-              height: 30,
-              color: Colors.black,
-            ),
-            rightIcon: Icon(Icons.arrow_right),
-            btnName: 'Terms & Condition',
-          ),
-          _buildDivider(),
-          _buildPortfolioItem(
-            context: context,
-            leftIcon: Image.asset(
-              'assets/images/signout.png',
-              width: 30,
-              height: 30,
-              color: Colors.black,
-            ),
-            rightIcon: Icon(Icons.arrow_right),
-            btnName: 'SignOut',
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
   UserAccountsDrawerHeader _buildDrawerHeader(BuildContext context) {
@@ -186,15 +194,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             "subtitle": "",
             "icon": "assets/images/madical.png"
           },
-          {
-            "title": "Labs",
-            "subtitle": "",
-            "icon":"assets/images/labs.png"
-          },
+          {"title": "Labs", "subtitle": "", "icon": "assets/images/labs.png"},
           {
             "title": "Health Checkup",
             "subtitle": "",
-            "icon":"assets/images/checkup.png"
+            "icon": "assets/images/checkup.png"
           },
         ]
       },
@@ -212,8 +216,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               title: Text(
                 parent,
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               trailing: _isExpandedList[index]
                   ? Icon(Icons.keyboard_arrow_up)
@@ -271,7 +275,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         Navigator.of(context).pop();
         if (btnName == 'ADD_APPOINTMENT') {
           // Navigator.pushNamed(widget.previousContext, UavRoutes.AddAppointment_Screen);
-        } else if (btnName == 'LOGOUT') {
+        } else if (btnName.toLowerCase() == 'signout') {
           showModalBottomSheet(
               context: context,
               builder: (BuildContext bc) {

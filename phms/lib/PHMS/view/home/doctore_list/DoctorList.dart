@@ -157,8 +157,8 @@ class _DoctorListState extends State<DoctorList> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.of(context, rootNavigator: true).pushNamed(
-                                            UavRoutes.Video_case_register_screen_1,
-                                            arguments: {"data": null});
+                                            UavRoutes.Book_Appointment,
+                                            arguments: {"booking_type":"v"});
                                       },
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
@@ -206,9 +206,9 @@ class _DoctorListState extends State<DoctorList> {
                                     SizedBox(width: 20), // Add horizontal space
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context, rootNavigator: false).pushNamed(
-                                            UavRoutes.Patient_case_register_screen_1,
-                                            arguments: {"data": null});
+                                        Navigator.of(context, rootNavigator: true).pushNamed(
+                                            UavRoutes.Book_Appointment,
+                                            arguments:{"booking_type":"c"});
                                       },
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
