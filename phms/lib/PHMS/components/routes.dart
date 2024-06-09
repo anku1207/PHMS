@@ -13,6 +13,7 @@ import 'package:phms/PHMS/view/home/doctore_list/DoctorList.dart';
 import 'package:phms/PHMS/view/home/history/HistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/CaseHistoryTab.dart';
 import 'package:phms/PHMS/view/home/appointment/PatientCaseDetailsScreen.dart';
+import 'package:phms/PHMS/view/home/patient_history/PDFViewerScreen.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_2.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_3.dart';
@@ -55,6 +56,7 @@ class UavRoutes {
   static const Appointment_list_grid = "/appointment_list_grid";
   static const Doctor_Details = "/doctor_details";
   static const Patient_Case_Details_Screen = "/patient_case_details_screen";
+  static const PDF_Viewer_Screen = "/pdf_viewer_screen";
 
 
 
@@ -125,6 +127,8 @@ class RouteGenerator {
         return BouncyPage(widget: DoctorDetails(argument: settings.arguments!));
       case UavRoutes.Patient_Case_Details_Screen :
         return BouncyPage(widget: PatientCaseDetailsScreen(argument: settings.arguments!));
+      case UavRoutes.PDF_Viewer_Screen :
+        return BouncyPage(widget: PDFViewerScreen(pdfUrl:settings.arguments! as String));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

@@ -5,6 +5,7 @@ import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
 import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CaseHistoryTab extends StatefulWidget {
   late final Object argument;
@@ -128,13 +129,15 @@ class _HomeTabState extends State<HomeTab> {
     return Stack(children: [
       GestureDetector(
         onTap: () {
-          Navigator.of(context, rootNavigator: true).pushNamed(
-              UavRoutes.Patient_Case_Details_Screen,
-              arguments:{"patientName": 'John Doe',
-                "caseDescription": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel arcu sed metus commodo pretium.',
-                "diagnosis": 'Diagnosis details...',
-                "treatment": 'Prescribed antibiotics for 10 days. Advised to rest and drink fluids.',
-              });
+          Navigator.of(context, rootNavigator: true)
+              .pushNamed(UavRoutes.Patient_Case_Details_Screen, arguments: {
+            "patientName": 'John Doe',
+            "caseDescription":
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel arcu sed metus commodo pretium.',
+            "diagnosis": 'Diagnosis details...',
+            "treatment":
+                'Prescribed antibiotics for 10 days. Advised to rest and drink fluids.',
+          });
         },
         child: Container(
           child: ListView.separated(
@@ -242,7 +245,12 @@ class _HomeTabState extends State<HomeTab> {
                               ),
                               SizedBox(width: 20), // Add horizontal space
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushNamed(UavRoutes.PDF_Viewer_Screen,
+                                      arguments:
+                                      "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");
+                                },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -297,7 +305,14 @@ class _HomeTabState extends State<HomeTab> {
                               ),
                               SizedBox(width: 20), // Add horizontal space
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+
+                                  _launchURL("https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");
+                                  /*Navigator.of(context, rootNavigator: true)
+                                      .pushNamed(UavRoutes.PDF_Viewer_Screen,
+                                          arguments:
+                                              "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");*/
+                                },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -366,5 +381,16 @@ class _HomeTabState extends State<HomeTab> {
         ),
       )
     ]);
+  }
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+
+    try {
+      await launch(uri.toString());
+    } catch (e) {
+      print('Error launching URL: $e');
+      // Handle error appropriately
+    }
   }
 }
