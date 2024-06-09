@@ -168,6 +168,8 @@ Thumbs.db
 *.pid.lock
 npm-debug.log*
 yarn-debug.log*
+# Exclude large Flutter build files
+**/android/app/build/intermediates/flutter/debug/flutter_assets/kernel_blob.bin
 yarn-error.log*
 *.cert
 *.key
