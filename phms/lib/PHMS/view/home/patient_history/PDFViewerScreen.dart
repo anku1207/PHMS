@@ -56,6 +56,8 @@ class _PDFViewerScreenState extends State<PDFViewerScreen> {
         onPageError: (page, error) {
           print('Error occurred on page $page: $error');
         },
+
+
         onViewCreated: (PDFViewController controller) {
           // Use the controller as needed
         },
