@@ -1,5 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
+import 'package:phms/PHMS/components/constants.dart';
+import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
+import 'package:phms/PHMS/view/home/appointment/AppointmentTab.dart';
+
+import 'CaseDetailsCard.dart';
+import 'DoctorDetailsCard.dart';
 
 class PatientCaseDetailsScreen extends StatefulWidget {
   late final Object argument;
@@ -16,6 +25,7 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
   late String caseDescription;
   late String diagnosis;
   late String treatment;
+  bool showReports =false;
 
   @override
   void initState() {
@@ -27,199 +37,103 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
     caseDescription = argumentsMap["caseDescription"];
     diagnosis = argumentsMap["diagnosis"];
     treatment = argumentsMap["treatment"];
+    showReports=argumentsMap["showReports"];
   }
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm')
+        .format(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Patient Case Details'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-                width: double.infinity,
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: Colors.grey[400]!,
-                    width: 1.0,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
+        appBar: AppBar(
+          title: Text('Patient Case Details'),
+        ),
+        body: Stack(children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(
+                      color: Colors.grey[400]!,
+                      width: 1.0,
                     ),
-                  ],
-                ),
-                child: _buildPatientInfo()),
-            Container(
-                width: double.infinity,
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: Colors.grey[400]!,
-                    width: 1.0,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: _buildCaseDescription()),
-            Container(
-                width: double.infinity,
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: Colors.grey[400]!,
-                    width: 1.0,
+                  child: DoctorDetailsCard(
+                    argument: {
+                      "doctorName": 'Dr. Smith',
+                      "specialization": 'Cardiologist',
+                      "contactNumber": '123-456-7890',
+                    },
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
                 ),
-                child: _buildDiagnosis()),
-            Container(
-                width: double.infinity,
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(
-                    color: Colors.grey[400]!,
-                    width: 1.0,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
+                SizedBox(height: 16),
+                Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.0),
+                      border: Border.all(
+                        color: Colors.grey[400]!,
+                        width: 1.0,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: _buildTreatment()),
-          ],
-        ),
-      ),
-    );
-  }
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CaseDetailsCard(argument: {
+                          "patientName": 'John Doe',
+                          "caseDescription": 'Follow-up for hypertension',
+                          "diagnosis": 'Hypertension Stage 1',
+                          "treatment": 'Medication adjustment',
+                          "appointmentTime": formattedDate
+                        }),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20, bottom: 20),
+                          child: showReports?
+                            caseHistoryReports(context, (result) {
+                              if (result == "report") {
+                                launchURL(
+                                    "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");
+                              } else if (result == "bill") {
+                                launchURL(
+                                    "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");
+                              } else if (result == "prescription") {
+                                launchURL(
+                                    "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");
+                              }
+                            }):showCancelAndReschedule(context),
 
-  Widget _buildPatientInfo() {
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Patient Name:',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(patientName, style: Theme.of(context).textTheme.bodyText2),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCaseDescription() {
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Case Description:',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(caseDescription, style: Theme.of(context).textTheme.bodyText2),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDiagnosis() {
-    return Expanded(
-        child: Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Diagnosis:',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(diagnosis, style: Theme.of(context).textTheme.bodyText2),
-          ],
-        ),
-      ),
-    ));
-  }
-
-  Widget _buildTreatment() {
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Treatment:',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    ?.copyWith(fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text(treatment, style: Theme.of(context).textTheme.bodyText2),
-          ],
-        ),
-      ),
-    );
+                        )
+                      ],
+                    )),
+              ],
+            ),
+          ),
+        ]));
   }
 }

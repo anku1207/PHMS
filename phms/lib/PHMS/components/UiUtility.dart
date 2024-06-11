@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:phms/PHMS/components/routes.dart';
+
+import 'constants.dart';
 
 Future<String>? showAlertDialog(
     {required BuildContext context,
@@ -108,5 +111,407 @@ Container dropDownLayout(BuildContext context, String hintText,
     ),
   );
 }
+void cancelAppointment(BuildContext context, Function returnFunction) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                "Cancel Appointment",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(35.0),
+                child: Text(
+                  "Are you sure you want to cancel this appointment ?",
+                  textAlign: TextAlign.center,
+                  style:
+                  TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      returnFunction("no");
+                    },
+                    child: Text("No".toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        )),
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      returnFunction("yes");
+                    },
+                    child: Text("Yes".toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        )),
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      });
+}
+
+Align caseHistoryReports(BuildContext context, Function function ){
+ return Align(
+    alignment: Alignment.bottomRight,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () {
+            function("report");
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0,
+                // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight:
+                  50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Activity_Box_Border_Color,
+                    // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment:
+                  MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Image.asset(
+                        "assets/images/report.png",
+                        color: UavPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Report",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
+                        fontSize:
+                        8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 20), // Add horizontal space
+        GestureDetector(
+          onTap: () {
+            /* Navigator.of(context, rootNavigator: true)
+                                      .pushNamed(UavRoutes.PDF_Viewer_Screen,
+                                      arguments:
+                                      "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");*/
+            function("bill");
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0,
+                // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight:
+                  50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Activity_Box_Border_Color,
+                    // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment:
+                  MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Image.asset(
+                        "assets/images/medical_bill.png",
+                        color: UavPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Bill",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
+                        fontSize:
+                        8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 20), // Add horizontal space
+        GestureDetector(
+          onTap: () {
+            function("prescription");
+
+            /*Navigator.of(context, rootNavigator: true)
+                                      .pushNamed(UavRoutes.PDF_Viewer_Screen,
+                                          arguments:
+                                              "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf");*/
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0,
+                // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight:
+                  50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Activity_Box_Border_Color,
+                    // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment:
+                  MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Image.asset(
+                        "assets/images/Prescription.png",
+                        color: UavPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Prescription",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
+                        fontSize:
+                        8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Align showCancelAndReschedule(BuildContext context){
+  return Align(
+    alignment: Alignment.bottomCenter,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () {
+            cancelAppointment(context, (result) {
+              Navigator.pop(context);
+              if (result?.toLowerCase() == "yes") {}
+            });
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0,
+                // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight: 50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Activity_Box_Border_Color,
+                    // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Icon(
+                        Icons.cancel,
+                        // Use the appropriate icon here
+                        color: Colors.red,
+                        size:
+                        20.0, // Set the desired size for the icon
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Cancel",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
+                        fontSize:
+                        8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 20), // Add horizontal space
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).pushNamed(
+                UavRoutes.Book_Appointment,
+                arguments: {"booking_type": "re"});
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0,
+                // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight: 50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Activity_Box_Border_Color,
+                    // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Icon(
+                        Icons.access_time_filled,
+                        // Use the appropriate icon here
+                        color: UavPrimaryColor,
+                        size:
+                        20.0, // Set the desired size for the icon
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Reschedule",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1
+                          ?.copyWith(
+                        fontSize:
+                        8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 
 

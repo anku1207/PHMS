@@ -107,14 +107,23 @@ class _DoctorListState extends State<DoctorList> {
               itemBuilder: (context, index) {
                 final doctor = doctorListResponseVO.doctorlist![index];
                 return Container(
+                    width: double.infinity,
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(15.0),
-                      // Rounded corners
                       border: Border.all(
-                        color: Colors.grey, // Border color
-                        width: 1.0, // Border width
+                        color: Colors.grey[400]!,
+                        width: 1.0,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
                     child: GestureDetector(
                       onTap: () {

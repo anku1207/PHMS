@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'constants.dart';
 import 'package:intl/intl.dart';
 import 'package:image/image.dart' as img; // Import the 'image' package
@@ -260,4 +261,15 @@ String convertImageToBase64(PickedFile pickedImage) {
   String base64Image = base64Encode(imageBytes);
 
   return base64Image;
+}
+
+Future<void> launchURL(String url) async {
+  final Uri uri = Uri.parse(url);
+
+  try {
+    await launch(uri.toString());
+  } catch (e) {
+    print('Error launching URL: $e');
+    // Handle error appropriately
+  }
 }
