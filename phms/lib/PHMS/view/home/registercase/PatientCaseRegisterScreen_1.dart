@@ -198,7 +198,7 @@ class _PatientCaseRegisterScreen_1State
         } else {
           showAlertDialog(
               context: context,
-              btnNameOk: "ok",
+              btnNameOk: "Ok",
               btnNameCancel: null,
               title: "Oops! ",
               message: value.message!);

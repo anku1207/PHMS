@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/model/response_model/DoctorDetailsVO.dart';
 
 import 'InfoRow.dart';
@@ -112,6 +113,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                               label: 'Phone Number',
                               value: doctor.phoneNumber!),
                           InfoRow(label: 'Email', value: doctor.email!),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child:appointmentBookBtn(context)
+                          )
                         ],
                       ),
                     ))

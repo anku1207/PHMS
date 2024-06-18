@@ -72,7 +72,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
         } else {
           showAlertDialog(
               context: context,
-              btnNameOk: "ok",
+              btnNameOk: "Ok",
               btnNameCancel: null,
               title: "Oops! ",
               message: value.message!);

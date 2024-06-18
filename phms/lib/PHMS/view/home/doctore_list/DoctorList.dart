@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/model/response_model/DoctorListResponseVO.dart';
@@ -89,6 +90,7 @@ class _DoctorListState extends State<DoctorList> {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
                 builder: (context) {
                   return DoctorFilterBottomSheet(
                     onFilterApplied: _filterDoctors,
@@ -139,131 +141,48 @@ class _DoctorListState extends State<DoctorList> {
                             children: [
                               Text(
                                   doctor.doctorName!,
-                                  style:Theme.of(context).textTheme.headline2
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headline2
                               ),
                               SizedBox(height: 8),
-                              Text('Specialty: ${doctor.specialty}',style:Theme.of(context).textTheme.bodyText2),
+                              Text(
+                                  'Specialty: ${doctor.specialty}', style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2),
                               SizedBox(height: 4),
-                              Text('Hospital: ${doctor.hospital}',style:Theme.of(context).textTheme.bodyText2),
+                              Text('Hospital: ${doctor.hospital}', style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2),
                               SizedBox(height: 4),
-                              Text('Address: ${doctor.address}',style:Theme.of(context).textTheme.bodyText2),
+                              Text('Address: ${doctor.address}', style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2),
                               SizedBox(height: 4),
-                              Text('City: ${doctor.city}',style:Theme.of(context).textTheme.bodyText2),
+                              Text('City: ${doctor.city}', style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2),
                               SizedBox(height: 4),
-                              Text('State: ${doctor.state}',style:Theme.of(context).textTheme.bodyText2),
+                              Text('Phone Number: ${doctor.phoneNumber}',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodyText2),
                               SizedBox(height: 4),
-                              Text('Zip Code: ${doctor.zipCode}',style:Theme.of(context).textTheme.bodyText2),
-                              SizedBox(height: 4),
-                              Text('Phone Number: ${doctor.phoneNumber}',style:Theme.of(context).textTheme.bodyText2),
-                              SizedBox(height: 4),
-                              Text('Time: ${doctor.time}',style:Theme.of(context).textTheme.bodyText2),
+                              Text('Time: ${doctor.time}', style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyText2),
                               SizedBox(height: 4),
                               Align(
-                                alignment: Alignment.bottomRight,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context, rootNavigator: true).pushNamed(
-                                            UavRoutes.Book_Appointment,
-                                            arguments: {"booking_type":"v"});
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 70.0, // Width is set correctly
-                                            padding: const EdgeInsets.all(4.0),
-                                            constraints: BoxConstraints(
-                                              minHeight: 50.0, // Set the minimum height
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color:Activity_Box_Border_Color, // Border color
-                                                width: 1.0, // Border width
-                                              ),
-                                              borderRadius: BorderRadius.circular(8.0), // Border radius for rounded corners
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 20.0,
-                                                  width: 20.0,
-                                                  child: Image.asset(
-                                                    "assets/images/Calladoctor.png",
-                                                    color: UavPrimaryColor,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  "Call A Doctor",
-                                                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                                    fontSize: 8.0, // Set your desired font size here
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                  maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 20), // Add horizontal space
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context, rootNavigator: true).pushNamed(
-                                            UavRoutes.Book_Appointment,
-                                            arguments:{"booking_type":"c"});
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 70.0, // Width is set correctly
-                                            padding: const EdgeInsets.all(4.0),
-                                            constraints: BoxConstraints(
-                                              minHeight: 50.0, // Set the minimum height
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color:Activity_Box_Border_Color, // Border color
-                                                width: 1.0, // Border width
-                                              ),
-                                              borderRadius: BorderRadius.circular(8.0), // Border radius for rounded corners
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 20.0,
-                                                  width: 20.0,
-                                                  child: Image.asset(
-                                                    "assets/images/visitclinic.png",
-                                                    color: UavPrimaryColor,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  "Visit Clinic",
-                                                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                                    fontSize: 8.0, // Set your desired font size here
-                                                  ),                                              textAlign: TextAlign.center,
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                  alignment: Alignment.bottomRight,
+                                  child:appointmentBookBtn(context)
+                              )
                             ],
                           ),
                         ),

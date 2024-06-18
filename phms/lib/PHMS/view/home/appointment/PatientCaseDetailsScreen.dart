@@ -26,6 +26,7 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
   late String diagnosis;
   late String treatment;
   bool showReports =false;
+  late String title;
 
   @override
   void initState() {
@@ -38,6 +39,8 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
     diagnosis = argumentsMap["diagnosis"];
     treatment = argumentsMap["treatment"];
     showReports=argumentsMap["showReports"];
+
+    title=showReports?"Case Details":"Appointment Detail";
   }
 
   @override
@@ -46,11 +49,11 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
         .format(DateTime.now().add(Duration(days: 1)));
     return Scaffold(
         appBar: AppBar(
-          title: Text('Patient Case Details'),
+          title: Text(title),
         ),
         body: Stack(children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(4.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -102,7 +105,7 @@ class _PatientCaseDetailsScreenState extends State<PatientCaseDetailsScreen> {
                       ],
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CaseDetailsCard(argument: {

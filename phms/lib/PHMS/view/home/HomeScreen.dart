@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       myList.add(DashboardItemVO(
           id: Appointment,
-          name: "Appointment",
+          name: "Appointments",
           image: "assets/images/viewhistory.png",
           count: "0"));
       myList.add(DashboardItemVO(
@@ -128,11 +128,11 @@ class _HomeScreenState extends State<HomeScreen> {
           name: "Hospitalization",
           image: "assets/images/uploadreports.png",
           count: "0"));
-      myList.add(DashboardItemVO(
+     /* myList.add(DashboardItemVO(
           id: Refer_Doctor,
           name: "Refer Doctor",
           image: "assets/images/viewcase.png",
-          count: "0"));
+          count: "0"));*/
       myList.add(DashboardItemVO(
           id: Refer_APP,
           name: "Refer App",

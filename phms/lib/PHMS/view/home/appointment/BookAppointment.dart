@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart' as Constants;
 import 'package:phms/PHMS/components/utility.dart';
@@ -244,6 +245,12 @@ class _BookAppointmentState extends State<BookAppointment> {
                                             if (_formKey.currentState
                                                 ?.validate() ??
                                                 false) {
+                                              appointmentConfirmation(context,"Appointment Confirmation","Your appointment with test Doctor is confirmed for $_selectedDate at $_selectedTime.", (result) {
+                                                Navigator.pop(context);
+                                                if (result?.toLowerCase() == "yes") {
+
+                                                }
+                                              },yes:"Confirm",no:"No");
 
                                             }
                                           },

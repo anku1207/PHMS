@@ -870,7 +870,7 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
         } else {
           showAlertDialog(
               context: context,
-              btnNameOk: "ok",
+              btnNameOk: "Ok",
               btnNameCancel: null,
               title: "Oops! ",
               message: value.message!);

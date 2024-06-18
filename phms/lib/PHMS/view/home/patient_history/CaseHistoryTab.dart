@@ -200,7 +200,7 @@ class _HomeTabState extends State<HomeTab> {
                             SizedBox(height: 4),
                             Text('Address: ${appointment.reason}',
                                 style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: 16),
+                            SizedBox(height: 20),
                             caseHistoryReports(context, (result) {
                               if (result == "report") {
                                 launchURL(

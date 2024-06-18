@@ -436,7 +436,7 @@ class _PatientCaseRegisterScreen_3State
               },backBtn: false);
               /*showAlertDialog(
                   context: context,
-                  btnNameOk: "ok",
+                  btnNameOk: "Ok",
                   btnNameCancel: null,
                   title: "Oops! ",
                   message: value.message!);*/

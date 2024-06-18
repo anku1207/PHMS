@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/view/home/appointment/CancelAppointmentBottomSheet.dart';
 
 import 'constants.dart';
 
@@ -149,7 +150,7 @@ void cancelAppointment(BuildContext context, Function returnFunction) {
                     onPressed: () {
                       returnFunction("no");
                     },
-                    child: Text("No".toUpperCase(),
+                    child: Text("No",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -170,7 +171,7 @@ void cancelAppointment(BuildContext context, Function returnFunction) {
                     onPressed: () {
                       returnFunction("yes");
                     },
-                    child: Text("Yes".toUpperCase(),
+                    child: Text("Yes",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -191,6 +192,90 @@ void cancelAppointment(BuildContext context, Function returnFunction) {
         );
       });
 }
+
+
+void appointmentConfirmation(BuildContext context,String title,String message ,Function returnFunction,{yes,no}) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                "$title",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(35.0),
+                child: Text(
+                  "$message",
+                  textAlign: TextAlign.center,
+                  style:
+                  TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      returnFunction("no");
+                    },
+                    child: Text("$no",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        )),
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      returnFunction("yes");
+                    },
+                    child: Text("$yes",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        )),
+                    style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      });
+}
+
+
 
 Align caseHistoryReports(BuildContext context, Function function ){
  return Align(
@@ -392,7 +477,15 @@ Align showCancelAndReschedule(BuildContext context){
           onTap: () {
             cancelAppointment(context, (result) {
               Navigator.pop(context);
-              if (result?.toLowerCase() == "yes") {}
+              if (result?.toLowerCase() == "yes") {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return CancelAppointmentBottomSheet(argument: null);
+                  },
+                );
+              }
             });
           },
           child: Column(
@@ -510,6 +603,112 @@ Align showCancelAndReschedule(BuildContext context){
         ),
       ],
     ),
+  );
+}
+
+Row appointmentBookBtn(BuildContext context){
+  return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).pushNamed(
+                UavRoutes.Book_Appointment,
+                arguments: {"booking_type":"v"});
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0, // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight: 50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color:Activity_Box_Border_Color, // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Image.asset(
+                        "assets/images/Calladoctor.png",
+                        color: UavPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Call A Doctor",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 8.0, // Set your desired font size here
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 20), // Add horizontal space
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).pushNamed(
+                UavRoutes.Book_Appointment,
+                arguments:{"booking_type":"c"});
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 70.0, // Width is set correctly
+                padding: const EdgeInsets.all(4.0),
+                constraints: BoxConstraints(
+                  minHeight: 50.0, // Set the minimum height
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color:Activity_Box_Border_Color, // Border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(8.0), // Border radius for rounded corners
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 20.0,
+                      child: Image.asset(
+                        "assets/images/visitclinic.png",
+                        color: UavPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "Visit Clinic",
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 8.0, // Set your desired font size here
+                      ),                                              textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
   );
 }
 

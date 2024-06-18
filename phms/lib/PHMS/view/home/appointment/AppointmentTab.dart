@@ -7,6 +7,8 @@ import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
 import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
 
+import 'CancelAppointmentBottomSheet.dart';
+
 class AppointmentTab extends StatefulWidget {
   late final Object argument;
 
@@ -191,7 +193,7 @@ class _HomeTabState extends State<HomeTab> {
                           children: [
                             Text(
                               'Doctor: ${appointment.address}',
-                              style: Theme.of(context).textTheme.headline2,
+                              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 16),
                             ),
                             SizedBox(height: 8),
                             Text('Date: ${appointment.appointmentdatetime}',
@@ -202,7 +204,7 @@ class _HomeTabState extends State<HomeTab> {
                             SizedBox(height: 4),
                             Text('Location: ${appointment.reason}',
                                 style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: 4),
+                            SizedBox(height: 20),
                             if (widget.selectTab == 1)
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -213,7 +215,15 @@ class _HomeTabState extends State<HomeTab> {
                                       onTap: () {
                                         cancelAppointment(context, (result) {
                                           Navigator.pop(context);
-                                          if (result?.toLowerCase() == "yes") {}
+                                          if (result?.toLowerCase() == "yes") {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              builder: (BuildContext context) {
+                                                return CancelAppointmentBottomSheet(argument: null);
+                                              },
+                                            );
+                                          }
                                         });
                                       },
                                       child: Column(

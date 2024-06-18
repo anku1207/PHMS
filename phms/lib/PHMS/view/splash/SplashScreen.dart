@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:phms/PHMS/components/Session.dart';
+import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 
 class SplashView extends StatefulWidget {
@@ -65,12 +66,14 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
         },
         child: Container(
             child: Scaffold(
+              backgroundColor: Activity_Button_BG_Color,
                 body: Center(
                   /*child: Lottie.asset('assets/images/splash_animation.json',
                   animate: true,
                   repeat: true)
                   ,*/
-                  child: new Image.asset('assets/images/splash_logo.png'),
+                  child: new Image.asset('assets/images/splash_logo.png',
+                    color: Activity_Icon_Color_White,),
                 ))));
 
   }

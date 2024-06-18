@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 class CaseDetailsCard extends StatefulWidget {
   late final Object argument;
+
   CaseDetailsCard({required this.argument});
+
   @override
   State<CaseDetailsCard> createState() => _CaseDetailsCardState();
 }
 
 class _CaseDetailsCardState extends State<CaseDetailsCard> {
-
   var argumentsMap;
 
   @override
@@ -17,7 +18,6 @@ class _CaseDetailsCardState extends State<CaseDetailsCard> {
     // TODO: implement initState
     super.initState();
     argumentsMap = widget.argument as Map;
-
   }
 
   @override
@@ -32,36 +32,33 @@ class _CaseDetailsCardState extends State<CaseDetailsCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Patient Name: ${argumentsMap["patientName"]}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            Text('Patient Name: ${argumentsMap["patientName"]}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    ?.copyWith(fontSize: 16)),
             SizedBox(height: 8),
-            Text(
-              'Appointment Time: ${argumentsMap["appointmentTime"]}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Case Description:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            Text('Appointment Time:',
+                style: Theme.of(context).textTheme.bodyText2),
             SizedBox(height: 4),
-            Text(argumentsMap["caseDescription"], style: TextStyle(fontSize: 16)),
+            Text(argumentsMap["appointmentTime"],
+                style: Theme.of(context).textTheme.bodyText1),
             SizedBox(height: 8),
-            Text(
-              'Diagnosis:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            Text('Case Description:',
+                style: Theme.of(context).textTheme.bodyText2),
             SizedBox(height: 4),
-            Text(argumentsMap["diagnosis"], style: TextStyle(fontSize: 16)),
+            Text(argumentsMap["caseDescription"],
+                style: Theme.of(context).textTheme.bodyText1),
             SizedBox(height: 8),
-            Text(
-              'Treatment:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            Text('Diagnosis:', style: Theme.of(context).textTheme.bodyText2),
             SizedBox(height: 4),
-            Text(argumentsMap["treatment"], style: TextStyle(fontSize: 16)),
+            Text(argumentsMap["diagnosis"],
+                style: Theme.of(context).textTheme.bodyText1),
+            SizedBox(height: 8),
+            Text('Treatment:', style: Theme.of(context).textTheme.bodyText2),
+            SizedBox(height: 4),
+            Text(argumentsMap["treatment"],
+                style: Theme.of(context).textTheme.bodyText1),
           ],
         ),
       ),

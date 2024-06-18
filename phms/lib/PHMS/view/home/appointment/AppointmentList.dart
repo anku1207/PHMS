@@ -69,7 +69,7 @@ class _AppointmentListState extends State<AppointmentList> {
             } else {
               showAlertDialog(
                   context: context,
-                  btnNameOk: "ok",
+                  btnNameOk: "Ok",
                   btnNameCancel: null,
                   title: "Oops! ",
                   message: value.message!);

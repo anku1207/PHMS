@@ -474,7 +474,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
         print(onError.toString());
         showAlertDialog(
             context: context,
-            btnNameOk: "ok",
+            btnNameOk: "Ok",
             btnNameCancel: null,
             title: "Oops! ",
             message: onError.toString());
@@ -490,7 +490,7 @@ class _PatientRegistrationDetailsScreenState extends State<PatientRegistrationDe
       } else {
         showAlertDialog(
             context: context,
-            btnNameOk: "ok",
+            btnNameOk: "Ok",
             btnNameCancel: null,
             title: "Oops! ",
             message: value!.message!);

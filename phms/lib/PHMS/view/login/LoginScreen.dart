@@ -274,8 +274,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   obscureText: _isHidden,
                                   style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
-                                    hintText: 'Enter Password',
-                                    labelText: 'Enter Password',
+                                    hintText: 'Password',
+                                    labelText: 'Password',
                                     prefixIcon: const Icon(
                                       Icons.lock,
                                       color: Colors.grey,
@@ -357,7 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                   },
                                   child: Text(
-                                    "Didn\'t have account ? Register Now",
+                                    "Didn\'t have account ? Sign Up Now",
                                     textAlign: TextAlign.center,
                                     style: Theme.of(context)
                                         .textTheme
@@ -404,7 +404,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           showAlertDialog(
               context: context,
-              btnNameOk: "ok",
+              btnNameOk: "Ok",
               btnNameCancel: null,
               title: "Oops! ",
               message: value.message!);

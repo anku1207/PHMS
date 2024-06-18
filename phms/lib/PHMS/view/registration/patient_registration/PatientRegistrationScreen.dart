@@ -134,8 +134,8 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
                                           .bodyText2,
                                       decoration: InputDecoration(
                                         counter: Offstage(),
-                                        hintText: 'Patient Name',
-                                        labelText: 'Patient Name',
+                                        hintText: 'Full Name',
+                                        labelText: 'Full Name',
                                         prefixIcon: const Icon(
                                           Icons.drive_file_rename_outline,
                                           color: Colors.grey,
@@ -233,7 +233,7 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
         print(onError.toString());
         showAlertDialog(
             context: context,
-            btnNameOk: "ok",
+            btnNameOk: "Ok",
             btnNameCancel: null,
             title: "Oops! ",
             message: onError.toString());
@@ -250,7 +250,7 @@ class _PatientRegistrationScreenState extends State<PatientRegistrationScreen> {
       } else {
         showAlertDialog(
             context: context,
-            btnNameOk: "ok",
+            btnNameOk: "Ok",
             btnNameCancel: null,
             title: "Oops! ",
             message: value!.message!);

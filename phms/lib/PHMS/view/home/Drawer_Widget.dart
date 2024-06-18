@@ -314,7 +314,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             onPressed: () {
                               Navigator.pop(widget.previousContext);
                             },
-                            child: Text("No".toUpperCase(),
+                            child: Text("No",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -334,7 +334,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ),
                           ElevatedButton(
                             onPressed: () async {},
-                            child: Text("Yes".toUpperCase(),
+                            child: Text("Yes",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,

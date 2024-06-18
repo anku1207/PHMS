@@ -32,18 +32,26 @@ class _DoctorDetailsCardState extends State<DoctorDetailsCard> {
           children: [
             Text(
               'Doctor Name: ${argumentsMap["doctorName"]}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                ?.copyWith(fontSize: 16)),
             SizedBox(height: 8),
             Text(
-              'Specialization: ${argumentsMap["specialization"]}',
-              style: TextStyle(fontSize: 16),
-            ),
+              'Specialization:',
+                style: Theme.of(context).textTheme.bodyText2),
             SizedBox(height: 8),
             Text(
-              'Contact: ${argumentsMap["contactNumber"]}',
-              style: TextStyle(fontSize: 16),
-            ),
+                '${argumentsMap["specialization"]}',
+                style: Theme.of(context).textTheme.bodyText1),
+            SizedBox(height: 8),
+            Text(
+              'Contact:',
+                style: Theme.of(context).textTheme.bodyText2),
+            SizedBox(height: 8),
+            Text(
+                '${argumentsMap["contactNumber"]}',
+                style: Theme.of(context).textTheme.bodyText1),
           ],
         ),
       ),

@@ -29,7 +29,7 @@ import 'ApiUrl.dart';
 
 
 Future<CheckDoctorRegistrationResponse?> checkDoctor(CheckDoctorRegistrationRequestVO checkDoctorRegistrationRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
@@ -46,7 +46,7 @@ Future<CheckDoctorRegistrationResponse?> checkDoctor(CheckDoctorRegistrationRequ
 
 
 Future<CheckPatientRegistrationResponseVO?> checkPatient(CheckPatientRegistrationReqeustVO checkPatientRegistrationReqeustVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
@@ -64,7 +64,7 @@ Future<CheckPatientRegistrationResponseVO?> checkPatient(CheckPatientRegistratio
 
 
 Future<DoctorRegistrationResponseVO?> registerDoctor(DoctorRegistrationVO registrationRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
@@ -80,7 +80,7 @@ Future<DoctorRegistrationResponseVO?> registerDoctor(DoctorRegistrationVO regist
 }
 
 Future<PatientDetailsResponseVO?> registerPatient(PatientRegistrationRequestVO patientRegistrationRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("registerPatient");
   Map<String, String> headers = await getApiHeaders();
 
@@ -97,7 +97,7 @@ Future<PatientDetailsResponseVO?> registerPatient(PatientRegistrationRequestVO p
 
 
 Future<LoginResponseVO?> login(LoginRequestVO loginRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
@@ -114,7 +114,7 @@ Future<LoginResponseVO?> login(LoginRequestVO loginRequestVO) async {
 
 
 Future<PatientDetailsResponseVO?> getPatientDetails(PatientDetailsRequestVO patientDetailsRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
@@ -130,7 +130,7 @@ Future<PatientDetailsResponseVO?> getPatientDetails(PatientDetailsRequestVO pati
 }
 
 Future<CaseRegResponseVO?> caseRegister(CaseRegRequestVO caseRegRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("caseRegister");
   Map<String, String> headers = await getApiHeaders();
 
@@ -147,7 +147,7 @@ Future<CaseRegResponseVO?> caseRegister(CaseRegRequestVO caseRegRequestVO) async
 
 
 Future<CaseSummaryDoctorResponseVO?> patientCaseSummary(CaseSummaryDoctorRequestVO caseSummaryDoctorRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("caseRegister");
   Map<String, String> headers = await getApiHeaders();
 
@@ -163,7 +163,7 @@ Future<CaseSummaryDoctorResponseVO?> patientCaseSummary(CaseSummaryDoctorRequest
 }
 
 Future<CaseDetialsResponseVO?> caseDetails(CaseDetailsRequestVO detailsRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("caseRegister");
   Map<String, String> headers = await getApiHeaders();
 
@@ -179,7 +179,7 @@ Future<CaseDetialsResponseVO?> caseDetails(CaseDetailsRequestVO detailsRequestVO
 }
 
 Future<CaseSummaryResponseVO?> caseSummary(CaseSummaryDoctorRequestVO caseSummaryDoctorRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("caseRegister");
   Map<String, String> headers = await getApiHeaders();
 
@@ -196,7 +196,7 @@ Future<CaseSummaryResponseVO?> caseSummary(CaseSummaryDoctorRequestVO caseSummar
 
 
 Future<AppointmentListResponseVO?> getAppointmentList(AppointmentListRequestVO appointmentListRequestVO) async {
-  EasyLoading.show(status: 'loading...');
+  EasyLoading.show(status: 'Loading...');
   print("getAppointmentList");
   Map<String, String> headers = await getApiHeaders();
 
