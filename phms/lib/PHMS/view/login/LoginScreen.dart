@@ -304,9 +304,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             alignment: Alignment.centerRight,
                             child: TextButton(
                                 onPressed: () {
-                                  // Navigator.push(context,BouncyPage(widget: register()));
-                                  /*Navigator.pushNamed(
-                                      context, UavRoutes.Home_Screen);*/
+                                  Navigator.pushNamed(
+                                      context,
+                                      UavRoutes
+                                          .OTP_SCREEN,arguments: {});
                                 },
                                 child: Text(
                                   "Forgot Password ?",

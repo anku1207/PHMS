@@ -5,14 +5,14 @@ import 'package:phms/PHMS/model/response_model/PatientDetailsResponseVO.dart';
 import 'package:phms/PHMS/view/home/DashboardScreen.dart';
 import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
-import 'package:phms/PHMS/view/home/appointment/AppointmentTab.dart';
-import 'package:phms/PHMS/view/home/appointment/AppointmentList.dart';
-import 'package:phms/PHMS/view/home/appointment/BookAppointment.dart';
-import 'package:phms/PHMS/view/home/doctore_list/DoctorDetails.dart';
-import 'package:phms/PHMS/view/home/doctore_list/DoctorList.dart';
+import 'package:phms/PHMS/view/home/appointment/patient/AppointmentTab.dart';
+import 'package:phms/PHMS/view/home/appointment/doctor/AppointmentList.dart';
+import 'package:phms/PHMS/view/home/appointment/patient/BookAppointment.dart';
+import 'package:phms/PHMS/view/home/doctore_list/patient/DoctorDetails.dart';
+import 'package:phms/PHMS/view/home/doctore_list/patient/DoctorList.dart';
 import 'package:phms/PHMS/view/home/history/HistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/CaseHistoryTab.dart';
-import 'package:phms/PHMS/view/home/appointment/PatientCaseDetailsScreen.dart';
+import 'package:phms/PHMS/view/home/appointment/patient/PatientCaseDetailsScreen.dart';
 import 'package:phms/PHMS/view/home/patient_history/PDFViewerScreen.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_1.dart';
 import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_2.dart';
@@ -20,7 +20,9 @@ import 'package:phms/PHMS/view/home/patient_history/PatientHistoryScreen_3.dart'
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_1.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_2.dart';
 import 'package:phms/PHMS/view/home/registercase/PatientCaseRegisterScreen_3.dart';
+import 'package:phms/PHMS/view/login/CreatePinScreen.dart';
 import 'package:phms/PHMS/view/login/LoginScreen.dart';
+import 'package:phms/PHMS/view/login/OTPScreen.dart';
 import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrationDetailsScreen.dart';
 import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrationHospitalDetails.dart';
 import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrationHospitalDetailsSecondScreen.dart';
@@ -57,6 +59,10 @@ class UavRoutes {
   static const Doctor_Details = "/doctor_details";
   static const Patient_Case_Details_Screen = "/patient_case_details_screen";
   static const PDF_Viewer_Screen = "/pdf_viewer_screen";
+  static const OTP_SCREEN = "/otp_screen";
+  static const Create_Pin_Screen = "/create_pin_screen";
+
+
 
 
 
@@ -129,6 +135,10 @@ class RouteGenerator {
         return BouncyPage(widget: PatientCaseDetailsScreen(argument: settings.arguments!));
       case UavRoutes.PDF_Viewer_Screen :
         return BouncyPage(widget: PDFViewerScreen(pdfUrl:settings.arguments! as String));
+      case UavRoutes.OTP_SCREEN :
+        return BouncyPage(widget: OTPScreen(argument:settings.arguments!));
+      case UavRoutes.Create_Pin_Screen :
+        return BouncyPage(widget: CreatePinScreen(argument:settings.arguments!));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

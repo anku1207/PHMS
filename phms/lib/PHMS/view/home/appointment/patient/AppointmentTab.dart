@@ -1,11 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/DashboardItemVO.dart';
-import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
+
+import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart'
+    as response;
+import 'package:phms/PHMS/model/request_model/patient/PatientAppointmentReqVO.dart';
+import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart' as Login;
+import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
 import 'CancelAppointmentBottomSheet.dart';
 
@@ -100,48 +109,71 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  final List<Invoices> appointmentList = [
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-    Invoices(
-      address: "Dr. John Doe",
-      appointmentdatetime: "2024-06-01",
-      appointmentID: "1",
-      reason: "Tantia Hospital, Pune",
-    ),
-  ];
+  late List<response.Invoices> appointmentList=[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      getAppointmentList(context);
+    });
+  }
+
+  getAppointmentList(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    checkCustomerSession().then((value) {
+      if (value != null) {
+        print('Value before decoding: $value');
+        Map<String, dynamic> data1 = jsonDecode(value);
+        Login.Data data = Login.Data.fromJson(data1);
+
+        Case cases = Case(
+            patientID: data.userid,
+            fromDate: "",
+            toDate: "",
+            doctorID: "",
+            followup: "Y");
+
+        PatientAppointmentReqVO patientAppointmentReqVO =
+            new PatientAppointmentReqVO(cases: cases);
+
+        print("appointmentListRequestVO ___" +
+            patientAppointmentReqVO.toJson().toString());
+        Future<response.PatientAppointmentListResVO?> patientAppointmentResVO =
+            API.getPatientAppointmentList(patientAppointmentReqVO);
+        patientAppointmentResVO.catchError(
+          (onError) {
+            print(onError.toString());
+            showToastShortTime(context, onError.toString());
+          },
+        ).then((value) {
+          if (value != null) {
+            if (value.success == "1") {
+              setState(() {
+                appointmentList.addAll(value.invoices!);
+              });
+            } else {
+              showAlertDialog(
+                  context: context,
+                  btnNameOk: "Ok",
+                  btnNameCancel: null,
+                  title: "Oops! ",
+                  message: value.message!);
+            }
+          }
+        }).whenComplete(() {
+          print("called when future completes");
+          EasyLoading.dismiss();
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return  appointmentList!=null && appointmentList.isNotEmpty ? Stack(children: [
       GestureDetector(
         onTap: () {
           Navigator.of(context, rootNavigator: true)
@@ -152,8 +184,7 @@ class _HomeTabState extends State<HomeTab> {
             "diagnosis": 'Diagnosis details...',
             "treatment":
                 'Prescribed antibiotics for 10 days. Advised to rest and drink fluids.',
-            "showReports":false
-
+            "showReports": false
           });
         },
         child: Container(
@@ -193,7 +224,10 @@ class _HomeTabState extends State<HomeTab> {
                           children: [
                             Text(
                               'Doctor: ${appointment.address}',
-                              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 16),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(fontSize: 16),
                             ),
                             SizedBox(height: 8),
                             Text('Date: ${appointment.appointmentdatetime}',
@@ -220,7 +254,8 @@ class _HomeTabState extends State<HomeTab> {
                                               context: context,
                                               isScrollControlled: true,
                                               builder: (BuildContext context) {
-                                                return CancelAppointmentBottomSheet(argument: null);
+                                                return CancelAppointmentBottomSheet(
+                                                    argument: null);
                                               },
                                             );
                                           }
@@ -368,6 +403,14 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ),
       )
-    ]);
+    ]):Center(
+      child: Text(
+        'Data not found',
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1
+              ?.copyWith(fontSize: 16),
+      ),
+    );
   }
 }

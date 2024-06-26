@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phms/PHMS/components/routes.dart';
-import 'package:phms/PHMS/view/home/appointment/CancelAppointmentBottomSheet.dart';
+import 'package:phms/PHMS/view/home/appointment/patient/CancelAppointmentBottomSheet.dart';
 
 import 'constants.dart';
 

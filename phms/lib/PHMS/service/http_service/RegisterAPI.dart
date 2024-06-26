@@ -12,6 +12,10 @@ import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
+import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart';
+import 'package:phms/PHMS/model/request_model/patient/PatientAppointmentReqVO.dart';
 import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseDetialsResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/CaseRegResponseVO.dart';
@@ -206,6 +210,38 @@ Future<AppointmentListResponseVO?> getAppointmentList(AppointmentListRequestVO a
   print(response.body);
   if (response.statusCode == 200) {
     return AppointmentListResponseVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to createUser Data');
+  }
+}
+
+Future<PatientAppointmentListResVO?> getPatientAppointmentList(PatientAppointmentReqVO patientAppointmentReqVO) async {
+  EasyLoading.show(status: 'Loading...');
+  print("getAppointmentList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewAppointments_Patient');
+  var response = await http.post(url, headers: headers,body: json.encode(patientAppointmentReqVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return PatientAppointmentListResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to createUser Data');
+  }
+}
+
+Future<DoctorListResVO?> getDoctorList(DoctorListReqVO doctorListReqVO) async {
+  EasyLoading.show(status: 'Loading...');
+  print("getDoctorList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewDoctor');
+  var response = await http.post(url, headers: headers,body: json.encode(doctorListReqVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return DoctorListResVO.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to createUser Data');
   }

@@ -5,7 +5,7 @@ import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
-import 'package:phms/PHMS/view/home/appointment/AppointmentTab.dart';
+import 'package:phms/PHMS/view/home/appointment/patient/AppointmentTab.dart';
 
 import 'CaseDetailsCard.dart';
 import 'DoctorDetailsCard.dart';

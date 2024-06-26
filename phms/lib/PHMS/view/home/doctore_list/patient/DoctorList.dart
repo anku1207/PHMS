@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
+import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorListResponseVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
+import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
+import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart' as Login;
+
 
 import 'DoctorFilterBottomSheet.dart';
 
@@ -75,6 +85,57 @@ class _DoctorListState extends State<DoctorList> {
     doctorsList.add(doctorlist);
 
     doctorListResponseVO = DoctorListResponseVO(doctorlist: doctorsList);
+
+    Future.delayed(Duration.zero, () {
+      _getDoctorList(context);
+    });
+  }
+
+  _getDoctorList(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    checkCustomerSession().then((value) {
+      if (value != null) {
+        print('Value before decoding: $value');
+        Map<String, dynamic> data1 = jsonDecode(value);
+        Login.Data data = Login.Data.fromJson(data1);
+
+        Place place = new Place(doctorname: "",location: "",specialisation: "");
+
+
+        DoctorListReqVO  doctorListReqVO=
+        new DoctorListReqVO(place: place);
+
+        print("doctorListReqVO ___" +
+            doctorListReqVO.toJson().toString());
+        Future<DoctorListResVO?> patientAppointmentResVO =
+        API.getDoctorList(doctorListReqVO);
+        patientAppointmentResVO.catchError(
+              (onError) {
+            print(onError.toString());
+            showToastShortTime(context, onError.toString());
+          },
+        ).then((value) {
+          if (value != null) {
+            if (value.success == "1") {
+              setState(() {
+
+              });
+            } else {
+              showAlertDialog(
+                  context: context,
+                  btnNameOk: "Ok",
+                  btnNameCancel: null,
+                  title: "Oops! ",
+                  message: value.message!);
+            }
+          }
+        }).whenComplete(() {
+          print("called when future completes");
+          EasyLoading.dismiss();
+        });
+      }
+    });
   }
 
   void _filterDoctors(Map<String, String> filters) {}
