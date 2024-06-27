@@ -14,7 +14,6 @@ import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart' as Login;
 
-
 import 'DoctorFilterBottomSheet.dart';
 
 class DoctorList extends StatefulWidget {
@@ -27,71 +26,19 @@ class DoctorList extends StatefulWidget {
 }
 
 class _DoctorListState extends State<DoctorList> {
-  late DoctorListResponseVO doctorListResponseVO;
-  List<Doctorlist> doctorsList = [];
+  List<Data> doctorList = List.filled(0, Data(), growable: true);
+  bool isLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    Doctorlist doctorlist = Doctorlist(
-        doctorName: "Dr. John Doe",
-        hospital: "Tantia Hospital",
-        address: "P68, D2-block, Midc., Chinchwad",
-        city: "Pune",
-        country: "India",
-        phoneNumber: "27475929",
-        state: "Maharashtra",
-        specialty: "Cardiology",
-        time: "12.00",
-        zipCode: "411019");
-    doctorsList.add(doctorlist);
-    doctorlist = Doctorlist(
-        doctorName: "Dr. John Doe",
-        hospital: "Tantia Hospital",
-        address: "P68, D2-block, Midc., Chinchwad",
-        city: "Pune",
-        country: "India",
-        phoneNumber: "27475929",
-        state: "Maharashtra",
-        specialty: "Cardiology",
-        time: "12.00",
-        zipCode: "411019");
-    doctorsList.add(doctorlist);
-    doctorlist = Doctorlist(
-        doctorName: "Dr. John Doe",
-        hospital: "Tantia Hospital",
-        address: "P68, D2-block, Midc., Chinchwad",
-        city: "Pune",
-        country: "India",
-        phoneNumber: "27475929",
-        state: "Maharashtra",
-        specialty: "Cardiology",
-        time: "12.00",
-        zipCode: "411019");
-    doctorsList.add(doctorlist);
-    doctorlist = Doctorlist(
-        doctorName: "Dr. John Doe",
-        hospital: "Tantia Hospital",
-        address: "P68, D2-block, Midc., Chinchwad",
-        city: "Pune",
-        country: "India",
-        phoneNumber: "27475929",
-        state: "Maharashtra",
-        specialty: "Cardiology",
-        time: "12.00",
-        zipCode: "411019");
-    doctorsList.add(doctorlist);
-
-    doctorListResponseVO = DoctorListResponseVO(doctorlist: doctorsList);
-
     Future.delayed(Duration.zero, () {
       _getDoctorList(context);
     });
   }
 
-  _getDoctorList(BuildContext context){
+  _getDoctorList(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
 
     checkCustomerSession().then((value) {
@@ -100,18 +47,21 @@ class _DoctorListState extends State<DoctorList> {
         Map<String, dynamic> data1 = jsonDecode(value);
         Login.Data data = Login.Data.fromJson(data1);
 
-        Place place = new Place(doctorname: "",location: "",specialisation: "");
+        Place place = new Place(
+            doctorname: "",
+            location: "",
+            specialisation: "",
+            city: "Mumbai",
+            latitude: null,
+            longitude: null);
 
+        DoctorListReqVO doctorListReqVO = new DoctorListReqVO(place: place);
 
-        DoctorListReqVO  doctorListReqVO=
-        new DoctorListReqVO(place: place);
-
-        print("doctorListReqVO ___" +
-            doctorListReqVO.toJson().toString());
+        print("doctorListReqVO ___" + doctorListReqVO.toJson().toString());
         Future<DoctorListResVO?> patientAppointmentResVO =
-        API.getDoctorList(doctorListReqVO);
+            API.getDoctorList(doctorListReqVO);
         patientAppointmentResVO.catchError(
-              (onError) {
+          (onError) {
             print(onError.toString());
             showToastShortTime(context, onError.toString());
           },
@@ -119,7 +69,7 @@ class _DoctorListState extends State<DoctorList> {
           if (value != null) {
             if (value.success == "1") {
               setState(() {
-
+                doctorList.addAll(value.data!);
               });
             } else {
               showAlertDialog(
@@ -133,6 +83,9 @@ class _DoctorListState extends State<DoctorList> {
         }).whenComplete(() {
           print("called when future completes");
           EasyLoading.dismiss();
+          setState(() {
+            isLoading=false;
+          });
         });
       }
     });
@@ -165,10 +118,10 @@ class _DoctorListState extends State<DoctorList> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: doctorListResponseVO.doctorlist!.length,
+            child: doctorList.isNotEmpty ? ListView.builder(
+              itemCount: doctorList.length,
               itemBuilder: (context, index) {
-                final doctor = doctorListResponseVO.doctorlist![index];
+                final doctor = doctorList[index];
                 return Container(
                     width: double.infinity,
                     margin: const EdgeInsets.all(8.0),
@@ -200,57 +153,40 @@ class _DoctorListState extends State<DoctorList> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                  doctor.doctorName!,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline2
-                              ),
+                              Text(doctor.doctorname!,
+                                  style: Theme.of(context).textTheme.headline2),
                               SizedBox(height: 8),
-                              Text(
-                                  'Specialty: ${doctor.specialty}', style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2),
+                              Text('Specialty: ${doctor.specialisation}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Hospital: ${doctor.hospital}', style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2),
+                              Text('Hospital: ----}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Address: ${doctor.address}', style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2),
+                              Text('Address: ${doctor.address}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('City: ${doctor.city}', style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2),
+                              Text('City: ${doctor.address}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Phone Number: ${doctor.phoneNumber}',
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .bodyText2),
+                              Text('Phone Number: ${doctor.mobile}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Time: ${doctor.time}', style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .bodyText2),
+                              Text('Time: ---}',
+                                  style: Theme.of(context).textTheme.bodyText2),
+                              SizedBox(height: 4),
+                              Text('Qualification: ${doctor.qualification}',
+                                  style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
                               Align(
                                   alignment: Alignment.bottomRight,
-                                  child:appointmentBookBtn(context)
-                              )
+                                  child: appointmentBookBtn(context))
                             ],
                           ),
                         ),
                       ),
                     ));
               },
-            ),
+            ):buildLoadingOrDataWidget(context,isLoading)
           ),
         ],
       ),

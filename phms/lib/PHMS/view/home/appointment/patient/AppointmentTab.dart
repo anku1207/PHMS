@@ -109,7 +109,8 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  late List<response.Invoices> appointmentList=[];
+  late List<response.Invoices> appointmentList = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -166,6 +167,9 @@ class _HomeTabState extends State<HomeTab> {
         }).whenComplete(() {
           print("called when future completes");
           EasyLoading.dismiss();
+          setState(() {
+            isLoading = false;
+          });
         });
       }
     });
@@ -173,244 +177,265 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return  appointmentList!=null && appointmentList.isNotEmpty ? Stack(children: [
-      GestureDetector(
-        onTap: () {
-          Navigator.of(context, rootNavigator: true)
-              .pushNamed(UavRoutes.Patient_Case_Details_Screen, arguments: {
-            "patientName": 'John Doe',
-            "caseDescription":
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel arcu sed metus commodo pretium.',
-            "diagnosis": 'Diagnosis details...',
-            "treatment":
-                'Prescribed antibiotics for 10 days. Advised to rest and drink fluids.',
-            "showReports": false
-          });
-        },
-        child: Container(
-          child: ListView.separated(
-            itemCount: appointmentList.length + 1,
-            // Add 1 to account for the space
-            separatorBuilder: (context, index) => SizedBox(height: 0),
-            // Add space between items
-            itemBuilder: (context, index) {
-              if (index < appointmentList.length) {
-                final appointment = appointmentList[index];
-                return Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15.0),
-                      border: Border.all(
-                        color: Colors.grey[400]!,
-                        width: 1.0,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Card(
-                      margin: const EdgeInsets.all(4.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Doctor: ${appointment.address}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(fontSize: 16),
+    return appointmentList.isNotEmpty
+        ? Stack(children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).pushNamed(
+                    UavRoutes.Patient_Case_Details_Screen,
+                    arguments: {
+                      "patientName": 'John Doe',
+                      "caseDescription":
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel arcu sed metus commodo pretium.',
+                      "diagnosis": 'Diagnosis details...',
+                      "treatment":
+                          'Prescribed antibiotics for 10 days. Advised to rest and drink fluids.',
+                      "showReports": false
+                    });
+              },
+              child: Container(
+                child: ListView.separated(
+                  itemCount: appointmentList.length + 1,
+                  // Add 1 to account for the space
+                  separatorBuilder: (context, index) => SizedBox(height: 0),
+                  // Add space between items
+                  itemBuilder: (context, index) {
+                    if (index < appointmentList.length) {
+                      final appointment = appointmentList[index];
+                      return Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(
+                              color: Colors.grey[400]!,
+                              width: 1.0,
                             ),
-                            SizedBox(height: 8),
-                            Text('Date: ${appointment.appointmentdatetime}',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: 4),
-                            Text('Time: ${appointment.appointmentID}',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: 4),
-                            Text('Location: ${appointment.reason}',
-                                style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(height: 20),
-                            if (widget.selectTab == 1)
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        cancelAppointment(context, (result) {
-                                          Navigator.pop(context);
-                                          if (result?.toLowerCase() == "yes") {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: (BuildContext context) {
-                                                return CancelAppointmentBottomSheet(
-                                                    argument: null);
-                                              },
-                                            );
-                                          }
-                                        });
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 70.0,
-                                            // Width is set correctly
-                                            padding: const EdgeInsets.all(4.0),
-                                            constraints: BoxConstraints(
-                                              minHeight:
-                                                  50.0, // Set the minimum height
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color:
-                                                    Activity_Box_Border_Color,
-                                                // Border color
-                                                width: 1.0, // Border width
-                                              ),
-                                              borderRadius: BorderRadius.circular(
-                                                  8.0), // Border radius for rounded corners
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 20.0,
-                                                  width: 20.0,
-                                                  child: Icon(
-                                                    Icons.cancel,
-                                                    // Use the appropriate icon here
-                                                    color: Colors.red,
-                                                    size:
-                                                        20.0, // Set the desired size for the icon
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  "Cancel",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      ?.copyWith(
-                                                        fontSize:
-                                                            8.0, // Set your desired font size here
-                                                      ),
-                                                  textAlign: TextAlign.center,
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 20), // Add horizontal space
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pushNamed(
-                                                UavRoutes.Book_Appointment,
-                                                arguments: {
-                                              "booking_type": "re"
-                                            });
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 70.0,
-                                            // Width is set correctly
-                                            padding: const EdgeInsets.all(4.0),
-                                            constraints: BoxConstraints(
-                                              minHeight:
-                                                  50.0, // Set the minimum height
-                                            ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color:
-                                                    Activity_Box_Border_Color,
-                                                // Border color
-                                                width: 1.0, // Border width
-                                              ),
-                                              borderRadius: BorderRadius.circular(
-                                                  8.0), // Border radius for rounded corners
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 20.0,
-                                                  width: 20.0,
-                                                  child: Icon(
-                                                    Icons.access_time_filled,
-                                                    // Use the appropriate icon here
-                                                    color: UavPrimaryColor,
-                                                    size:
-                                                        20.0, // Set the desired size for the icon
-                                                  ),
-                                                ),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  "Reschedule",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1
-                                                      ?.copyWith(
-                                                        fontSize:
-                                                            8.0, // Set your desired font size here
-                                                      ),
-                                                  textAlign: TextAlign.center,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
-                          ],
-                        ),
-                      ),
-                    ));
-              } else {
-                // Return an empty SizedBox after the last item
-                return SizedBox(height: 80);
-              }
-            },
-          ),
-        ),
-      )
-    ]):Center(
-      child: Text(
-        'Data not found',
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              ?.copyWith(fontSize: 16),
-      ),
-    );
+                            ],
+                          ),
+                          child: Card(
+                            margin: const EdgeInsets.all(4.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Doctor: ${appointment.address}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(fontSize: 16),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                      'Date: ${appointment.appointmentdatetime}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2),
+                                  SizedBox(height: 4),
+                                  Text('Time: ${appointment.appointmentID}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2),
+                                  SizedBox(height: 4),
+                                  Text('Location: ${appointment.reason}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2),
+                                  SizedBox(height: 20),
+                                  if (widget.selectTab == 1)
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              cancelAppointment(context,
+                                                  (result) {
+                                                Navigator.pop(context);
+                                                if (result?.toLowerCase() ==
+                                                    "yes") {
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    isScrollControlled: true,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return CancelAppointmentBottomSheet(
+                                                          argument: null);
+                                                    },
+                                                  );
+                                                }
+                                              });
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 70.0,
+                                                  // Width is set correctly
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  constraints: BoxConstraints(
+                                                    minHeight:
+                                                        50.0, // Set the minimum height
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          Activity_Box_Border_Color,
+                                                      // Border color
+                                                      width:
+                                                          1.0, // Border width
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0), // Border radius for rounded corners
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 20.0,
+                                                        width: 20.0,
+                                                        child: Icon(
+                                                          Icons.cancel,
+                                                          // Use the appropriate icon here
+                                                          color: Colors.red,
+                                                          size:
+                                                              20.0, // Set the desired size for the icon
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Text(
+                                                        "Cancel",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1
+                                                            ?.copyWith(
+                                                              fontSize:
+                                                                  8.0, // Set your desired font size here
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width:
+                                                  20), // Add horizontal space
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pushNamed(
+                                                      UavRoutes
+                                                          .Book_Appointment,
+                                                      arguments: {
+                                                    "booking_type": "re"
+                                                  });
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 70.0,
+                                                  // Width is set correctly
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  constraints: BoxConstraints(
+                                                    minHeight:
+                                                        50.0, // Set the minimum height
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          Activity_Box_Border_Color,
+                                                      // Border color
+                                                      width:
+                                                          1.0, // Border width
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0), // Border radius for rounded corners
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 20.0,
+                                                        width: 20.0,
+                                                        child: Icon(
+                                                          Icons
+                                                              .access_time_filled,
+                                                          // Use the appropriate icon here
+                                                          color:
+                                                              UavPrimaryColor,
+                                                          size:
+                                                              20.0, // Set the desired size for the icon
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Text(
+                                                        "Reschedule",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText1
+                                                            ?.copyWith(
+                                                              fontSize:
+                                                                  8.0, // Set your desired font size here
+                                                            ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ));
+                    } else {
+                      // Return an empty SizedBox after the last item
+                      return SizedBox(height: 80);
+                    }
+                  },
+                ),
+              ),
+            )
+          ])
+        : buildLoadingOrDataWidget(context,isLoading);
   }
 }

@@ -28,34 +28,38 @@ class DoctorListReqVO {
 /// specialisation : ""
 
 class Place {
-  Place({
-      String? doctorname, 
-      String? location, 
-      String? specialisation,}){
-    _doctorname = doctorname;
-    _location = location;
-    _specialisation = specialisation;
-}
+  String? doctorname;
+  String? location;
+  String? specialisation;
+  String? city;
+  int? latitude;
+  int? longitude;
 
-  Place.fromJson(dynamic json) {
-    _doctorname = json['doctorname'];
-    _location = json['location'];
-    _specialisation = json['specialisation'];
+  Place(
+      {this.doctorname,
+        this.location,
+        this.specialisation,
+        this.city,
+        this.latitude,
+        this.longitude});
+
+  Place.fromJson(Map<String, dynamic> json) {
+    doctorname = json['doctorname'];
+    location = json['location'];
+    specialisation = json['specialisation'];
+    city = json['city'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
-  String? _doctorname;
-  String? _location;
-  String? _specialisation;
-
-  String? get doctorname => _doctorname;
-  String? get location => _location;
-  String? get specialisation => _specialisation;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['doctorname'] = _doctorname;
-    map['location'] = _location;
-    map['specialisation'] = _specialisation;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['doctorname'] = this.doctorname;
+    data['location'] = this.location;
+    data['specialisation'] = this.specialisation;
+    data['city'] = this.city;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
+    return data;
   }
-
 }

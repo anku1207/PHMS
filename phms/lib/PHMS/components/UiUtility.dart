@@ -712,5 +712,26 @@ Row appointmentBookBtn(BuildContext context){
   );
 }
 
+Widget buildLoadingOrDataWidget(BuildContext context, bool isLoading) {
+  return isLoading
+      ? Center(
+    child: Container(
+      color: Colors.black.withOpacity(0.0),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    ),
+  )
+      : Center(
+    child: Text(
+      'Data not found',
+      style: Theme.of(context)
+          .textTheme
+          .bodyText1
+          ?.copyWith(fontSize: 16),
+    ),
+  );
+}
+
 
 
