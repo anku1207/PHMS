@@ -76,6 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
           image: "assets/images/appointment.png",
           count: "0"));
       myList.add(DashboardItemVO(
+          id: New_Case,
+          name: "New Case",
+          image: "assets/images/medicalcase.png",
+          count: "0"));
+      myList.add(DashboardItemVO(
           id: Patient_History,
           name: "Patient History",
           image: "assets/images/viewhistory.png",
@@ -334,7 +339,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void openViewMenuWise(BuildContext context, int serviceId) {
-    if (serviceId == 2) {
+    if (serviceId == New_Case) {
+      Navigator.of(context, rootNavigator: true)
+          .pushNamed(UavRoutes.Patient_case_register_screen_1,
+          arguments: {"data": null});
+    }else if (serviceId == Patient_History) {
+      Navigator.of(context, rootNavigator: true)
+          .pushNamed(UavRoutes.Patient_history_screen_1,
+          arguments: {"data": null});
+    }else if (serviceId == 2) {
       Navigator.of(context, rootNavigator: true)
           .pushNamed(UavRoutes.Patient_registration_Screen);
     } else if (serviceId == 15) {
