@@ -188,7 +188,7 @@ class _OTPScreenState extends State<OTPScreen> {
               keyboardType: TextInputType.number,
               maxLength: 1,
               decoration: InputDecoration(
-                counterText: '',
+                counter: Offstage(),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),

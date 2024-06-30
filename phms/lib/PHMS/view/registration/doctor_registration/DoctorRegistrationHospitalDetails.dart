@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
@@ -30,6 +31,14 @@ class _DoctorRegistrationHospitalDetailsScreenState
   late final TextEditingController doctorAssociationController;
   late final TextEditingController startTimeController;
   late final TextEditingController endTimeController;
+  late final TextEditingController mobileNumberId;
+  late final TextEditingController emailController;
+  late final TextEditingController landlineController;
+
+  late String placeType;
+  late String areas;
+  FocusNode _dropdownFocus = FocusNode();
+
 
   List<String> operatingDays = [
     'Mon',
@@ -42,10 +51,47 @@ class _DoctorRegistrationHospitalDetailsScreenState
   ];
   List<int> selectedOperatingDays = [];
 
+  final List<String> areasList = [
+    'Andheri',
+    'Bandra',
+    'Colaba',
+    'Dadar',
+    'Juhu',
+    'Malad',
+  ];
+
+  final List<String> placeTypesList = [
+    'Nursery',
+    'Clinic',
+    'Hospital',
+    'Pharmacy',
+    'Rehabilitation Center',
+    'Laboratory',
+    'Urgent Care',
+    'Dental Office',
+    'Outpatient Surgery Center',
+    'Imaging Center',
+    'Dialysis Center',
+    'Mental Health Facility',
+    'Primary Care Office',
+    'Specialty Clinic',
+    'Veterinary Clinic',
+    'Optometry Office',
+    'Walk-in Clinic',
+    'Pediatric Office',
+    'Geriatric Center',
+    'Orthopedic Center',
+  ];
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    placeType = "Choose Place Type";
+    areas= "Choose Area";
+    
     _formKey = GlobalKey<FormState>();
     _autoValidate = AutovalidateMode.disabled;
     mobileNumberValidate = false;
@@ -53,6 +99,21 @@ class _DoctorRegistrationHospitalDetailsScreenState
     doctorAssociationController = TextEditingController();
     startTimeController = TextEditingController();
     endTimeController = TextEditingController();
+    mobileNumberId = new TextEditingController();
+    emailController = new TextEditingController();
+    landlineController = new TextEditingController();
+
+  }
+
+  @override
+  void dispose() {
+    doctorAssociationController.dispose();
+    startTimeController.dispose();
+    endTimeController.dispose();
+    mobileNumberId.dispose();
+    emailController.dispose();
+    landlineController.dispose();
+    super.dispose();
   }
 
   @override
@@ -166,7 +227,101 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                       null
                                      // validateRequiredField(value),
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                dropDownLayout(
+                                    context, placeType, placeTypesList,
+                                        (selectVal) {
+                                      setState(() {
+                                        placeType = selectVal;
+                                        FocusScope.of(context)
+                                            .requestFocus(_dropdownFocus);
+                                      });
+                                    }),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                dropDownLayout(
+                                    context, areas, areasList,
+                                        (selectVal) {
+                                      setState(() {
+                                        areas = selectVal;
+                                        FocusScope.of(context)
+                                            .requestFocus(_dropdownFocus);
+                                      });
+                                    }),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: mobileNumberId,
+                                  maxLength: 10,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    counter: Offstage(),
+                                    hintText: 'Mobile Number',
+                                    labelText: 'Mobile Number',
+                                    prefixIcon: const Icon(
+                                      Icons.phone,
+                                      color: Colors.grey,
+                                    ),
+                                    prefixText: ' ',
+                                    contentPadding: new EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 20.0),
+                                  ),
+                                  validator: (value) =>
+                                      validateMobileNumberPattern(value!),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: emailController,
+                                  maxLength: 50,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  decoration: InputDecoration(
+                                    counter: Offstage(),
+                                    hintText: 'Email',
+                                    labelText: 'Email',
+                                    prefixIcon: const Icon(
+                                      Icons.drive_file_rename_outline,
+                                      color: Colors.grey,
+                                    ),
+                                    prefixText: ' ',
+                                    contentPadding: new EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 20.0),
+                                  ),
+                                  validator: (value) => validateEmailPattern(value!),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                    controller: landlineController,
+                                    maxLength: 50,
+                                    style:
+                                    Theme.of(context).textTheme.bodyText2,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      counter: Offstage(),
+                                      hintText: 'Landline',
+                                      labelText: 'Landline',
+                                      prefixIcon: const Icon(
+                                        Icons.drive_file_rename_outline,
+                                        color: Colors.grey,
+                                      ),
+                                      prefixText: ' ',
+                                      contentPadding: new EdgeInsets.symmetric(
+                                          vertical: 20.0, horizontal: 20.0),
+                                    ),
+                                    validator: (value) => null
+                                  //validateRequiredField(value),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(

@@ -46,7 +46,7 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
       decoration: /*InputDecoration(
         labelText: label,
         border: OutlineInputBorder(),
-        counterText: '',
+        counter: Offstage(),
       ),*/InputDecoration(
         hintText: '$label',
         labelText: '$label',
@@ -55,7 +55,7 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
           color: Colors.grey,
         ),
         prefixText: ' ',
-        counterText: '',
+        counter: Offstage(),
         contentPadding: new EdgeInsets.symmetric(
             vertical: 20.0, horizontal: 20.0),
       ),

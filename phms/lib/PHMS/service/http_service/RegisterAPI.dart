@@ -13,6 +13,7 @@ import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
+import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/PatientAppointmentReqVO.dart';
@@ -246,6 +247,23 @@ Future<DoctorListResVO?> getDoctorList(DoctorListReqVO doctorListReqVO) async {
     throw Exception('Failed to createUser Data');
   }
 }
+
+Future<SpecialitiesListResVO?> getSpecialitiesList() async {
+  EasyLoading.show(status: 'Loading...');
+  print("getSpecialitiesList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewSpecialities');
+  var response = await http.post(url, headers: headers,body: json.encode(null),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return SpecialitiesListResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to getSpecialitiesList Data');
+  }
+}
+
 
 void httpRequestDebugging(http.Response response){
   alice.onHttpResponse(response);

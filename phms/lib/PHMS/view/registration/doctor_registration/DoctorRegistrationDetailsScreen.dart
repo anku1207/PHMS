@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
+import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
 class DoctorRegistrationDetailsScreen extends StatefulWidget {
   final Object argument;
-  DoctorRegistrationDetailsScreen({Key? key, required this.argument}) : super(key: key);
+
+  DoctorRegistrationDetailsScreen({Key? key, required this.argument})
+      : super(key: key);
+
   @override
   State<DoctorRegistrationDetailsScreen> createState() =>
       _DoctorRegistrationDetailsScreenState();
@@ -21,6 +27,7 @@ class _DoctorRegistrationDetailsScreenState
   late AutovalidateMode _autoValidate;
   bool mobileNumberValidate = false;
   var argumentsMap;
+
   // Create controllers for each TextFormField
   late TextEditingController doctorNameController;
   late TextEditingController mobileController;
@@ -32,21 +39,15 @@ class _DoctorRegistrationDetailsScreenState
   late DoctorRegistrationVO doctorRegistrationVO;
   bool _isHidden = true;
 
-
   late String specialization;
   late String qualification;
-  final List<String> specializationList = [
-    'Dentist',
-     'Heart Specialist',
-     'Eys Specialist',
-  ];
+  final List<String> specializationList = [];
 
   final List<String> qualificationList = [
     'MBBS',
     'MD',
   ];
   FocusNode _dropdownFocus = FocusNode();
-
 
   @override
   void dispose() {
@@ -55,6 +56,7 @@ class _DoctorRegistrationDetailsScreenState
 
     super.dispose();
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -66,7 +68,7 @@ class _DoctorRegistrationDetailsScreenState
     _autoValidate = AutovalidateMode.disabled;
     mobileNumberValidate = false;
     specialization = "Choose specialization";
-    qualification="Choose qualification";
+    qualification = "Choose qualification";
 
     // Create controllers for each TextFormField
     doctorNameController = TextEditingController();
@@ -77,11 +79,49 @@ class _DoctorRegistrationDetailsScreenState
     regNumberController = TextEditingController();
     otpController = TextEditingController();
 
-    doctorRegistrationVO=DoctorRegistrationVO();
+    doctorRegistrationVO = DoctorRegistrationVO();
 
-    doctorNameController.text=argumentsMap["doctor_name"];
-    mobileController.text=argumentsMap["doctor_mobile"];
-    otpController.text=generateRandom4DigitNumber().toString();
+    doctorNameController.text = argumentsMap["doctor_name"];
+    mobileController.text = argumentsMap["doctor_mobile"];
+    otpController.text = generateRandom4DigitNumber().toString();
+
+    Future.delayed(Duration.zero, () {
+      _getSpecialitiesList(context);
+    });
+  }
+
+  _getSpecialitiesList(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    print("_getSpecialitiesList ___" + "");
+    Future<SpecialitiesListResVO?> specialitiesListResVO =
+        API.getSpecialitiesList();
+    specialitiesListResVO.catchError(
+      (onError) {
+        print(onError.toString());
+        showToastShortTime(context, onError.toString());
+      },
+    ).then((value) {
+      if (value != null) {
+        if (value.success == "1") {
+          setState(() {
+            value.data!.forEach((specializationData) {
+              specializationList.add(specializationData.speciality!);
+            });
+          });
+        } else {
+          showAlertDialog(
+              context: context,
+              btnNameOk: "Ok",
+              btnNameCancel: null,
+              title: "Oops! ",
+              message: value.message!);
+        }
+      }
+    }).whenComplete(() {
+      print("called when future completes");
+      EasyLoading.dismiss();
+    });
   }
 
   @override
@@ -107,8 +147,8 @@ class _DoctorRegistrationDetailsScreenState
                       height: 60.0,
                       child: Image.asset(
                         'assets/images/login.png',
-                        height: 60.0,  // Set the height of the image
-                        width: 60.0,   // Set the width of the image
+                        height: 60.0, // Set the height of the image
+                        width: 60.0, // Set the width of the image
                       ),
                     ),
                   ),
@@ -121,15 +161,17 @@ class _DoctorRegistrationDetailsScreenState
                       height: 40,
                       alignment: Alignment.center,
                       child: Column(
-                        mainAxisSize: MainAxisSize.min, // To minimize the height of the Column
+                        mainAxisSize: MainAxisSize.min,
+                        // To minimize the height of the Column
                         children: <Widget>[
                           Text(
                             "Doctor Details",
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                           ),
                           Container(
                             height: 10,
@@ -145,7 +187,6 @@ class _DoctorRegistrationDetailsScreenState
                     ),
                   ),
                 ),
-
               ],
             ),
             Expanded(
@@ -174,8 +215,10 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: doctorNameController,
                                   maxLength: 100,
-                                  enabled: false, // Set to false to make it read-only
-                                  readOnly: true, // Set to true to remove the cursor
+                                  enabled: false,
+                                  // Set to false to make it read-only
+                                  readOnly: true,
+                                  // Set to true to remove the cursor
                                   style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
                                     counter: Offstage(),
@@ -198,8 +241,10 @@ class _DoctorRegistrationDetailsScreenState
                                 TextFormField(
                                   controller: mobileController,
                                   maxLength: 10,
-                                  enabled: false, // Set to false to make it read-only
-                                  readOnly: true, // Set to true to remove the cursor
+                                  enabled: false,
+                                  // Set to false to make it read-only
+                                  readOnly: true,
+                                  // Set to true to remove the cursor
                                   keyboardType: TextInputType.number,
                                   style: Theme.of(context).textTheme.bodyText2,
                                   decoration: InputDecoration(
@@ -220,7 +265,6 @@ class _DoctorRegistrationDetailsScreenState
                                 SizedBox(
                                   height: 20,
                                 ),
-
                                 TextFormField(
                                   controller: passwordController,
                                   obscureText: _isHidden,
@@ -248,7 +292,6 @@ class _DoctorRegistrationDetailsScreenState
                                   validator: (value) =>
                                       validateRequiredField(value),
                                 ),
-
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -268,8 +311,7 @@ class _DoctorRegistrationDetailsScreenState
                                     contentPadding: new EdgeInsets.symmetric(
                                         vertical: 20.0, horizontal: 20.0),
                                   ),
-                                  validator: (value) =>
-                                      validateEmail(value!),
+                                  validator: (value) => validateEmail(value!),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -297,53 +339,50 @@ class _DoctorRegistrationDetailsScreenState
                                   height: 20,
                                 ),
                                 TextFormField(
-                                  controller: landlineController,
-                                  maxLength: 50,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    counter: Offstage(),
-                                    hintText: 'Landline',
-                                    labelText: 'Landline',
-                                    prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
-                                      color: Colors.grey,
+                                    controller: landlineController,
+                                    maxLength: 50,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      counter: Offstage(),
+                                      hintText: 'Landline',
+                                      labelText: 'Landline',
+                                      prefixIcon: const Icon(
+                                        Icons.drive_file_rename_outline,
+                                        color: Colors.grey,
+                                      ),
+                                      prefixText: ' ',
+                                      contentPadding: new EdgeInsets.symmetric(
+                                          vertical: 20.0, horizontal: 20.0),
                                     ),
-                                    prefixText: ' ',
-                                    contentPadding: new EdgeInsets.symmetric(
-                                        vertical: 20.0, horizontal: 20.0),
-                                  ),
-                                  validator: (value) =>
-                                      null
-                                      //validateRequiredField(value),
-                                ),
+                                    validator: (value) => null
+                                    //validateRequiredField(value),
+                                    ),
                                 SizedBox(
                                   height: 20,
                                 ),
-                                dropDownLayout(context,
-                                    qualification,
-                                    qualificationList,
-                                        (selectVal) {
-                                      setState(() {
-                                        qualification = selectVal;
-                                        FocusScope.of(context).requestFocus(_dropdownFocus);
-
-                                      });
-                                    }),
+                                dropDownLayout(
+                                    context, qualification, qualificationList,
+                                    (selectVal) {
+                                  setState(() {
+                                    qualification = selectVal;
+                                    FocusScope.of(context)
+                                        .requestFocus(_dropdownFocus);
+                                  });
+                                }),
                                 SizedBox(
                                   height: 20,
                                 ),
-
-                                dropDownLayout(context,
-                                    specialization,
-                                    specializationList,
-                                        (selectVal) {
-                                      setState(() {
-                                        specialization = selectVal;
-                                        FocusScope.of(context).requestFocus(_dropdownFocus);
-
-                                      });
-                                    }),
+                                dropDownLayout(
+                                    context, specialization, specializationList,
+                                    (selectVal) {
+                                  setState(() {
+                                    specialization = selectVal;
+                                    FocusScope.of(context)
+                                        .requestFocus(_dropdownFocus);
+                                  });
+                                }),
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -378,30 +417,43 @@ class _DoctorRegistrationDetailsScreenState
                                   minWidth: double.infinity),
                               child: ElevatedButton(
                                 onPressed: () => {
-                                  if(qualificationList.isNotEmpty && !qualificationList.contains(qualification)){
-                                    showToastShortTime(context, "please select qualification")
-                                  }else if(specializationList.isNotEmpty && !specializationList.contains(specialization) ){
-                                    showToastShortTime(context, "please select specialization")
-                                  }else{
-                                    if (_formKey.currentState?.validate() ?? false) {
-                                      registration = Registration(
-                                        doctorname: doctorNameController.text,
-                                        mobile: mobileController.text,
-                                        password: passwordController.text,
-                                        email: emailController.text,
-                                        landline: landlineController.text,
-                                        qualification: qualification,
-                                        specialisation: specialization,
-                                        regNumber: regNumberController.text,
-                                      ),
-                                      Navigator.pushNamed(
-                                          context,
-                                          UavRoutes
-                                              .Doctor_Registration_Hospital_Details_Screen,
-                                          arguments: registration
-                                      )
+                                  if (qualificationList.isNotEmpty &&
+                                      !qualificationList
+                                          .contains(qualification))
+                                    {
+                                      showToastShortTime(context,
+                                          "please select qualification")
                                     }
-                                  }
+                                  else if (specializationList.isNotEmpty &&
+                                      !specializationList
+                                          .contains(specialization))
+                                    {
+                                      showToastShortTime(context,
+                                          "please select specialization")
+                                    }
+                                  else
+                                    {
+                                      if (_formKey.currentState?.validate() ??
+                                          false)
+                                        {
+                                          registration = Registration(
+                                            doctorname:
+                                                doctorNameController.text,
+                                            mobile: mobileController.text,
+                                            password: passwordController.text,
+                                            email: emailController.text,
+                                            landline: landlineController.text,
+                                            qualification: qualification,
+                                            specialisation: specialization,
+                                            regNumber: regNumberController.text,
+                                          ),
+                                          Navigator.pushNamed(
+                                              context,
+                                              UavRoutes
+                                                  .Doctor_Registration_Hospital_Details_Screen,
+                                              arguments: registration)
+                                        }
+                                    }
                                 },
                                 child: Text("Next",
                                     style: TextStyle(
@@ -422,6 +474,7 @@ class _DoctorRegistrationDetailsScreenState
           ]),
     );
   }
+
   void _togglePasswordView() {
     setState(() {
       _isHidden = !_isHidden;
