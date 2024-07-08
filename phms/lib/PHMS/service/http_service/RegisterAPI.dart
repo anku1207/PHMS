@@ -13,6 +13,9 @@ import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
+import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
+import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
+import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart';
@@ -263,7 +266,54 @@ Future<SpecialitiesListResVO?> getSpecialitiesList() async {
     throw Exception('Failed to getSpecialitiesList Data');
   }
 }
+Future<QualificationResModel?> getQualificationList() async {
+  EasyLoading.show(status: 'Loading...');
+  print("getQualificationList");
+  Map<String, String> headers = await getApiHeaders();
 
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewQualifications');
+  var response = await http.post(url, headers: headers,body: json.encode(null),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return QualificationResModel.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to getQualificationList Data');
+  }
+}
+
+Future<PlaceTypeResVO?> getPlaceTypeList() async {
+  EasyLoading.show(status: 'Loading...');
+  print("getPlaceTypeList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewPlaceType');
+  var response = await http.post(url, headers: headers,body: json.encode(null),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return PlaceTypeResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to getPlaceTypeList Data');
+  }
+}
+
+
+Future<AreaListResVO?> getAreaList() async {
+  EasyLoading.show(status: 'Loading...');
+  print("getAreaList");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/ViewLocation');
+  var response = await http.post(url, headers: headers,body: json.encode(null),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return AreaListResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to getPlaceTypeList Data');
+  }
+}
 
 void httpRequestDebugging(http.Response response){
   alice.onHttpResponse(response);

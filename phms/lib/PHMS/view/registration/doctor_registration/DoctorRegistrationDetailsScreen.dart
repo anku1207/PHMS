@@ -7,6 +7,7 @@ import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
@@ -43,10 +44,7 @@ class _DoctorRegistrationDetailsScreenState
   late String qualification;
   final List<String> specializationList = [];
 
-  final List<String> qualificationList = [
-    'MBBS',
-    'MD',
-  ];
+  final List<String> qualificationList = [];
   FocusNode _dropdownFocus = FocusNode();
 
   @override
@@ -86,38 +84,59 @@ class _DoctorRegistrationDetailsScreenState
     otpController.text = generateRandom4DigitNumber().toString();
 
     Future.delayed(Duration.zero, () {
-      _getSpecialitiesList(context);
+      _getSpecialitiesQualificationList(context);
     });
   }
 
-  _getSpecialitiesList(BuildContext context) {
+  _getSpecialitiesQualificationList(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
 
-    print("_getSpecialitiesList ___" + "");
+    print("_getSpecialitiesQualificationList ___" + "");
     Future<SpecialitiesListResVO?> specialitiesListResVO =
         API.getSpecialitiesList();
-    specialitiesListResVO.catchError(
-      (onError) {
-        print(onError.toString());
-        showToastShortTime(context, onError.toString());
-      },
-    ).then((value) {
-      if (value != null) {
-        if (value.success == "1") {
-          setState(() {
-            value.data!.forEach((specializationData) {
-              specializationList.add(specializationData.speciality!);
-            });
+
+    Future<QualificationResModel?> qualificationResVO =
+        API.getQualificationList();
+
+    Future.wait([specialitiesListResVO, qualificationResVO]).then((results) {
+      final specialitiesListResult = results[0] as SpecialitiesListResVO?;
+      final qualificationListResult = results[1] as QualificationResModel?;
+
+      if (specialitiesListResult != null &&
+          specialitiesListResult.success == "1") {
+        setState(() {
+          specialitiesListResult.data!.forEach((specializationData) {
+            specializationList.add(specializationData.speciality!);
           });
-        } else {
-          showAlertDialog(
-              context: context,
-              btnNameOk: "Ok",
-              btnNameCancel: null,
-              title: "Oops! ",
-              message: value.message!);
-        }
+        });
+      } else if (specialitiesListResult != null) {
+        showAlertDialog(
+            context: context,
+            btnNameOk: "Ok",
+            btnNameCancel: null,
+            title: "Oops! ",
+            message: specialitiesListResult.message!);
       }
+
+      if (qualificationListResult != null &&
+          qualificationListResult.success == "1") {
+        setState(() {
+          qualificationListResult.data!.forEach((qualificationData) {
+            qualificationList.add(qualificationData.qualification!);
+          });
+        });
+        // Handle anotherListResult similarly
+      } else if (qualificationListResult != null) {
+        showAlertDialog(
+            context: context,
+            btnNameOk: "Ok",
+            btnNameCancel: null,
+            title: "Oops! ",
+            message: qualificationListResult.message!);
+      }
+    }).catchError((onError) {
+      print(onError.toString());
+      showToastShortTime(context, onError.toString());
     }).whenComplete(() {
       print("called when future completes");
       EasyLoading.dismiss();
