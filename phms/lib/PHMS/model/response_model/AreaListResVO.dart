@@ -3,64 +3,75 @@
 /// data : [{"AREAID":" 154796"},{" AREANAME":"(Gandhinagar) Sector 16 ","PINCODE":" 382016"},{"AREAID":" 154797"},{" AREANAME":"(Gandhinagar) Sector 17 ","PINCODE":" 382016"}]
 
 class AreaListResVO {
-  AreaListResVO({
-      String? success, 
-      String? message, 
-      List<Data>? data,}){
-    _success = success;
-    _message = message;
-    _data = data;
-}
+  String? success;
+  String? message;
+  List<Data>? data;
 
-  AreaListResVO.fromJson(dynamic json) {
-    _success = json['success'];
-    _message = json['message'];
+  AreaListResVO({this.success, this.message, this.data});
+
+  AreaListResVO.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
     if (json['data'] != null) {
-      _data = [];
+      data = <Data>[];
       json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
-  String? _success;
-  String? _message;
-  List<Data>? _data;
-
-  String? get success => _success;
-  String? get message => _message;
-  List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['success'] = _success;
-    map['message'] = _message;
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    return map;
+    return data;
   }
-
 }
-
-/// AREAID : " 154796"
 
 class Data {
-  Data({
-      String? areaid,}){
-    _areaid = areaid;
-}
+  String? pincode;
+  List<AreaName>? areaName;
 
-  Data.fromJson(dynamic json) {
-    _areaid = json['AREAID'];
+  Data({this.pincode, this.areaName});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    pincode = json['pincode'];
+    if (json['areaName'] != null) {
+      areaName = <AreaName>[];
+      json['areaName'].forEach((v) {
+        areaName!.add(new AreaName.fromJson(v));
+      });
+    }
   }
-  String? _areaid;
-
-  String? get areaid => _areaid;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['AREAID'] = _areaid;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['pincode'] = this.pincode;
+    if (this.areaName != null) {
+      data['areaName'] = this.areaName!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class AreaName {
+  int? aID;
+  String? aName;
+
+  AreaName({this.aID, this.aName});
+
+  AreaName.fromJson(Map<String, dynamic> json) {
+    aID = json['aID'];
+    aName = json['aName'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['aID'] = this.aID;
+    data['aName'] = this.aName;
+    return data;
+  }
 }

@@ -43,7 +43,9 @@ class _DoctorRegistrationHospitalDetailsScreenState
   late String placeType;
   late String areas,pinCode;
   FocusNode _dropdownFocus = FocusNode();
+  Map<String, List<AreaName>> areaByPinCodeList = Map();
 
+  late int aID;
   List<String> operatingDays = [
     'Mon',
     'Tue',
@@ -55,17 +57,12 @@ class _DoctorRegistrationHospitalDetailsScreenState
   ];
   List<int> selectedOperatingDays = [];
 
-  final List<String> areasList = [
-    'Andheri',
-    'Bandra',
-    'Colaba',
-    'Dadar',
-    'Juhu',
-    'Malad',
-  ];
+  final List<String> areasList = [];
   final List<String> pinCodeList = [];
 
   final List<String> placeTypesList = [];
+  final List<String> locationAreaList = [];
+  List<AreaName> pinCodeWiseAreaList=[];
 
   @override
   void initState() {
@@ -130,13 +127,16 @@ class _DoctorRegistrationHospitalDetailsScreenState
       }
        if(areaListResult != null){
          if(areaListResult.success == "1"){
-           setState(() {
-             areaListResult.data!.forEach((areaList) {
-               pinCodeList.add(areaList.areaid!);
+           if(areaListResult.data!.isNotEmpty){
+             setState(() {
+               areaListResult.data!.forEach((areaList) {
+                 pinCodeList.add(areaList.pincode!);
+                 areaByPinCodeList[areaList.pincode!]=areaList.areaName!;
+               });
+               pinCode=pinCodeList[0];
+               _getAreasByPinCode(pinCodeList[0]);
              });
-
-           });
-
+           }
          }else{
            showAlertDialog(
                context: context,
@@ -153,6 +153,20 @@ class _DoctorRegistrationHospitalDetailsScreenState
       EasyLoading.dismiss();
     });
 
+  }
+
+  _getAreasByPinCode(String pinCode){
+    pinCodeWiseAreaList = areaByPinCodeList[pinCode]!;
+    areasList.clear();
+    if (pinCodeWiseAreaList.isNotEmpty) {
+      pinCodeWiseAreaList.forEach((areaName) {
+        areasList.add(areaName.aName!);
+      });
+      areas=pinCodeWiseAreaList[0].aName!;
+      aID=pinCodeWiseAreaList[0].aID!;
+    } else {
+      print('No areas found for pin code $pinCode');
+    }
   }
 
   @override
@@ -297,6 +311,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         (selectVal) {
                                       setState(() {
                                         pinCode = selectVal;
+
+                                        _getAreasByPinCode(pinCode);
                                         FocusScope.of(context)
                                             .requestFocus(_dropdownFocus);
                                       });
@@ -309,6 +325,8 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                     (selectVal) {
                                   setState(() {
                                     areas = selectVal;
+                                    aID=pinCodeWiseAreaList[areasList.indexOf(areas)].aID!;
+                                    showToastLongTime(context, aID.toString());
                                     FocusScope.of(context)
                                         .requestFocus(_dropdownFocus);
                                   });
