@@ -41,9 +41,10 @@ class _DoctorRegistrationHospitalDetailsScreenState
   late final TextEditingController addressController;
 
   late String placeType;
-  late String areas,pinCode;
+  late String areas, pinCode, placeTypeId;
   FocusNode _dropdownFocus = FocusNode();
   Map<String, List<AreaName>> areaByPinCodeList = Map();
+  late PlaceTypeResVO placeListResult;
 
   late int aID;
   List<String> operatingDays = [
@@ -62,7 +63,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
 
   final List<String> placeTypesList = [];
   final List<String> locationAreaList = [];
-  List<AreaName> pinCodeWiseAreaList=[];
+  List<AreaName> pinCodeWiseAreaList = [];
 
   @override
   void initState() {
@@ -71,7 +72,7 @@ class _DoctorRegistrationHospitalDetailsScreenState
 
     placeType = "Choose Place Type";
     areas = "Choose Area";
-    pinCode="Choose Pincode";
+    pinCode = "Choose Pincode";
 
     _formKey = GlobalKey<FormState>();
     _autoValidate = AutovalidateMode.disabled;
@@ -97,73 +98,66 @@ class _DoctorRegistrationHospitalDetailsScreenState
     Future<PlaceTypeResVO?> placeTypeListResVO = API.getPlaceTypeList();
     Future<AreaListResVO?> areaListResVO = API.getAreaList();
 
-
-
     Future.wait([placeTypeListResVO, areaListResVO]).catchError(
       (onError) {
         print(onError.toString());
         showToastShortTime(context, onError.toString());
       },
     ).then((results) {
-      final placeListResult = results[0] as PlaceTypeResVO?;
+      placeListResult = results[0] as PlaceTypeResVO;
       final areaListResult = results[1] as AreaListResVO?;
 
-
-       if (placeListResult != null) {
-        if (placeListResult.success == "1") {
-          setState(() {
-            placeListResult.invoices!.forEach((placeTypeData) {
-              placeTypesList.add(placeTypeData.areaname!);
-            });
+      if (placeListResult.success == "1") {
+        setState(() {
+          placeListResult.invoices!.forEach((placeTypeData) {
+            placeTypesList.add(placeTypeData.areaname!);
           });
+        });
+      } else {
+        showAlertDialog(
+            context: context,
+            btnNameOk: "Ok",
+            btnNameCancel: null,
+            title: "Oops! ",
+            message: placeListResult.message!);
+      }
+
+      if (areaListResult != null) {
+        if (areaListResult.success == "1") {
+          if (areaListResult.data!.isNotEmpty) {
+            setState(() {
+              areaListResult.data!.forEach((areaList) {
+                pinCodeList.add(areaList.pincode!);
+                areaByPinCodeList[areaList.pincode!] = areaList.areaName!;
+              });
+              pinCode = pinCodeList[0];
+              _getAreasByPinCode(pinCodeList[0]);
+            });
+          }
         } else {
           showAlertDialog(
               context: context,
               btnNameOk: "Ok",
               btnNameCancel: null,
               title: "Oops! ",
-              message: placeListResult.message!);
+              message: areaListResult.message!);
         }
       }
-       if(areaListResult != null){
-         if(areaListResult.success == "1"){
-           if(areaListResult.data!.isNotEmpty){
-             setState(() {
-               areaListResult.data!.forEach((areaList) {
-                 pinCodeList.add(areaList.pincode!);
-                 areaByPinCodeList[areaList.pincode!]=areaList.areaName!;
-               });
-               pinCode=pinCodeList[0];
-               _getAreasByPinCode(pinCodeList[0]);
-             });
-           }
-         }else{
-           showAlertDialog(
-               context: context,
-               btnNameOk: "Ok",
-               btnNameCancel: null,
-               title: "Oops! ",
-               message: areaListResult.message!);
-         }
-       }
-
-
     }).whenComplete(() {
       print("called when future completes");
       EasyLoading.dismiss();
     });
-
   }
 
-  _getAreasByPinCode(String pinCode){
+  _getAreasByPinCode(String pinCode) {
     pinCodeWiseAreaList = areaByPinCodeList[pinCode]!;
     areasList.clear();
     if (pinCodeWiseAreaList.isNotEmpty) {
       pinCodeWiseAreaList.forEach((areaName) {
         areasList.add(areaName.aName!);
       });
-      areas=pinCodeWiseAreaList[0].aName!;
-      aID=pinCodeWiseAreaList[0].aID!;
+      areas = pinCodeWiseAreaList[0].aName!;
+      aID = pinCodeWiseAreaList[0].aID!;
     } else {
       print('No areas found for pin code $pinCode');
     }
@@ -300,6 +294,11 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                     (selectVal) {
                                   setState(() {
                                     placeType = selectVal;
+                                    placeTypeId = placeListResult
+                                        .invoices![
+                                            placeTypesList.indexOf(placeType)]
+                                        .areaID!;
+
                                     FocusScope.of(context)
                                         .requestFocus(_dropdownFocus);
                                   });
@@ -308,15 +307,15 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                   height: 20,
                                 ),
                                 dropDownLayout(context, pinCode, pinCodeList,
-                                        (selectVal) {
-                                      setState(() {
-                                        pinCode = selectVal;
+                                    (selectVal) {
+                                  setState(() {
+                                    pinCode = selectVal;
 
-                                        _getAreasByPinCode(pinCode);
-                                        FocusScope.of(context)
-                                            .requestFocus(_dropdownFocus);
-                                      });
-                                    }),
+                                    _getAreasByPinCode(pinCode);
+                                    FocusScope.of(context)
+                                        .requestFocus(_dropdownFocus);
+                                  });
+                                }),
 
                                 SizedBox(
                                   height: 20,
@@ -325,8 +324,9 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                     (selectVal) {
                                   setState(() {
                                     areas = selectVal;
-                                    aID=pinCodeWiseAreaList[areasList.indexOf(areas)].aID!;
-                                    showToastLongTime(context, aID.toString());
+                                    aID = pinCodeWiseAreaList[
+                                            areasList.indexOf(areas)]
+                                        .aID!;
                                     FocusScope.of(context)
                                         .requestFocus(_dropdownFocus);
                                   });
@@ -336,24 +336,25 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                   height: 20,
                                 ),
                                 TextFormField(
-                                  maxLength: 50,
-                                  controller: addressController,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                  decoration: InputDecoration(
-                                    counter: Offstage(),
-                                    hintText: 'Address',
-                                    labelText: 'Address',
-                                    prefixIcon: const Icon(
-                                      Icons.drive_file_rename_outline,
-                                      color: Colors.grey,
+                                    maxLength: 50,
+                                    controller: addressController,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    decoration: InputDecoration(
+                                      counter: Offstage(),
+                                      hintText: 'Address',
+                                      labelText: 'Address',
+                                      prefixIcon: const Icon(
+                                        Icons.drive_file_rename_outline,
+                                        color: Colors.grey,
+                                      ),
+                                      prefixText: ' ',
+                                      contentPadding: new EdgeInsets.symmetric(
+                                          vertical: 20.0, horizontal: 20.0),
                                     ),
-                                    prefixText: ' ',
-                                    contentPadding: new EdgeInsets.symmetric(
-                                        vertical: 20.0, horizontal: 20.0),
-                                  ),
-                                  validator: (value) =>
-                                      validateRequiredField(value),
-                                ),
+                                    validator: (value) => null
+                                    //validateRequiredField(value),
+                                    ),
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -459,14 +460,14 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                       (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        setState(() {
+                                        /* setState(() {
                                           if (selectedOperatingDays
                                               .contains(index)) {
                                             selectedOperatingDays.remove(index);
                                           } else {
                                             selectedOperatingDays.add(index);
                                           }
-                                        });
+                                        });*/
                                       },
                                       child: Container(
                                         margin: EdgeInsets.all(0),
@@ -656,12 +657,13 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         visitinghrs: startTimeController.text +
                                             " - " +
                                             endTimeController.text,
-                                        address: "ahmedabad",
-                                        doctorid: "1",
-                                        mobile: "9586582649",
-                                        placetype: "1",
-                                        email: "",
-                                        landline: "");
+                                        address: addressController.text,
+                                        doctorid: "",
+                                        mobile: mobileNumberId.text,
+                                        placetype: placeTypeId,
+                                        email: emailController.text,
+                                        landline: landlineController.text,
+                                        areaID: aID.toString());
                                     if (placeList.isNotEmpty) placeList.clear();
                                     placeList.add(place);
                                     widget.argument.setPlace(placeList);

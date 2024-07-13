@@ -124,71 +124,62 @@ class Registration {
 /// visitingdays : "Mon - Wed"
 
 class Place {
-  Place({
-      String? placename, 
-      String? placetype, 
-      String? doctorid, 
-      String? mobile, 
-      String? email, 
-      String? landline, 
-      String? address, 
-      String? visitinghrs, 
-      String? visitingdays,}){
-    _placename = placename;
-    _placetype = placetype;
-    _doctorid = doctorid;
-    _mobile = mobile;
-    _email = email;
-    _landline = landline;
-    _address = address;
-    _visitinghrs = visitinghrs;
-    _visitingdays = visitingdays;
-}
+  String? placename;
+  String? placetype;
+  String? doctorid;
+  String? mobile;
+  String? email;
+  String? landline;
+  String? address;
+  String? visitinghrs;
+  String? visitingdays;
+  String? areaID;
+  String? lat;
+  String? long;
 
-  Place.fromJson(dynamic json) {
-    _placename = json['placename'];
-    _placetype = json['placetype'];
-    _doctorid = json['doctorid'];
-    _mobile = json['mobile'];
-    _email = json['email'];
-    _landline = json['landline'];
-    _address = json['address'];
-    _visitinghrs = json['visitinghrs'];
-    _visitingdays = json['visitingdays'];
+  Place(
+      {this.placename,
+        this.placetype,
+        this.doctorid,
+        this.mobile,
+        this.email,
+        this.landline,
+        this.address,
+        this.visitinghrs,
+        this.visitingdays,
+        this.areaID,
+        this.lat,
+        this.long});
+
+  Place.fromJson(Map<String, dynamic> json) {
+    placename = json['placename'];
+    placetype = json['placetype'];
+    doctorid = json['doctorid'];
+    mobile = json['mobile'];
+    email = json['email'];
+    landline = json['landline'];
+    address = json['address'];
+    visitinghrs = json['visitinghrs'];
+    visitingdays = json['visitingdays'];
+    areaID = json['areaID'];
+    lat = json['lat'];
+    long = json['long'];
   }
-  String? _placename;
-  String? _placetype;
-  String? _doctorid;
-  String? _mobile;
-  String? _email;
-  String? _landline;
-  String? _address;
-  String? _visitinghrs;
-  String? _visitingdays;
-
-  String? get placename => _placename;
-  String? get placetype => _placetype;
-  String? get doctorid => _doctorid;
-  String? get mobile => _mobile;
-  String? get email => _email;
-  String? get landline => _landline;
-  String? get address => _address;
-  String? get visitinghrs => _visitinghrs;
-  String? get visitingdays => _visitingdays;
-
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['placename'] = _placename;
-    map['placetype'] = _placetype;
-    map['doctorid'] = _doctorid;
-    map['mobile'] = _mobile;
-    map['email'] = _email;
-    map['landline'] = _landline;
-    map['address'] = _address;
-    map['visitinghrs'] = _visitinghrs;
-    map['visitingdays'] = _visitingdays;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['placename'] = this.placename;
+    data['placetype'] = this.placetype;
+    data['doctorid'] = this.doctorid;
+    data['mobile'] = this.mobile;
+    data['email'] = this.email;
+    data['landline'] = this.landline;
+    data['address'] = this.address;
+    data['visitinghrs'] = this.visitinghrs;
+    data['visitingdays'] = this.visitingdays;
+    data['areaID'] = this.areaID;
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    return data;
   }
-
 }
