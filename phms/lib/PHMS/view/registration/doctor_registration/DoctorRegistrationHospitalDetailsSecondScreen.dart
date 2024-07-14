@@ -10,12 +10,13 @@ import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorRegistrationResponseVO.dart';
 import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
+import 'package:phms/PHMS/model/response_model/RegistrationArgs.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
 class DoctorRegistrationHospitalDetailsSecondScreen extends StatefulWidget {
-  late final Registration argument;
+  late final RegistrationArgs registrationArgs;
 
-  DoctorRegistrationHospitalDetailsSecondScreen({required this.argument});
+  DoctorRegistrationHospitalDetailsSecondScreen({required this.registrationArgs});
 
   @override
   State<DoctorRegistrationHospitalDetailsSecondScreen> createState() =>
@@ -65,10 +66,16 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
   final List<String> locationAreaList = [];
   List<AreaName> pinCodeWiseAreaList = [];
 
+
+  late Registration _registration;
+  late String _doctorId;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _registration = widget.registrationArgs.registration;
+    _doctorId = widget.registrationArgs.doctorId;
 
     placeType = "Choose Place Type";
     areas = "Choose Area";
@@ -177,12 +184,14 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
   void doctorRegister(BuildContext context, Registration registration) {
     FocusScope.of(context).requestFocus(FocusNode());
 
+    Registration finalRegistration = new Registration(DcotorID: registration.DoctorID,place: registration.place);
+
     DoctorRegistrationVO doctorRegistrationVO =
-        DoctorRegistrationVO(registration: registration);
+        DoctorRegistrationVO(registration: finalRegistration);
 
     print("doctorRegister_data ___" + doctorRegistrationVO.toJson().toString());
     Future<DoctorRegistrationResponseVO?> categoryListResponse =
-        API.registerDoctor(doctorRegistrationVO);
+        API.addDoctorPlace(doctorRegistrationVO);
     categoryListResponse.catchError(
       (onError) {
         print(onError.toString());
@@ -719,20 +728,19 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
                                                     " - " +
                                                     endTimeController.text,
                                             address: addressController.text,
-                                            doctorid: "",
                                             mobile: mobileNumberId.text,
                                             placetype: placeTypeId,
                                             email: emailController.text,
                                             landline: landlineController.text,
                                             areaID: aID.toString());
-                                        if (widget.argument.place!.length ==
+                                        if (_registration.place!.length ==
                                             2) {
-                                          widget.argument.place!.removeAt(1);
+                                          _registration.place!.removeAt(1);
                                         }
-                                        widget.argument.place!.add(place);
+                                        _registration.place!.add(place);
 
                                         doctorRegister(
-                                            context, widget.argument);
+                                            context, _registration);
                                       }
                                     }
                                   },

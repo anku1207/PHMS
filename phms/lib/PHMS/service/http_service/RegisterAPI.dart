@@ -14,6 +14,7 @@ import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
 import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
+import 'package:phms/PHMS/model/response_model/DoctorRegisterResVO.dart';
 import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
 import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
@@ -69,14 +70,30 @@ Future<CheckPatientRegistrationResponseVO?> checkPatient(CheckPatientRegistratio
   }
 }
 
+Future<DoctorRegisterResVO?> registerDoctor(DoctorRegistrationVO registrationRequestVO) async {
+  EasyLoading.show(status: 'Loading...');
+  print("registerDoctor");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/doctorReg');
+  var response = await http.post(url, headers: headers,body: json.encode(registrationRequestVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return DoctorRegisterResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to registerDoctor Data');
+  }
+}
 
 
-Future<DoctorRegistrationResponseVO?> registerDoctor(DoctorRegistrationVO registrationRequestVO) async {
+
+Future<DoctorRegistrationResponseVO?> addDoctorPlace(DoctorRegistrationVO registrationRequestVO) async {
   EasyLoading.show(status: 'Loading...');
   print("createUser");
   Map<String, String> headers = await getApiHeaders();
 
-  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/doctorReg');
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/AddPlace');
   var response = await http.post(url, headers: headers,body: json.encode(registrationRequestVO.toJson()),);
   httpRequestDebugging(response);
   print(response.body);

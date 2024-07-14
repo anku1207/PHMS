@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/response_model/PatientDetailsResponseVO.dart';
+import 'package:phms/PHMS/model/response_model/RegistrationArgs.dart';
 import 'package:phms/PHMS/view/home/DashboardScreen.dart';
 import 'package:phms/PHMS/view/home/HomeScreen.dart';
 import 'package:phms/PHMS/view/home/ProductScreen.dart';
@@ -96,9 +97,9 @@ class RouteGenerator {
       case UavRoutes.Doctor_Registration_Details_Screen:
         return BouncyPage(widget: DoctorRegistrationDetailsScreen(argument:settings.arguments!));
       case UavRoutes.Doctor_Registration_Hospital_Details_Screen:
-        return BouncyPage(widget: DoctorRegistrationHospitalDetailsScreen(argument:settings.arguments! as Registration));
+        return BouncyPage(widget: DoctorRegistrationHospitalDetailsScreen(registrationArgs:settings.arguments! as RegistrationArgs));
       case UavRoutes.Doctor_Registration_Hospital_Details_Second_Screen:
-        return BouncyPage(widget: DoctorRegistrationHospitalDetailsSecondScreen(argument:settings.arguments! as Registration));
+        return BouncyPage(widget: DoctorRegistrationHospitalDetailsSecondScreen(registrationArgs:settings.arguments! as RegistrationArgs));
       case UavRoutes.Dashboard_Screen:
         return BouncyPage(widget: DashboardScreen());
       case UavRoutes.Home_Screen:

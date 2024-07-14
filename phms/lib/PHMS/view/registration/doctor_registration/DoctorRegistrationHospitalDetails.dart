@@ -10,12 +10,13 @@ import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
 import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
+import 'package:phms/PHMS/model/response_model/RegistrationArgs.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
 class DoctorRegistrationHospitalDetailsScreen extends StatefulWidget {
-  late final Registration argument;
+  late final RegistrationArgs registrationArgs;
 
-  DoctorRegistrationHospitalDetailsScreen({required this.argument});
+  DoctorRegistrationHospitalDetailsScreen({required this.registrationArgs});
 
   @override
   State<DoctorRegistrationHospitalDetailsScreen> createState() =>
@@ -65,10 +66,16 @@ class _DoctorRegistrationHospitalDetailsScreenState
   final List<String> locationAreaList = [];
   List<AreaName> pinCodeWiseAreaList = [];
 
+  late Registration _registration;
+  late String _doctorId;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _registration = widget.registrationArgs.registration;
+    _doctorId = widget.registrationArgs.doctorId;
 
     placeType = "Choose Place Type";
     areas = "Choose Area";
@@ -658,7 +665,6 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                             " - " +
                                             endTimeController.text,
                                         address: addressController.text,
-                                        doctorid: "",
                                         mobile: mobileNumberId.text,
                                         placetype: placeTypeId,
                                         email: emailController.text,
@@ -666,14 +672,17 @@ class _DoctorRegistrationHospitalDetailsScreenState
                                         areaID: aID.toString());
                                     if (placeList.isNotEmpty) placeList.clear();
                                     placeList.add(place);
-                                    widget.argument.setPlace(placeList);
+                                    _registration.setPlace(placeList);
                                     // Navigate to the next screen
                                     print(place.toJson());
                                     Navigator.pushNamed(
                                         context,
                                         UavRoutes
                                             .Doctor_Registration_Hospital_Details_Second_Screen,
-                                        arguments: widget.argument);
+                                        arguments: RegistrationArgs(
+                                          _registration,  // Your Registration object
+                                          _doctorId,  // The doctorId value
+                                        ));
                                   }
                                 }
                               },

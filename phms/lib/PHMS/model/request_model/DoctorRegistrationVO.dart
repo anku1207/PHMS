@@ -1,14 +1,17 @@
-/// registration : {"doctorname":"Test Doctor 3","mobile":"9920199203","email":"test3@xyz.com","landline":"","qualification":"MD","specialisation":"Eye Surgeon","regNumber":"M12991","password":"test@1234","place":[{"placename":"TEST 4","placetype":"1","doctorid":"1","mobile":"9820198102","email":"","landline":"","address":"vile parle east","visitinghrs":"10:00 – 12:00","visitingdays":"Mon - Wed"},{"placename":"TEST 5","placetype":"1","doctorid":"1","mobile":"9811298112","email":"","landline":"","address":"bandra west","visitinghrs":"16:00 – 18:00","visitingdays":"Thu - Fri"}]}
+/// registration : {"doctorname":"Test Doctor 3","mobile":"9920199203","email":"test3@xyz.com","landline":"","qualification":"MD","specialisation":"Eye Surgeon","regNumber":"M12991","password":"test@1234","place":[{"placename":"TEST 4","placetype":"1","DoctorID":"1","mobile":"9820198102","email":"","landline":"","address":"vile parle east","visitinghrs":"10:00 – 12:00","visitingdays":"Mon - Wed"},{"placename":"TEST 5","placetype":"1","DoctorID":"1","mobile":"9811298112","email":"","landline":"","address":"bandra west","visitinghrs":"16:00 – 18:00","visitingdays":"Thu - Fri"}]}
 
 class DoctorRegistrationVO {
   DoctorRegistrationVO({
-      Registration? registration,}){
+    Registration? registration,}) {
     _registration = registration;
-}
+  }
 
   DoctorRegistrationVO.fromJson(dynamic json) {
-    _registration = json['registration'] != null ? Registration.fromJson(json['registration']) : null;
+    _registration = json['registration'] != null
+        ? Registration.fromJson(json['registration'])
+        : null;
   }
+
   Registration? _registration;
 
   Registration? get registration => _registration;
@@ -31,19 +34,20 @@ class DoctorRegistrationVO {
 /// specialisation : "Eye Surgeon"
 /// regNumber : "M12991"
 /// password : "test@1234"
-/// place : [{"placename":"TEST 4","placetype":"1","doctorid":"1","mobile":"9820198102","email":"","landline":"","address":"vile parle east","visitinghrs":"10:00 – 12:00","visitingdays":"Mon - Wed"},{"placename":"TEST 5","placetype":"1","doctorid":"1","mobile":"9811298112","email":"","landline":"","address":"bandra west","visitinghrs":"16:00 – 18:00","visitingdays":"Thu - Fri"}]
+/// place : [{"placename":"TEST 4","placetype":"1","DoctorID":"1","mobile":"9820198102","email":"","landline":"","address":"vile parle east","visitinghrs":"10:00 – 12:00","visitingdays":"Mon - Wed"},{"placename":"TEST 5","placetype":"1","DoctorID":"1","mobile":"9811298112","email":"","landline":"","address":"bandra west","visitinghrs":"16:00 – 18:00","visitingdays":"Thu - Fri"}]
 
 class Registration {
   Registration({
-      String? doctorname, 
-      String? mobile, 
-      String? email, 
-      String? landline, 
-      String? qualification, 
-      String? specialisation, 
-      String? regNumber, 
-      String? password, 
-      List<Place>? place,}){
+    String? doctorname,
+    String? mobile,
+    String? email,
+    String? landline,
+    String? qualification,
+    String? specialisation,
+    String? regNumber,
+    String? password,
+    String? DcotorID,
+    List<Place>? place,}) {
     _doctorname = doctorname;
     _mobile = mobile;
     _email = email;
@@ -53,7 +57,8 @@ class Registration {
     _regNumber = regNumber;
     _password = password;
     _place = place;
-}
+    _DoctorID =DcotorID;
+    }
 
   Registration.fromJson(dynamic json) {
     _doctorname = json['doctorname'];
@@ -64,6 +69,7 @@ class Registration {
     _specialisation = json['specialisation'];
     _regNumber = json['regNumber'];
     _password = json['password'];
+    _DoctorID = json['DoctorID'];
     if (json['place'] != null) {
       _place = [];
       json['place'].forEach((v) {
@@ -71,6 +77,7 @@ class Registration {
       });
     }
   }
+
   String? _doctorname;
   String? _mobile;
   String? _email;
@@ -79,20 +86,35 @@ class Registration {
   String? _specialisation;
   String? _regNumber;
   String? _password;
+  String? _DoctorID;
   List<Place>? _place;
 
   String? get doctorname => _doctorname;
+
   String? get mobile => _mobile;
+
   String? get email => _email;
+
   String? get landline => _landline;
+
   String? get qualification => _qualification;
+
   String? get specialisation => _specialisation;
+
   String? get regNumber => _regNumber;
+
   String? get password => _password;
+
+  String? get DoctorID => _DoctorID;
+
   List<Place>? get place => _place;
 
   setPlace(List<Place> newPlace) {
     _place = newPlace;
+  }
+
+  setDoctorID(String dID){
+    _DoctorID = dID;
   }
 
   Map<String, dynamic> toJson() {
@@ -105,9 +127,12 @@ class Registration {
     map['specialisation'] = _specialisation;
     map['regNumber'] = _regNumber;
     map['password'] = _password;
+    map['DoctorID'] = _DoctorID;
     if (_place != null) {
       map['place'] = _place?.map((v) => v.toJson()).toList();
     }
+    map.removeWhere((key, value) => value == null);
+
     return map;
   }
 
@@ -115,7 +140,7 @@ class Registration {
 
 /// placename : "TEST 4"
 /// placetype : "1"
-/// doctorid : "1"
+/// DoctorID : "1"
 /// mobile : "9820198102"
 /// email : ""
 /// landline : ""
@@ -126,7 +151,6 @@ class Registration {
 class Place {
   String? placename;
   String? placetype;
-  String? doctorid;
   String? mobile;
   String? email;
   String? landline;
@@ -137,24 +161,21 @@ class Place {
   String? lat;
   String? long;
 
-  Place(
-      {this.placename,
-        this.placetype,
-        this.doctorid,
-        this.mobile,
-        this.email,
-        this.landline,
-        this.address,
-        this.visitinghrs,
-        this.visitingdays,
-        this.areaID,
-        this.lat,
-        this.long});
+  Place({this.placename,
+    this.placetype,
+    this.mobile,
+    this.email,
+    this.landline,
+    this.address,
+    this.visitinghrs,
+    this.visitingdays,
+    this.areaID,
+    this.lat,
+    this.long});
 
   Place.fromJson(Map<String, dynamic> json) {
     placename = json['placename'];
     placetype = json['placetype'];
-    doctorid = json['doctorid'];
     mobile = json['mobile'];
     email = json['email'];
     landline = json['landline'];
@@ -170,7 +191,6 @@ class Place {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['placename'] = this.placename;
     data['placetype'] = this.placetype;
-    data['doctorid'] = this.doctorid;
     data['mobile'] = this.mobile;
     data['email'] = this.email;
     data['landline'] = this.landline;

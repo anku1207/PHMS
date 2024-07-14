@@ -7,7 +7,9 @@ import 'package:phms/PHMS/components/constants.dart';
 import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
+import 'package:phms/PHMS/model/response_model/DoctorRegisterResVO.dart';
 import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
+import 'package:phms/PHMS/model/response_model/RegistrationArgs.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 
@@ -466,11 +468,7 @@ class _DoctorRegistrationDetailsScreenState
                                             specialisation: specialization,
                                             regNumber: regNumberController.text,
                                           ),
-                                          Navigator.pushNamed(
-                                              context,
-                                              UavRoutes
-                                                  .Doctor_Registration_Hospital_Details_Screen,
-                                              arguments: registration)
+                                          doctorRegister(context,registration)
                                         }
                                     }
                                 },
@@ -492,6 +490,51 @@ class _DoctorRegistrationDetailsScreenState
             ),
           ]),
     );
+  }
+
+
+  void doctorRegister(BuildContext context, Registration registration) {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    DoctorRegistrationVO doctorRegistrationVO =
+    DoctorRegistrationVO(registration: registration);
+
+    print("doctorRegister_data ___" + doctorRegistrationVO.toJson().toString());
+    Future<DoctorRegisterResVO?> doctorRegistrationResVO =
+    API.registerDoctor(doctorRegistrationVO);
+    doctorRegistrationResVO.catchError(
+          (onError) {
+        print(onError.toString());
+        showToastShortTime(context, onError.toString());
+      },
+    ).then((value) {
+      if (value != null) {
+        if (value.success == "1") {
+          showToastShortTime(context, value.message!);
+
+          registration.setDoctorID(value.doctorID!);
+          Navigator.pushNamed(
+              context,
+              UavRoutes
+                  .Doctor_Registration_Hospital_Details_Screen,
+              arguments: RegistrationArgs(
+                registration,  // Your Registration object
+                value.doctorID!,  // The doctorId value
+              ));
+
+        } else {
+          showAlertDialog(
+              context: context,
+              btnNameOk: "Ok",
+              btnNameCancel: null,
+              title: "Oops! ",
+              message: value.message!);
+        }
+      }
+    }).whenComplete(() {
+      print("called when future completes");
+      EasyLoading.dismiss();
+    });
   }
 
   void _togglePasswordView() {
