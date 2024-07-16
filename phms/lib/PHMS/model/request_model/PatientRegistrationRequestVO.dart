@@ -36,82 +36,69 @@ class PatientRegistrationRequestVO {
 /// password : "1234"
 
 class Registration {
-  Registration({
-      String? patientname, 
-      String? mobile, 
-      String? email, 
-      String? location, 
-      String? dob, 
-      String? bloodgrp, 
-      String? doctorname, 
-      String? doctornumber, 
-      String? address, 
-      String? gender, 
-      String? password,}){
-    _patientname = patientname;
-    _mobile = mobile;
-    _email = email;
-    _location = location;
-    _dob = dob;
-    _bloodgrp = bloodgrp;
-    _doctorname = doctorname;
-    _doctornumber = doctornumber;
-    _address = address;
-    _gender = gender;
-    _password = password;
-}
+  String? patientname;
+  String? mobile;
+  String? email;
+  String? location;
+  String? dob;
+  String? bloodgrp;
+  String? password;
+  String? doctorname;
+  String? doctornumber;
+  String? gender;
+  String? address;
+  String? eCperson;
+  String? eCmobile;
 
-  Registration.fromJson(dynamic json) {
-    _patientname = json['patientname'];
-    _mobile = json['mobile'];
-    _email = json['email'];
-    _location = json['location'];
-    _dob = json['dob'];
-    _bloodgrp = json['bloodgrp'];
-    _doctorname = json['doctorname'];
-    _doctornumber = json['doctornumber'];
-    _address = json['address'];
-    _gender = json['gender'];
-    _password = json['password'];
+
+  Registration(
+      {this.patientname,
+        this.mobile,
+        this.email,
+        this.location,
+        this.dob,
+        this.bloodgrp,
+        this.password,
+        this.doctorname,
+        this.doctornumber,
+        this.gender,
+        this.address,
+        this.eCperson,
+        this.eCmobile,
+      });
+
+  Registration.fromJson(Map<String, dynamic> json) {
+    patientname = json['patientname'];
+    mobile = json['mobile'];
+    email = json['email'];
+    location = json['location'];
+    dob = json['dob'];
+    bloodgrp = json['bloodgrp'];
+    password = json['password'];
+    doctorname = json['doctorname'];
+    doctornumber = json['doctornumber'];
+    gender = json['gender'];
+    address = json['address'];
+    eCperson = json['eCperson'];
+    eCmobile = json['eCmobile'];
+
   }
-  String? _patientname;
-  String? _mobile;
-  String? _email;
-  String? _location;
-  String? _dob;
-  String? _bloodgrp;
-  String? _doctorname;
-  String? _doctornumber;
-  String? _address;
-  String? _gender;
-  String? _password;
-
-  String? get patientname => _patientname;
-  String? get mobile => _mobile;
-  String? get email => _email;
-  String? get location => _location;
-  String? get dob => _dob;
-  String? get bloodgrp => _bloodgrp;
-  String? get doctorname => _doctorname;
-  String? get doctornumber => _doctornumber;
-  String? get address => _address;
-  String? get gender => _gender;
-  String? get password => _password;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['patientname'] = _patientname;
-    map['mobile'] = _mobile;
-    map['email'] = _email;
-    map['location'] = _location;
-    map['dob'] = _dob;
-    map['bloodgrp'] = _bloodgrp;
-    map['doctorname'] = _doctorname;
-    map['doctornumber'] = _doctornumber;
-    map['address'] = _address;
-    map['gender'] = _gender;
-    map['password'] = _password;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['patientname'] = this.patientname;
+    data['mobile'] = this.mobile;
+    data['email'] = this.email;
+    data['location'] = this.location;
+    data['dob'] = this.dob;
+    data['bloodgrp'] = this.bloodgrp;
+    data['password'] = this.password;
+    data['doctorname'] = this.doctorname;
+    data['doctornumber'] = this.doctornumber;
+    data['gender'] = this.gender;
+    data['address'] = this.address;
+    data['eCperson'] = this.eCperson;
+    data['eCmobile'] = this.eCmobile;
+    return data;
   }
-
 }
