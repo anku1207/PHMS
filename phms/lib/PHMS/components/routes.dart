@@ -31,6 +31,7 @@ import 'package:phms/PHMS/view/registration/doctor_registration/DoctorRegistrati
 import 'package:phms/PHMS/view/registration/patient_registration/PatientRegistrationDetailsScreen.dart';
 import 'package:phms/PHMS/view/registration/patient_registration/PatientRegistrationScreen.dart';
 import 'package:phms/PHMS/view/splash/SplashScreen.dart';
+import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart' as DoctorListResVO;
 
 
 
@@ -131,7 +132,7 @@ class RouteGenerator {
       case UavRoutes.Case_History_Tab :
         return BouncyPage(widget: CaseHistoryTab(argument: settings.arguments!));
       case UavRoutes.Doctor_Details :
-        return BouncyPage(widget: DoctorDetails(argument: settings.arguments!));
+        return BouncyPage(widget: DoctorDetails(argument: settings.arguments! as DoctorListResVO.Data));
       case UavRoutes.Patient_Case_Details_Screen :
         return BouncyPage(widget: PatientCaseDetailsScreen(argument: settings.arguments!));
       case UavRoutes.PDF_Viewer_Screen :

@@ -51,7 +51,7 @@ class _DoctorListState extends State<DoctorList> {
             doctorname: "",
             location: "",
             specialisation: "",
-            city: "Mumbai",
+            pincode: "",
             latitude: null,
             longitude: null);
 
@@ -144,7 +144,7 @@ class _DoctorListState extends State<DoctorList> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, UavRoutes.Doctor_Details,
-                            arguments: {});
+                            arguments: doctor);
                       },
                       child: Card(
                         margin: const EdgeInsets.all(4.0),
@@ -159,19 +159,19 @@ class _DoctorListState extends State<DoctorList> {
                               Text('Specialty: ${doctor.specialisation}',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Hospital: ----}',
+                              Text('Hospital: ',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
                               Text('Address: ${doctor.address}',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('City: ${doctor.address}',
+                              Text('City: ',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
                               Text('Phone Number: ${doctor.mobile}',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
-                              Text('Time: ---}',
+                              Text('Time: ',
                                   style: Theme.of(context).textTheme.bodyText2),
                               SizedBox(height: 4),
                               Text('Qualification: ${doctor.qualification}',

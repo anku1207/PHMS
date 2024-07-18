@@ -30,24 +30,24 @@ class DoctorListReqVO {
 class Place {
   String? doctorname;
   String? location;
+  String? pincode;
   String? specialisation;
-  String? city;
-  int? latitude;
-  int? longitude;
+  String? latitude;
+  String? longitude;
 
   Place(
       {this.doctorname,
         this.location,
+        this.pincode,
         this.specialisation,
-        this.city,
         this.latitude,
         this.longitude});
 
   Place.fromJson(Map<String, dynamic> json) {
     doctorname = json['doctorname'];
     location = json['location'];
+    pincode = json['pincode'];
     specialisation = json['specialisation'];
-    city = json['city'];
     latitude = json['latitude'];
     longitude = json['longitude'];
   }
@@ -56,8 +56,8 @@ class Place {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['doctorname'] = this.doctorname;
     data['location'] = this.location;
+    data['pincode'] = this.pincode;
     data['specialisation'] = this.specialisation;
-    data['city'] = this.city;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
     return data;

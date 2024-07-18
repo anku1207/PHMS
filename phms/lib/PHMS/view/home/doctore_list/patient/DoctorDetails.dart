@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/model/response_model/DoctorDetailsVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
 
 import 'InfoRow.dart';
 
 class DoctorDetails extends StatefulWidget {
-  late final Object argument;
+  late final Data argument;
 
   DoctorDetails({required this.argument});
 
@@ -23,16 +24,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     super.initState();
 
     doctor = DoctorDetailsVO(
-      name: 'Dr. John Doe',
-      specialty: 'Cardiology',
-      hospital: 'Tantia Hospital',
-      address: 'P68, D2-block, Midc., Chinchwad',
-      city: 'Pune',
-      state: 'Maharashtra',
-      country: 'India',
-      zipCode: '411019',
-      phoneNumber: '27475929',
-      email: 'john.doe@example.com',
+      name: widget.argument.doctorname,
+      specialty: widget.argument.specialisation,
+      hospital: '',
+      address: widget.argument.address,
+      qualification: widget.argument.qualification,
+      city: "",
+      state: '',
+      country: '',
+      zipCode: '',
+      phoneNumber: widget.argument.mobile,
+      email: widget.argument.email,
       photoUrl: 'https://picsum.photos/200/300', // Replace with a valid URL
     );
   }
@@ -104,6 +106,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InfoRow(label: 'Hospital', value: doctor.hospital!),
+                          InfoRow(label: 'Specialisation', value: doctor.specialty!),
+                          InfoRow(label: 'Qualification', value: doctor.qualification!),
                           InfoRow(label: 'Address', value: doctor.address!),
                           InfoRow(label: 'City', value: doctor.city!),
                           InfoRow(label: 'State', value: doctor.state!),
