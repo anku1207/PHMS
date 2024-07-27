@@ -45,6 +45,9 @@ class _PatientCaseRegisterScreen_3State
   late TextEditingController notesController ;
   late TextEditingController dateAndTimeController ;
   late TextEditingController reasonController ;
+  late TextEditingController labAdvice ;
+  late TextEditingController radioAdvice ;
+
 
 
   @override
@@ -62,6 +65,8 @@ class _PatientCaseRegisterScreen_3State
     notesController = TextEditingController();
     dateAndTimeController=TextEditingController();
     reasonController=TextEditingController();
+    labAdvice=TextEditingController();
+    radioAdvice=TextEditingController();
   }
 
   @override
@@ -73,6 +78,8 @@ class _PatientCaseRegisterScreen_3State
     notesController.dispose();
     dateAndTimeController.dispose();
     reasonController.dispose();
+    labAdvice.dispose();
+    radioAdvice.dispose();
 
   }
 
@@ -258,6 +265,48 @@ class _PatientCaseRegisterScreen_3State
                                             vertical: 20.0, horizontal: 20.0),
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextFormField(
+                                      controller: labAdvice,
+                                      keyboardType: TextInputType.text,
+                                      minLines: 2, // Set the minimum number of lines
+                                      maxLines: 5, // Set the maximum number of lines
+                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(height: 1.5),
+                                      decoration: InputDecoration(
+                                        counter: Offstage(),
+                                        hintText: 'Lab Advice',
+                                        labelText: 'Lab Advice',
+                                        prefixIcon: const Icon(
+                                          Icons.drive_file_rename_outline,
+                                          color: Colors.grey,
+                                        ),
+                                        contentPadding: new EdgeInsets.symmetric(
+                                            vertical: 20.0, horizontal: 20.0),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    TextFormField(
+                                      controller: radioAdvice,
+                                      keyboardType: TextInputType.text,
+                                      minLines: 2, // Set the minimum number of lines
+                                      maxLines: 5, // Set the maximum number of lines
+                                      style: Theme.of(context).textTheme.bodyText2!.copyWith(height: 1.5),
+                                      decoration: InputDecoration(
+                                        counter: Offstage(),
+                                        hintText: 'Radio Advice',
+                                        labelText: 'Radio Advice',
+                                        prefixIcon: const Icon(
+                                          Icons.drive_file_rename_outline,
+                                          color: Colors.grey,
+                                        ),
+                                        contentPadding: new EdgeInsets.symmetric(
+                                            vertical: 20.0, horizontal: 20.0),
+                                      ),
+                                    ),
                                     Row(
                                       children: [
                                         Checkbox(
@@ -384,8 +433,7 @@ class _PatientCaseRegisterScreen_3State
         CaseRegRequest.Case casee = CaseRegRequest.Case(doctorID: data.userid, patientID: argument.patientID,symptoms: symptomsController.text,prescription: prescriptionController.text,
             notes: notesController.text,followup: isChecked?"Y":"N",appointmentdatetime: dateAndTimeController.text,reason:reasonController.text
             ,appointmentID: "0",existingCaseID: "0",placeID: "5",scheduleID: "0"
-        ,prescriptionPic: prescriptionImg,symptomsPic: "",notesPic: "",symptomsImg:symptomsImageName,prescriptionImg: prescriptionImageName,
-        notesImg: notesImageName);
+        ,prescriptionPic: prescriptionImg,prescriptionImg: prescriptionImageName,radioAdvice: reasonController.text,labAdvice: labAdvice.text);
 
         CaseRegRequest.CaseRegRequestVO caseRegRequestVO = CaseRegRequest.CaseRegRequestVO(casee:casee);
 

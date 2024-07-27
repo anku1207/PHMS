@@ -5,15 +5,16 @@
 
 class CaseDetialsResponseVO {
   CaseDetialsResponseVO({
-      String? success, 
-      String? message, 
-      List<Data>? data, 
-      List<CaseDetails>? caseDetails,}){
+    String? success,
+    String? message,
+    List<Data>? data,
+    List<CaseDetails>? caseDetails,
+  }) {
     _success = success;
     _message = message;
     _data = data;
     _caseDetails = caseDetails;
-}
+  }
 
   CaseDetialsResponseVO.fromJson(dynamic json) {
     _success = json['success'];
@@ -31,14 +32,18 @@ class CaseDetialsResponseVO {
       });
     }
   }
+
   String? _success;
   String? _message;
   List<Data>? _data;
   List<CaseDetails>? _caseDetails;
 
   String? get success => _success;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
+
   List<CaseDetails>? get caseDetails => _caseDetails;
 
   Map<String, dynamic> toJson() {
@@ -53,7 +58,6 @@ class CaseDetialsResponseVO {
     }
     return map;
   }
-
 }
 
 /// casedetailsid : "65"
@@ -70,19 +74,21 @@ class CaseDetialsResponseVO {
 /// notes_desc : "notes"
 
 class CaseDetails {
-  CaseDetails({
-      String? casedetailsid, 
-      String? followupdatetime, 
-      String? doctorcharges, 
-      String? symptoms, 
-      String? prescription, 
-      String? plan, 
-      String? soapPic, 
-      String? reportType, 
-      String? reportDesc, 
-      String? reportPic, 
-      String? reportamt, 
-      String? notesDesc,}){
+  CaseDetails(
+      {String? casedetailsid,
+      String? followupdatetime,
+      String? doctorcharges,
+      String? symptoms,
+      String? prescription,
+      String? plan,
+      String? soapPic,
+      String? reportType,
+      String? reportDesc,
+      String? reportPic,
+      String? reportamt,
+      String? notesDesc,
+      String? labAdvice,
+      String? radioAdvice}) {
     _casedetailsid = casedetailsid;
     _followupdatetime = followupdatetime;
     _doctorcharges = doctorcharges;
@@ -95,7 +101,9 @@ class CaseDetails {
     _reportPic = reportPic;
     _reportamt = reportamt;
     _notesDesc = notesDesc;
-}
+    _labAdvice = labAdvice;
+    _radioAdvice = radioAdvice;
+  }
 
   CaseDetails.fromJson(dynamic json) {
     _casedetailsid = json['casedetailsid'];
@@ -110,7 +118,10 @@ class CaseDetails {
     _reportPic = json['report_pic'];
     _reportamt = json['reportamt'];
     _notesDesc = json['notes_desc'];
+    _labAdvice = json['lab_advice'];
+    _radioAdvice = json['radio_advice'];
   }
+
   String? _casedetailsid;
   String? _followupdatetime;
   String? _doctorcharges;
@@ -123,19 +134,38 @@ class CaseDetails {
   String? _reportPic;
   String? _reportamt;
   String? _notesDesc;
+  String? _labAdvice;
+  String? _radioAdvice;
 
   String? get casedetailsid => _casedetailsid;
+
   String? get followupdatetime => _followupdatetime;
+
   String? get doctorcharges => _doctorcharges;
+
   String? get symptoms => _symptoms;
+
   String? get prescription => _prescription;
+
   String? get plan => _plan;
+
   String? get soapPic => _soapPic;
+
   String? get reportType => _reportType;
+
   String? get reportDesc => _reportDesc;
+
   String? get reportPic => _reportPic;
+
   String? get reportamt => _reportamt;
-  String? get notesDesc => _notesDesc;
+
+  String? get labAdvice => _notesDesc;
+
+  String? get notesDesc => _labAdvice;
+
+
+  String? get radioAdvice => _radioAdvice;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -151,9 +181,10 @@ class CaseDetails {
     map['report_pic'] = _reportPic;
     map['reportamt'] = _reportamt;
     map['notes_desc'] = _notesDesc;
+    map['lab_advice'] = _labAdvice;
+    map['radio_advice'] = _radioAdvice;
     return map;
   }
-
 }
 
 /// caseID : "65"
@@ -168,15 +199,16 @@ class CaseDetails {
 
 class Data {
   Data({
-      String? caseID, 
-      String? casedatetime, 
-      String? doctorname, 
-      String? doctormobile, 
-      String? patientname, 
-      String? patientmobile, 
-      String? bloodgroup, 
-      String? dob, 
-      String? email,}){
+    String? caseID,
+    String? casedatetime,
+    String? doctorname,
+    String? doctormobile,
+    String? patientname,
+    String? patientmobile,
+    String? bloodgroup,
+    String? dob,
+    String? email,
+  }) {
     _caseID = caseID;
     _casedatetime = casedatetime;
     _doctorname = doctorname;
@@ -186,7 +218,7 @@ class Data {
     _bloodgroup = bloodgroup;
     _dob = dob;
     _email = email;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _caseID = json['caseID'];
@@ -199,6 +231,7 @@ class Data {
     _dob = json['DOB'];
     _email = json['email'];
   }
+
   String? _caseID;
   String? _casedatetime;
   String? _doctorname;
@@ -210,13 +243,21 @@ class Data {
   String? _email;
 
   String? get caseID => _caseID;
+
   String? get casedatetime => _casedatetime;
+
   String? get doctorname => _doctorname;
+
   String? get doctormobile => _doctormobile;
+
   String? get patientname => _patientname;
+
   String? get patientmobile => _patientmobile;
+
   String? get bloodgroup => _bloodgroup;
+
   String? get dob => _dob;
+
   String? get email => _email;
 
   Map<String, dynamic> toJson() {
@@ -232,5 +273,4 @@ class Data {
     map['email'] = _email;
     return map;
   }
-
 }

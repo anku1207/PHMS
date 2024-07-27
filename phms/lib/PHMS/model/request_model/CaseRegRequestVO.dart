@@ -2,13 +2,15 @@
 
 class CaseRegRequestVO {
   CaseRegRequestVO({
-      Case? casee,}){
+    Case? casee,
+  }) {
     _case = casee;
-}
+  }
 
   CaseRegRequestVO.fromJson(dynamic json) {
     _case = json['case'] != null ? Case.fromJson(json['case']) : null;
   }
+
   Case? _case;
 
   Case? get casee => _case;
@@ -20,7 +22,6 @@ class CaseRegRequestVO {
     }
     return map;
   }
-
 }
 
 /// doctorID : "37"
@@ -43,124 +44,78 @@ class CaseRegRequestVO {
 /// scheduleID : "0"
 
 class Case {
-  Case({
-      String? doctorID, 
-      String? patientID, 
-      String? symptoms, 
-      String? prescription, 
-      String? notes, 
-      String? symptomsPic, 
-      String? prescriptionPic, 
-      String? notesPic, 
-      String? symptomsImg, 
-      String? prescriptionImg, 
-      String? notesImg, 
-      String? followup, 
-      String? appointmentdatetime, 
-      String? reason, 
-      String? appointmentID, 
-      String? existingCaseID, 
-      String? placeID, 
-      String? scheduleID,}){
-    _doctorID = doctorID;
-    _patientID = patientID;
-    _symptoms = symptoms;
-    _prescription = prescription;
-    _notes = notes;
-    _symptomsPic = symptomsPic;
-    _prescriptionPic = prescriptionPic;
-    _notesPic = notesPic;
-    _symptomsImg = symptomsImg;
-    _prescriptionImg = prescriptionImg;
-    _notesImg = notesImg;
-    _followup = followup;
-    _appointmentdatetime = appointmentdatetime;
-    _reason = reason;
-    _appointmentID = appointmentID;
-    _existingCaseID = existingCaseID;
-    _placeID = placeID;
-    _scheduleID = scheduleID;
-}
+  String? doctorID;
+  String? patientID;
+  String? symptoms;
+  String? prescription;
+  String? notes;
+  String? prescriptionPic;
+  String? prescriptionImg;
+  String? existingCaseID;
+  String? followup;
+  String? placeID;
+  String? appointmentdatetime;
+  String? reason;
+  String? appointmentID;
+  String? scheduleID;
+  String? labAdvice;
+  String? radioAdvice;
 
-  Case.fromJson(dynamic json) {
-    _doctorID = json['doctorID'];
-    _patientID = json['patientID'];
-    _symptoms = json['symptoms'];
-    _prescription = json['prescription'];
-    _notes = json['notes'];
-    _symptomsPic = json['symptoms_pic'];
-    _prescriptionPic = json['prescription_pic'];
-    _notesPic = json['notes_pic'];
-    _symptomsImg = json['symptoms_img'];
-    _prescriptionImg = json['prescription_img'];
-    _notesImg = json['notes_img'];
-    _followup = json['followup'];
-    _appointmentdatetime = json['appointmentdatetime'];
-    _reason = json['reason'];
-    _appointmentID = json['appointmentID'];
-    _existingCaseID = json['existingCaseID'];
-    _placeID = json['placeID'];
-    _scheduleID = json['scheduleID'];
+  Case(
+      {this.doctorID,
+      this.patientID,
+      this.symptoms,
+      this.prescription,
+      this.notes,
+      this.prescriptionPic,
+      this.prescriptionImg,
+      this.existingCaseID,
+      this.followup,
+      this.placeID,
+      this.appointmentdatetime,
+      this.reason,
+      this.appointmentID,
+      this.scheduleID,
+      this.labAdvice,
+      this.radioAdvice});
+
+  Case.fromJson(Map<String, dynamic> json) {
+    doctorID = json['doctorID'];
+    patientID = json['patientID'];
+    symptoms = json['symptoms'];
+    prescription = json['prescription'];
+    notes = json['notes'];
+    prescriptionPic = json['prescription_pic'];
+    prescriptionImg = json['prescription_img'];
+    existingCaseID = json['existingCaseID'];
+    followup = json['followup'];
+    placeID = json['placeID'];
+    appointmentdatetime = json['appointmentdatetime'];
+    reason = json['reason'];
+    appointmentID = json['appointmentID'];
+    scheduleID = json['scheduleID'];
+    labAdvice = json['lab_advice'];
+    radioAdvice = json['radio_advice'];
   }
-  String? _doctorID;
-  String? _patientID;
-  String? _symptoms;
-  String? _prescription;
-  String? _notes;
-  String? _symptomsPic;
-  String? _prescriptionPic;
-  String? _notesPic;
-  String? _symptomsImg;
-  String? _prescriptionImg;
-  String? _notesImg;
-  String? _followup;
-  String? _appointmentdatetime;
-  String? _reason;
-  String? _appointmentID;
-  String? _existingCaseID;
-  String? _placeID;
-  String? _scheduleID;
-
-  String? get doctorID => _doctorID;
-  String? get patientID => _patientID;
-  String? get symptoms => _symptoms;
-  String? get prescription => _prescription;
-  String? get notes => _notes;
-  String? get symptomsPic => _symptomsPic;
-  String? get prescriptionPic => _prescriptionPic;
-  String? get notesPic => _notesPic;
-  String? get symptomsImg => _symptomsImg;
-  String? get prescriptionImg => _prescriptionImg;
-  String? get notesImg => _notesImg;
-  String? get followup => _followup;
-  String? get appointmentdatetime => _appointmentdatetime;
-  String? get reason => _reason;
-  String? get appointmentID => _appointmentID;
-  String? get existingCaseID => _existingCaseID;
-  String? get placeID => _placeID;
-  String? get scheduleID => _scheduleID;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['doctorID'] = _doctorID;
-    map['patientID'] = _patientID;
-    map['symptoms'] = _symptoms;
-    map['prescription'] = _prescription;
-    map['notes'] = _notes;
-    map['symptoms_pic'] = _symptomsPic;
-    map['prescription_pic'] = _prescriptionPic;
-    map['notes_pic'] = _notesPic;
-    map['symptoms_img'] = _symptomsImg;
-    map['prescription_img'] = _prescriptionImg;
-    map['notes_img'] = _notesImg;
-    map['followup'] = _followup;
-    map['appointmentdatetime'] = _appointmentdatetime;
-    map['reason'] = _reason;
-    map['appointmentID'] = _appointmentID;
-    map['existingCaseID'] = _existingCaseID;
-    map['placeID'] = _placeID;
-    map['scheduleID'] = _scheduleID;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['doctorID'] = this.doctorID;
+    data['patientID'] = this.patientID;
+    data['symptoms'] = this.symptoms;
+    data['prescription'] = this.prescription;
+    data['notes'] = this.notes;
+    data['prescription_pic'] = this.prescriptionPic;
+    data['prescription_img'] = this.prescriptionImg;
+    data['existingCaseID'] = this.existingCaseID;
+    data['followup'] = this.followup;
+    data['placeID'] = this.placeID;
+    data['appointmentdatetime'] = this.appointmentdatetime;
+    data['reason'] = this.reason;
+    data['appointmentID'] = this.appointmentID;
+    data['scheduleID'] = this.scheduleID;
+    data['lab_advice'] = this.labAdvice;
+    data['radio_advice'] = this.radioAdvice;
+    return data;
   }
-
 }

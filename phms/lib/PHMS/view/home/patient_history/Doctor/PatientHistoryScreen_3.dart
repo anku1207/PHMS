@@ -52,6 +52,8 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
   late TextEditingController dateAndTimeController;
 
   late TextEditingController reasonController;
+  late TextEditingController labAdvice ;
+  late TextEditingController radioAdvice ;
 
   @override
   void initState() {
@@ -68,6 +70,8 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
     notesController = TextEditingController();
     dateAndTimeController = TextEditingController();
     reasonController = TextEditingController();
+    labAdvice=TextEditingController();
+    radioAdvice=TextEditingController();
 
     Future.delayed(Duration.zero, () {
       getCaseDetails(context);
@@ -83,6 +87,8 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
     notesController.dispose();
     dateAndTimeController.dispose();
     reasonController.dispose();
+    labAdvice.dispose();
+    radioAdvice.dispose();
   }
 
   double getTextHeight(String text, TextStyle style) {
@@ -723,6 +729,48 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
                                                     validateRequiredField(
                                                         value!),
                                               ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              TextFormField(
+                                                controller: labAdvice,
+                                                keyboardType: TextInputType.text,
+                                                minLines: 2, // Set the minimum number of lines
+                                                maxLines: 5, // Set the maximum number of lines
+                                                style: Theme.of(context).textTheme.bodyText2!.copyWith(height: 1.5),
+                                                decoration: InputDecoration(
+                                                  counter: Offstage(),
+                                                  hintText: 'Lab Advice',
+                                                  labelText: 'Lab Advice',
+                                                  prefixIcon: const Icon(
+                                                    Icons.drive_file_rename_outline,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  contentPadding: new EdgeInsets.symmetric(
+                                                      vertical: 20.0, horizontal: 20.0),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              TextFormField(
+                                                controller: radioAdvice,
+                                                keyboardType: TextInputType.text,
+                                                minLines: 2, // Set the minimum number of lines
+                                                maxLines: 5, // Set the maximum number of lines
+                                                style: Theme.of(context).textTheme.bodyText2!.copyWith(height: 1.5),
+                                                decoration: InputDecoration(
+                                                  counter: Offstage(),
+                                                  hintText: 'Radio Advice',
+                                                  labelText: 'Radio Advice',
+                                                  prefixIcon: const Icon(
+                                                    Icons.drive_file_rename_outline,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  contentPadding: new EdgeInsets.symmetric(
+                                                      vertical: 20.0, horizontal: 20.0),
+                                                ),
+                                              ),
                                               Row(
                                                 children: [
                                                   Checkbox(
@@ -855,6 +903,9 @@ class _PatientHistoryScreen_3State extends State<PatientHistoryScreen_3> {
               symptomsController.text=value.caseDetails![0].symptoms ?? "";
               prescriptionController.text=value.caseDetails![0].prescription ?? "";
               notesController.text=value.caseDetails![0].notesDesc ?? "";
+              labAdvice.text = value.caseDetails![0].labAdvice ?? "";
+              radioAdvice.text = value.caseDetails![0].radioAdvice ?? "";
+
               if(value.caseDetails![0].followupdatetime!.isNotEmpty){
                 isChecked=true;
               }else{

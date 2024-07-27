@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'Validations.dart';
+import 'constants.dart';
 
 class CustomDateTimePickerFormField extends StatefulWidget {
   late TextEditingController dateTimeController;
@@ -32,14 +33,7 @@ class _CustomDateTimePickerFormFieldState
         builder: (BuildContext context, Widget? child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-            child: Theme(
-              data: ThemeData(
-                primaryColor: Colors.blue, // Set your desired color
-                accentColor: Colors.blue, // Set your desired color
-                buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
-              ),
-              child: child!,
-            ),
+            child: child!
           );
         },
       );
