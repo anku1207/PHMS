@@ -122,7 +122,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           ),
                           Align(
                               alignment: Alignment.center,
-                              child:appointmentBookBtn(context)
+                              child:appointmentBookBtn(context,widget.argument.doctorid!)
                           )
                         ],
                       ),

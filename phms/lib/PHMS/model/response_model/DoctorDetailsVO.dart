@@ -1,4 +1,5 @@
 class DoctorDetailsVO {
+  String? doctorid;
   String? name;
   String? specialty;
   String? hospital;
@@ -12,23 +13,24 @@ class DoctorDetailsVO {
   String? photoUrl;
   String? qualification;
 
-  DoctorDetailsVO(
-      {this.name,
-      this.specialty,
-      this.hospital,
-      this.address,
-      this.city,
-      this.state,
-      this.country,
-      this.zipCode,
-      this.phoneNumber,
-      this.email,
-      this.photoUrl,
-      this.qualification});
+  DoctorDetailsVO({this.doctorid
+    , this.name,
+    this.specialty,
+    this.hospital,
+    this.address,
+    this.city,
+    this.state,
+    this.country,
+    this.zipCode,
+    this.phoneNumber,
+    this.email,
+    this.photoUrl,
+    this.qualification});
 
   // Factory method to create a Doctor object from JSON
   factory DoctorDetailsVO.fromJson(Map<String, dynamic> json) {
     return DoctorDetailsVO(
+        doctorid : json['DOCTORID'],
         name: json['name'],
         specialty: json['specialty'],
         hospital: json['hospital'],
@@ -57,7 +59,8 @@ class DoctorDetailsVO {
       'phoneNumber': phoneNumber,
       'email': email,
       'photoUrl': photoUrl,
-      'qualification':qualification
+      'qualification': qualification,
+      'doctore_id':doctorid
     };
   }
 }

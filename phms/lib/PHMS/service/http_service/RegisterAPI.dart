@@ -12,12 +12,14 @@ import 'package:phms/PHMS/model/request_model/DoctorRegistrationVO.dart';
 import 'package:phms/PHMS/model/request_model/LoginRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
+import 'package:phms/PHMS/model/request_model/patient/CreateAppointmentReqVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
 import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorRegisterResVO.dart';
 import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
 import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/CreateAppointmentResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/PatientAppointmentReqVO.dart';
@@ -329,6 +331,23 @@ Future<AreaListResVO?> getAreaList() async {
     return AreaListResVO.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to getPlaceTypeList Data');
+  }
+}
+
+
+Future<CreateAppointmentResVO?> bookAppointment(CreateAppointmentReqVO createAppointmentReqVO) async {
+  EasyLoading.show(status: 'Loading...');
+  print("bookAppointment");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/CreateAppointment');
+  var response = await http.post(url, headers: headers,body: json.encode(createAppointmentReqVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return CreateAppointmentResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to bookAppointment Data');
   }
 }
 

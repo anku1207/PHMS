@@ -32,11 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _currentIndex = 0;
 
-  final List<String> sideImages = [
-    "assets/images/banner_1.png",
-    "assets/images/banner_2.png",
-    "assets/images/banner_3.png",
-  ];
+  late List<String> sideImages = [];
 
   @override
   void initState() {
@@ -64,7 +60,15 @@ class _HomeScreenState extends State<HomeScreen> {
     if (userTypeLogin.toString() == "1") {
       setState(() {
         title = "Doctor Dashboard";
+        sideImages = [
+          "assets/images/d1.jpg",
+          "assets/images/d2.png",
+          "assets/images/d3.jpeg",
+        ];
       });
+
+
+
       myList.add(DashboardItemVO(
           id: Patient_Registration,
           name: "Patient Registration",
@@ -104,7 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       setState(() {
         title = "Patient Dashboard";
+        sideImages = [
+          "assets/images/banner_1.png",
+          "assets/images/banner_2.png",
+          "assets/images/banner_3.png",
+        ];
+
       });
+
 
       myList.add(DashboardItemVO(
           id: Search_Doctors_By_Specialization_Location,
@@ -234,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }).toList(),
                                   ),
                                   DotsIndicator(
-                                    dotsCount: sideImages.length,
+                                    dotsCount: sideImages.isNotEmpty?sideImages.length:1,
                                     position: _currentIndex.toDouble(),
                                     decorator: DotsDecorator(
                                       color: Colors.grey,

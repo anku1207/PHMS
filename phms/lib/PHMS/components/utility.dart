@@ -273,3 +273,20 @@ Future<void> launchURL(String url) async {
     // Handle error appropriately
   }
 }
+
+bool isNullOrEmpty(String? value) {
+  return value == null || value.isEmpty;
+}
+String convertTo24HourFormat(String time) {
+  // Define the input and output formats
+  DateFormat inputFormat = DateFormat("hh:mm a");
+  DateFormat outputFormat = DateFormat("HH:mm");
+
+  // Parse the input time
+  DateTime parsedTime = inputFormat.parse(time);
+
+  // Format the time in 24-hour format
+  String formattedTime = outputFormat.format(parsedTime);
+
+  return formattedTime;
+}

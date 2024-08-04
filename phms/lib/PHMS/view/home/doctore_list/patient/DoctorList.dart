@@ -179,7 +179,7 @@ class _DoctorListState extends State<DoctorList> {
                               SizedBox(height: 4),
                               Align(
                                   alignment: Alignment.bottomRight,
-                                  child: appointmentBookBtn(context))
+                                  child: appointmentBookBtn(context,doctor.doctorid!))
                             ],
                           ),
                         ),

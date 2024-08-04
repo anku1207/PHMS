@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phms/PHMS/components/routes.dart';
+import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/view/home/appointment/patient/CancelAppointmentBottomSheet.dart';
 
 import 'constants.dart';
@@ -606,7 +607,7 @@ Align showCancelAndReschedule(BuildContext context){
   );
 }
 
-Row appointmentBookBtn(BuildContext context){
+Row appointmentBookBtn(BuildContext context, String doctorid){
   return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -614,7 +615,7 @@ Row appointmentBookBtn(BuildContext context){
           onTap: () {
             Navigator.of(context, rootNavigator: true).pushNamed(
                 UavRoutes.Book_Appointment,
-                arguments: {"booking_type":"v"});
+                arguments: {"booking_type":"v","doctor_id":doctorid});
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -664,7 +665,7 @@ Row appointmentBookBtn(BuildContext context){
           onTap: () {
             Navigator.of(context, rootNavigator: true).pushNamed(
                 UavRoutes.Book_Appointment,
-                arguments:{"booking_type":"c"});
+                arguments:{"booking_type":"c","doctor_id":doctorid});
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,11 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
 import 'package:phms/PHMS/components/Validations.dart';
 import 'package:phms/PHMS/components/constants.dart' as Constants;
+import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
+import 'package:phms/PHMS/model/request_model/patient/CreateAppointmentReqVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/CreateAppointmentResVO.dart';
+import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
+import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart' as Login;
 
 class BookAppointment extends StatefulWidget {
   late final Object argument;
@@ -26,12 +34,6 @@ class _BookAppointmentState extends State<BookAppointment> {
   // Create controllers for each TextFormField
   late TextEditingController symptomsController;
 
-  late TextEditingController prescriptionController;
-  late TextEditingController notesController;
-
-  late TextEditingController dateAndTimeController;
-
-  late TextEditingController reasonController;
 
   String? _selectedDate;
   String? _selectedTime;
@@ -242,16 +244,19 @@ class _BookAppointmentState extends State<BookAppointment> {
                                             minWidth: double.infinity),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            if (_formKey.currentState
-                                                ?.validate() ??
-                                                false) {
+                                            if ((_formKey.currentState?.validate() ?? false) && !isNullOrEmpty(_selectedDate) && !isNullOrEmpty(_selectedTime)) {
+
+
+
                                               appointmentConfirmation(context,"Appointment Confirmation","Your appointment with test Doctor is confirmed for $_selectedDate at $_selectedTime.", (result) {
                                                 Navigator.pop(context);
                                                 if (result?.toLowerCase() == "yes") {
-
+                                                  createAppointment(context);
                                                 }
                                               },yes:"Confirm",no:"No");
 
+                                            }else{
+                                              showToastShortTime(context,"Empty Field not allowed!");
                                             }
                                           },
                                           child: Text("Submit",
@@ -274,5 +279,58 @@ class _BookAppointmentState extends State<BookAppointment> {
             ),
           )),
     );
+  }
+
+  void createAppointment(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+    checkCustomerSession().then((value) {
+      if (value != null) {
+        print('Value before decoding: $value');
+        Map<String, dynamic> data1 = jsonDecode(value);
+        Login.Data data = Login.Data.fromJson(data1);
+
+
+       Case cases = new Case(doctorID: argumentsMap["doctor_id"],patientID: data.userid,placeID: "5",appointmentdatetime: _selectedDate!+" "+convertTo24HourFormat(_selectedTime!),reason:symptomsController.text );
+
+       CreateAppointmentReqVO createRes = new CreateAppointmentReqVO(cases: cases);
+
+        print("CreateAppointmentReqVO ___" + createRes.toJson().toString());
+        Future<CreateAppointmentResVO?> responseData =
+        API.bookAppointment(createRes);
+        responseData.catchError(
+              (onError) {
+            print(onError.toString());
+            showToastShortTime(context, onError.toString());
+          },
+        ).then((value) {
+          if (value != null) {
+            if (value.success == "1") {
+              setState(() {
+                showResponseDialogCbsl(
+                    context,
+                    AlertDialogDesignResponseWise(
+                        "Success", value.message!, "OK", true), (clickBtn) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    UavRoutes.Home_Screen,
+                        (route) => false,
+                  );
+                },backBtn: false);
+              });
+            } else {
+              showAlertDialog(
+                  context: context,
+                  btnNameOk: "Ok",
+                  btnNameCancel: null,
+                  title: "Oops! ",
+                  message: value.message!);
+            }
+          }
+        }).whenComplete(() {
+          print("called when future completes");
+          EasyLoading.dismiss();
+        });
+      }
+    });
   }
 }
