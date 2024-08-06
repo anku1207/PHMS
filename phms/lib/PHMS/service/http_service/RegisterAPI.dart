@@ -14,6 +14,7 @@ import 'package:phms/PHMS/model/request_model/PatientDetailsRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/PatientRegistrationRequestVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/CreateAppointmentReqVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/DoctorListReqVO.dart';
+import 'package:phms/PHMS/model/request_model/patient/EditAppointmentReqVO.dart';
 import 'package:phms/PHMS/model/response_model/AreaListResVO.dart';
 import 'package:phms/PHMS/model/response_model/DoctorRegisterResVO.dart';
 import 'package:phms/PHMS/model/response_model/PlaceTypeResVO.dart';
@@ -21,6 +22,7 @@ import 'package:phms/PHMS/model/response_model/QualificationResModel.dart';
 import 'package:phms/PHMS/model/response_model/SpecialitiesListResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/CreateAppointmentResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/DoctorListResVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/EditAppointmentResVO.dart';
 import 'package:phms/PHMS/model/response_model/patient/PatientAppointmentListResVO.dart';
 import 'package:phms/PHMS/model/request_model/patient/PatientAppointmentReqVO.dart';
 import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
@@ -348,6 +350,22 @@ Future<CreateAppointmentResVO?> bookAppointment(CreateAppointmentReqVO createApp
     return CreateAppointmentResVO.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to bookAppointment Data');
+  }
+}
+
+Future<EditAppointmentResVO?> editAppointment(EditAppointmentReqVO appointmentReqVO) async {
+  EasyLoading.show(status: 'Loading...');
+  print("editAppointment");
+  Map<String, String> headers = await getApiHeaders();
+
+  var url = Uri.parse(ApiUrl.BASE_URL + 'Service1.svc/EditAppointment');
+  var response = await http.post(url, headers: headers,body: json.encode(appointmentReqVO.toJson()),);
+  httpRequestDebugging(response);
+  print(response.body);
+  if (response.statusCode == 200) {
+    return EditAppointmentResVO.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to editAppointment Data');
   }
 }
 

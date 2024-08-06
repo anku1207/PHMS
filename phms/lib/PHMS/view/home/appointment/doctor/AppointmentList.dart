@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:phms/PHMS/components/Session.dart';
 import 'package:phms/PHMS/components/UiUtility.dart';
+import 'package:phms/PHMS/components/routes.dart';
 import 'package:phms/PHMS/components/utility.dart';
 import 'package:phms/PHMS/model/request_model/AppointmentListRequestVO.dart';
+import 'package:phms/PHMS/model/request_model/patient/EditAppointmentReqVO.dart' as EA;
 import 'package:phms/PHMS/model/response_model/AppointmentListResponseVO.dart';
-import 'package:phms/PHMS/model/response_model/CaseSummaryResponseVO.dart'
-    as CaseSummaryResponseVO;
+
 import 'package:phms/PHMS/model/response_model/LoginResponseVO.dart' as Login;
-import 'package:phms/PHMS/model/response_model/PatientDetailsResponseVO.dart';
+import 'package:phms/PHMS/model/response_model/patient/EditAppointmentResVO.dart';
 import 'package:phms/PHMS/service/http_service/RegisterAPI.dart' as API;
 import 'package:phms/PHMS/components/constants.dart' as Constants;
 
@@ -156,7 +157,13 @@ class _AppointmentListState extends State<AppointmentList> {
                             SizedBox(
                               height: 40,
                             ),
-                            Column(
+                            invoices.isEmpty
+                                ? Center(
+                              child: Text(
+                                'No appointment available',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ):Column(
                               children: [
                                 for (Invoices info in invoices) Card(
                                     elevation: 10,
@@ -277,7 +284,12 @@ class _AppointmentListState extends State<AppointmentList> {
                                                 Expanded(
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      // Button action
+                                                      appointmentConfirmation(context,"Confirmation","Do you want to approved the appointment",(result) {
+                                                        Navigator.pop(context);
+                                                        if (result?.toLowerCase() == "yes") {
+                                                          editAppointment(context,info.appointmentID!,"Confirmed");
+                                                        }
+                                                      },yes:"Confirm",no:"No");
                                                     },
                                                     child: Text('Approved', style: TextStyle(
                                                       color: Colors.white,
@@ -294,7 +306,12 @@ class _AppointmentListState extends State<AppointmentList> {
                                                       side: BorderSide(color: Colors.red, width: 2.0), // Border color and width
                                                     ),
                                                     onPressed: () {
-                                                      // Button action
+                                                      appointmentConfirmation(context,"Confirmation","Do you want to cancel the appointment",(result) {
+                                                        Navigator.pop(context);
+                                                        if (result?.toLowerCase() == "yes") {
+                                                          editAppointment(context,info.appointmentID!,"Cancel");
+                                                        }
+                                                      },yes:"Confirm",no:"No");
                                                     },
                                                     child: Text('Cancel', style: TextStyle(
                                                       color: Colors.white,
@@ -318,5 +335,60 @@ class _AppointmentListState extends State<AppointmentList> {
             ),
           )),
     );
+  }
+
+  void editAppointment(BuildContext context,String aId,String editType) {
+
+
+    checkCustomerSession().then((value) {
+      if (value != null) {
+        print('Value before decoding: $value');
+        Map<String, dynamic> data1 = jsonDecode(value);
+        Login.Data data = Login.Data.fromJson(data1);
+
+
+        EA.Case cases = new EA.Case(appointmentID: aId,appStatus: editType,doctorID: data.userid,
+            placeID: "",patientID: "",olddatetime: "",reason: "",appointmentBy: "Patient",newdatetime: "");
+
+        EA.EditAppointmentReqVO appointmentReqVO = new EA.EditAppointmentReqVO(cases:cases );
+
+
+        print("editAppointment ___" +
+            appointmentReqVO.toJson().toString());
+        Future<EditAppointmentResVO?> appointmentResData =
+        API.editAppointment(appointmentReqVO);
+        appointmentResData.catchError(
+              (onError) {
+            print(onError.toString());
+            showToastShortTime(context, onError.toString());
+          },
+        ).then((value) {
+          if (value != null) {
+            if (value.success == "1") {
+              showResponseDialogCbsl(
+                  context,
+                  AlertDialogDesignResponseWise(
+                      "Success", value.message!, "OK", true), (clickBtn) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  UavRoutes.Home_Screen,
+                      (route) => false,
+                );
+              },backBtn: false);
+            } else {
+              showAlertDialog(
+                  context: context,
+                  btnNameOk: "Ok",
+                  btnNameCancel: null,
+                  title: "Oops! ",
+                  message: value.message!);
+            }
+          }
+        }).whenComplete(() {
+          print("called when future completes");
+          EasyLoading.dismiss();
+        });
+      }
+    });
   }
 }

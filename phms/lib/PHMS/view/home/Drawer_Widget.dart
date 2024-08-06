@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:phms/PHMS/components/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/constants.dart';
@@ -333,7 +335,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             width: 20,
                           ),
                           ElevatedButton(
-                            onPressed: () async {},
+                            onPressed: () async {
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              prefs.clear();
+
+                              WidgetsBinding.instance!.addPostFrameCallback((_) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  widget.previousContext,
+                                  UavRoutes.Login_Screen,
+                                      (route) => false,
+                                );
+                              });
+                            },
                             child: Text("Yes",
                                 style: TextStyle(
                                   color: Colors.white,
