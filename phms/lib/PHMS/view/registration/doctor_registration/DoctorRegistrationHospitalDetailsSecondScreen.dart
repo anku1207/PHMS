@@ -42,7 +42,8 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
   late final TextEditingController addressController;
 
   late String placeType;
-  late String areas, pinCode, placeTypeId;
+  late String areas, pinCode;
+  String? placeTypeId;
   FocusNode _dropdownFocus = FocusNode();
   Map<String, List<AreaName>> areaByPinCodeList = Map();
   late PlaceTypeResVO placeListResult;
@@ -80,7 +81,7 @@ class _DoctorRegistrationHospitalDetailsSecondScreen
     placeType = "Choose Place Type";
     areas = "Choose Area";
     pinCode = "Choose Pincode";
-
+    placeTypeId=null;
     _formKey = GlobalKey<FormState>();
     _autoValidate = AutovalidateMode.disabled;
     mobileNumberValidate = false;
